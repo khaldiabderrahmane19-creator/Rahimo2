@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="color-scheme" content="light dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="رحيمو">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<title>رحيمو — نظام إدارة التوصيل</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#0f172a;--muted:#64748b;--line:#e2e8f0;--primary:#2563eb;--primary2:#1d4ed8;--success:#059669;--danger:#dc2626;--warning:#d97706;--info:#0891b2;--shadow:0 10px 30px rgba(15,23,42,.07);--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:720px;margin:auto;min-height:100vh;padding-bottom:92px}.topbar{position:sticky;top:0;z-index:20;background:rgba(245,247,251,.92);backdrop-filter:blur(14px);padding:14px 16px;border-bottom:1px solid var(--line)}.topbar-inner{display:flex;justify-content:space-between;align-items:center}.brand{font-weight:900;font-size:21px}.sub{font-size:12px;color:var(--muted);margin-top:2px}.page{display:none;padding:16px}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:14px}.hero{background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff;border:0}.hero .muted{color:#cbd5e1}.grid{display:grid;gap:12px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.stat{padding:14px;border:1px solid var(--line);border-radius:15px;background:#fff}.stat .label{font-size:12px;color:var(--muted)}.stat .value{font-size:22px;font-weight:900;margin-top:5px}.label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.input,.select,.textarea{width:100%;border:1px solid #cbd5e1;border-radius:13px;padding:12px 13px;background:#fff;color:var(--text);outline:none}.input:focus,.select:focus,.textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.12)}.textarea{min-height:80px;resize:vertical}.field{margin-bottom:13px}.btn{border:0;border-radius:13px;padding:12px 14px;font-weight:800;min-height:44px}.btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary2)}.btn-success{background:#dcfce7;color:#047857}.btn-danger{background:#fee2e2;color:#b91c1c}.btn-warning{background:#fef3c7;color:#92400e}.btn-light{background:#f1f5f9;color:#334155}.btn-dark{background:#0f172a;color:#fff}.btn-block{width:100%}.row{display:flex;gap:8px;align-items:center}.between{display:flex;justify-content:space-between;align-items:center;gap:10px}.wrap{flex-wrap:wrap}.muted{color:var(--muted)}.small{font-size:12px}.money{font-weight:900}.positive{color:#047857}.negative{color:#b91c1c}.warning{color:#b45309}.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900;background:#f1f5f9}.badge.success{background:#dcfce7;color:#047857}.badge.warn{background:#fef3c7;color:#92400e}.badge.danger{background:#fee2e2;color:#b91c1c}.badge.info{background:#cffafe;color:#0e7490}.section-title{font-size:16px;font-weight:900;margin:0 0 12px}.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.quick button{padding:11px 5px;border:1px solid var(--line);background:#fff;border-radius:14px;font-weight:800;font-size:12px}.order{border:1px solid var(--line);border-radius:16px;padding:13px;margin-bottom:10px;background:#fff}.order:hover{border-color:#93c5fd}.order-id{font-size:11px;color:var(--muted)}.order-title{font-weight:900;margin:3px 0}.order-meta{display:grid;grid-template-columns:1fr 1fr;gap:7px;font-size:12px;color:#475569;margin-top:8px}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.actions .btn{flex:1;min-width:100px}.steps{display:grid;gap:9px}.step{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:12px}.step.current{border-color:#93c5fd;background:#eff6ff}.step.done{background:#f0fdf4;border-color:#bbf7d0}.step-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:#f1f5f9}.step.current .step-icon{background:#dbeafe}.step.done .step-icon{background:#dcfce7}.timer{font-size:24px;font-weight:900;text-align:center;padding:12px;border-radius:14px;background:#0f172a;color:#fff;margin-bottom:12px}.summary-line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line)}.summary-line:last-child{border-bottom:0}.tabs{display:flex;gap:7px;overflow:auto}.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 13px;font-weight:800;white-space:nowrap}.tab.active{background:#0f172a;color:#fff}.empty{text-align:center;padding:28px;color:var(--muted)}.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(720px,100%);z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(7,1fr);padding:8px 5px calc(8px + env(safe-area-inset-bottom))}.nav-item{border:0;background:transparent;color:#64748b;font-size:10px;font-weight:800;padding:5px 2px;display:flex;flex-direction:column;align-items:center;gap:3px}.nav-item span:first-child{font-size:18px}.nav-item.active{color:var(--primary)}.modal{position:fixed;inset:0;background:rgba(2,6,23,.58);z-index:50;display:none;align-items:flex-end;justify-content:center}.modal.show{display:flex}.sheet{background:#fff;width:min(720px,100%);max-height:92vh;overflow:auto;border-radius:24px 24px 0 0;padding:18px}.toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-20px);opacity:0;z-index:100;background:#0f172a;color:#fff;padding:11px 15px;border-radius:999px;font-weight:800;font-size:13px;transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.danger-box{border:1px solid #fecaca;background:#fff1f2;border-radius:14px;padding:12px}.success-box{border:1px solid #bbf7d0;background:#f0fdf4;border-radius:14px;padding:12px}.info-box{border:1px solid #bae6fd;background:#f0f9ff;border-radius:14px;padding:12px}.divider{height:1px;background:var(--line);margin:14px 0}.hide{display:none!important}@media(max-width:520px){.g3{grid-template-columns:1fr 1fr}.quick{grid-template-columns:repeat(2,1fr)}.order-meta{grid-template-columns:1fr}.bottom-nav{font-size:9px}.nav-item span:first-child{font-size:17px}}
+</style>
+
+<style>
+.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.kpi{padding:14px;border-radius:16px;border:1px solid var(--line);background:#fff}.kpi .k-label{font-size:11px;color:var(--muted);font-weight:800}.kpi .k-value{font-size:22px;font-weight:950;margin-top:4px}.kpi.green{background:#f0fdf4;border-color:#bbf7d0}.kpi.red{background:#fff1f2;border-color:#fecaca}.kpi.blue{background:#eff6ff;border-color:#bfdbfe}.kpi.amber{background:#fffbeb;border-color:#fde68a}.notice{padding:12px 14px;border-radius:14px;background:#f8fafc;border:1px solid var(--line);font-size:12px}.tx{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:11px 0;border-bottom:1px dashed var(--line)}.tx:last-child{border-bottom:0}.tx-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:#f1f5f9}.tx-title{font-weight:850;font-size:13px}.tx-meta{font-size:11px;color:var(--muted);margin-top:2px}.fab{position:fixed;right:max(18px,calc(50% - 325px));bottom:82px;width:54px;height:54px;border:0;border-radius:50%;background:var(--primary);color:#fff;font-size:23px;box-shadow:0 12px 28px rgba(37,99,235,.28);z-index:25}.readonly{opacity:.75}.danger-text{color:#b91c1c}.success-text{color:#047857}@media(min-width:650px){.kpi-grid{grid-template-columns:repeat(4,1fr)}}
+@media print{.bottom-nav,.topbar,.quick,.actions,.fab{display:none!important}.app{max-width:none;padding:0}.page{display:none!important}.page#earnings{display:block!important}.card{box-shadow:none}}
+</style>
+<style>
+.ai-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.ai-card{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fff}.ai-card h3{margin:0 0 6px;font-size:14px}.ai-card p{margin:0;color:var(--muted);font-size:11px;line-height:1.6}.ai-output{white-space:pre-wrap;line-height:1.8;font-size:13px;background:#f8fafc;border:1px solid var(--line);border-radius:15px;padding:14px;min-height:100px}.ai-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;background:#eef2ff;color:#4338ca;font-size:11px;font-weight:900}.ai-status{font-size:11px;color:var(--muted)}@media(max-width:520px){.ai-grid{grid-template-columns:1fr}}
+</style>
+<style>.earnings-stat-note{font-size:11px;color:var(--muted)}</style>
+
+<style id="rahimo-professional-upgrade">
+/* Rahimo V4 — visual/UX polish only */
+:root{
+  --bg:#f3f6fb;--card:#ffffff;--text:#0b1220;--muted:#64748b;
+  --line:#e5eaf2;--primary:#2563eb;--primary2:#1d4ed8;
+  --success:#059669;--danger:#dc2626;--warning:#d97706;--info:#0891b2;
+  --shadow:0 12px 32px rgba(15,23,42,.07);
+  --shadow-sm:0 4px 14px rgba(15,23,42,.06);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(circle at 100% 0%,rgba(37,99,235,.06),transparent 28rem),
+    radial-gradient(circle at 0% 35%,rgba(5,150,105,.035),transparent 24rem),
+    var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.app{max-width:760px;margin:auto;padding-bottom:90px}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.86)!important;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(226,232,240,.8);
+  box-shadow:0 3px 18px rgba(15,23,42,.04);
+}
+.topbar-inner{min-height:68px!important}
+.brand{font-weight:950!important;letter-spacing:-.4px}
+.sub{font-size:11px!important;color:var(--muted)!important}
+.page{animation:rahimoIn .22s ease both}
+@keyframes rahimoIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.card{
+  border:1px solid rgba(226,232,240,.9)!important;
+  border-radius:var(--radius)!important;
+  box-shadow:var(--shadow)!important;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+.card:hover{border-color:#dbe3ef!important}
+.hero{
+  background:linear-gradient(135deg,#0f172a 0%,#172554 52%,#1d4ed8 100%)!important;
+  color:#fff!important;
+  border:0!important;
+  box-shadow:0 18px 42px rgba(30,64,175,.18)!important;
+  overflow:hidden;position:relative;
+}
+.hero:after{
+  content:"";position:absolute;width:180px;height:180px;border-radius:50%;
+  left:-55px;top:-75px;background:rgba(255,255,255,.06);pointer-events:none
+}
+.hero .muted,.hero .small{color:rgba(255,255,255,.68)!important}
+.quick{
+  display:grid!important;grid-template-columns:repeat(4,1fr);gap:9px!important;
+  margin:12px 0!important;
+}
+.quick button{
+  min-height:64px!important;border:1px solid var(--line)!important;
+  border-radius:16px!important;background:#fff!important;color:var(--text)!important;
+  font-weight:850!important;box-shadow:var(--shadow-sm)!important;
+  transition:all .16s ease!important;
+}
+.quick button:hover{transform:translateY(-2px);border-color:#bfdbfe!important}
+.quick button:active,.btn:active,.ai-card:active{transform:scale(.98)}
+.section-title{font-weight:900!important;letter-spacing:-.2px}
+.stat,.kpi{
+  border:1px solid var(--line)!important;
+  border-radius:15px!important;
+  background:linear-gradient(180deg,#fff,#fbfcfe)!important;
+}
+.stat .value,.k-value{font-variant-numeric:tabular-nums}
+.badge{font-weight:850!important;border-radius:999px!important;padding:5px 10px!important}
+.input,.select,textarea{
+  min-height:46px!important;border:1px solid #d8e0eb!important;
+  border-radius:13px!important;background:#fbfdff!important;
+  transition:border-color .16s,box-shadow .16s,background .16s;
+}
+.input:focus,.select:focus,textarea:focus{
+  outline:none!important;background:#fff!important;border-color:#60a5fa!important;
+  box-shadow:0 0 0 4px rgba(37,99,235,.10)!important;
+}
+.btn{
+  min-height:44px!important;border-radius:13px!important;
+  font-weight:850!important;transition:transform .15s,box-shadow .15s,filter .15s;
+}
+.btn-primary{box-shadow:0 8px 20px rgba(37,99,235,.18)!important}
+.btn-primary:hover{filter:brightness(1.03);box-shadow:0 10px 24px rgba(37,99,235,.23)!important}
+.btn-danger{box-shadow:0 8px 20px rgba(220,38,38,.12)!important}
+.tabs{
+  padding:4px!important;background:#f1f5f9!important;
+  border-radius:13px!important;gap:4px!important;
+}
+.tab{
+  border-radius:10px!important;font-weight:800!important;
+  min-height:38px!important;transition:all .15s!important;
+}
+.tab.active{box-shadow:0 2px 8px rgba(15,23,42,.08)!important}
+.info-box{
+  border:1px solid #bfdbfe!important;border-radius:15px!important;
+  background:linear-gradient(135deg,#eff6ff,#f8fbff)!important;
+}
+.ai-card{
+  border:1px solid var(--line)!important;border-radius:16px!important;
+  background:#fff!important;box-shadow:var(--shadow-sm)!important;
+  transition:transform .16s,box-shadow .16s,border-color .16s!important;
+}
+.ai-card:hover{
+  transform:translateY(-3px);box-shadow:0 12px 26px rgba(15,23,42,.09)!important;
+  border-color:#bfdbfe!important;
+}
+.ai-chip{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:36px;height:28px;border-radius:999px;
+  background:#eef2ff;color:#4338ca;font-size:11px;font-weight:950;
+}
+#activeOrders>*,#dashboardDebts>*,#ordersList>* ,#customersList>* ,#expensesList>*{
+  border-radius:14px!important;
+}
+.order-actions{gap:7px!important}
+hr,.divider{opacity:.75}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid rgba(37,99,235,.18)!important;outline-offset:2px;
+}
+@media(max-width:520px){
+  .app{padding-left:10px;padding-right:10px}
+  .quick{grid-template-columns:repeat(2,1fr)!important}
+  .card{padding:15px!important}
+  .hero{padding:18px!important}
+}
+@media(min-width:700px){
+  .app{padding-left:14px;padding-right:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
+</style>
+
+<script id="rahimo-gps-fix">
+(function(){
+  window.RahimoGPS={
+    getPosition:function(){
+      return new Promise(function(resolve,reject){
+        if(!navigator.geolocation){reject({code:0,message:'المتصفح لا يدعم GPS'});return;}
+        navigator.geolocation.getCurrentPosition(resolve,reject,{
+          enableHighAccuracy:true,timeout:15000,maximumAge:0
+        });
+      });
+    },
+    openMaps:function(lat,lon){
+      window.open('https://www.google.com/maps/search/?api=1&query='+
+        encodeURIComponent(lat+','+lon),'_blank','noopener');
+    },
+    errorText:function(e){
+      if(e && e.code===1)return 'تم رفض إذن الموقع. فعّل إذن الموقع من إعدادات المتصفح.';
+      if(e && e.code===2)return 'تعذر تحديد موقعك. شغّل GPS وتأكد من الاتصال بالإنترنت.';
+      if(e && e.code===3)return 'انتهت مهلة GPS. اضغط إعادة المحاولة في مكان مفتوح.';
+      return 'تعذر الحصول على موقعك.';
+    }
+  };
+})();
+window.addEventListener('resize',()=>{if($('earnings')?.classList.contains('active'))renderWeeklyProfitChart()});
+</script>
+
+
+
+<style id="rahimo-integrated-profits-css">
+.rip-card{background:#fff;border:1px solid #e5eaf2;border-radius:16px;padding:14px;box-shadow:0 6px 18px rgba(15,23,42,.06);margin-top:12px}
+.rip-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.rip-stat b{display:block;font-size:20px;margin-top:4px}.rip-muted{font-size:11px;color:#64748b}
+.rip-table{width:100%;border-collapse:collapse;font-size:12px}.rip-table th,.rip-table td{padding:9px 6px;border-bottom:1px solid #edf0f4;text-align:right}.rip-table th{font-size:10px;color:#64748b}
+@media(max-width:560px){.rip-grid{grid-template-columns:1fr}}
+</style>
+
+<style id="rahimo-v17-design">
+:root{
+ --bg:#f4f7fb;--card:#fff;--text:#0f172a;--muted:#64748b;
+ --line:#e5eaf2;--primary:#2563eb;--primary2:#1d4ed8;
+ --success:#059669;--danger:#dc2626;--warning:#d97706;
+ --shadow:0 10px 28px rgba(15,23,42,.07);--radius:18px
+}
+html{background:var(--bg)}
+body{
+ margin:0;background:
+ radial-gradient(circle at 100% 0%,rgba(37,99,235,.055),transparent 30rem),
+ var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;
+ -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+.app{width:min(760px,100%);margin:auto;min-height:100vh;padding:0 10px 108px}
+.topbar{
+ position:sticky;top:0;z-index:40;padding:10px 6px;
+ background:rgba(244,247,251,.88)!important;border-bottom:1px solid rgba(226,232,240,.8);
+ backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)
+}
+.topbar-inner{
+ min-height:60px!important;padding:6px 10px;background:rgba(255,255,255,.92);
+ border:1px solid rgba(226,232,240,.9);border-radius:17px;
+ box-shadow:0 5px 18px rgba(15,23,42,.045)
+}
+.brand{font-size:20px!important;font-weight:950!important;letter-spacing:-.4px}
+.sub{font-size:11px!important;color:var(--muted)!important}
+.page{padding:14px 2px!important;animation:rahimoV17In .18s ease both}
+@keyframes rahimoV17In{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:none}}
+.card{
+ background:rgba(255,255,255,.98)!important;border:1px solid var(--line)!important;
+ border-radius:18px!important;box-shadow:var(--shadow)!important;
+ padding:16px!important;margin-bottom:12px!important
+}
+.hero{
+ background:linear-gradient(135deg,#0f172a 0%,#172554 55%,#2563eb 100%)!important;
+ border:0!important;color:#fff!important;overflow:hidden;position:relative;
+ box-shadow:0 16px 36px rgba(30,64,175,.16)!important
+}
+.hero:after{
+ content:"";position:absolute;width:170px;height:170px;border-radius:50%;
+ left:-65px;top:-80px;background:rgba(255,255,255,.055);pointer-events:none
+}
+.section-title{font-size:16px!important;font-weight:950!important;margin-bottom:11px!important}
+.quick{gap:8px!important;margin:10px 0 13px!important}
+.quick button{
+ min-height:62px!important;border:1px solid var(--line)!important;border-radius:15px!important;
+ background:#fff!important;box-shadow:0 4px 13px rgba(15,23,42,.045)!important;
+ font-weight:850!important;color:var(--text)!important
+}
+.grid{gap:10px!important}
+.stat,.kpi{
+ border:1px solid var(--line)!important;border-radius:15px!important;
+ box-shadow:none!important;background:linear-gradient(180deg,#fff,#fbfcfe)!important
+}
+.stat .value,.k-value{font-variant-numeric:tabular-nums}
+.input,.select,.textarea{
+ min-height:46px!important;border:1px solid #d7e0eb!important;border-radius:13px!important;
+ background:#fbfdff!important;transition:.15s
+}
+.input:focus,.select:focus,.textarea:focus{
+ border-color:#60a5fa!important;box-shadow:0 0 0 4px rgba(37,99,235,.10)!important;background:#fff!important
+}
+.btn{border-radius:13px!important;font-weight:850!important;min-height:44px!important}
+.btn-primary{box-shadow:0 7px 18px rgba(37,99,235,.16)!important}
+.order{
+ border:1px solid var(--line)!important;border-radius:15px!important;
+ padding:13px!important;background:#fff!important;box-shadow:0 4px 13px rgba(15,23,42,.035)
+}
+.tabs{
+ padding:4px!important;background:#f1f5f9!important;border-radius:13px!important;gap:4px!important
+}
+.tab{border:0!important;border-radius:10px!important;background:transparent!important}
+.tab.active{background:#0f172a!important;color:#fff!important}
+.notice,.info-box,.success-box,.danger-box{
+ border-radius:14px!important
+}
+
+/* One bottom navigation only */
+.bottom-nav{
+ position:fixed!important;left:50%!important;right:auto!important;bottom:8px!important;
+ transform:translateX(-50%)!important;width:min(720px,calc(100% - 16px))!important;
+ z-index:15000!important;height:72px!important;box-sizing:border-box!important;
+ padding:6px!important;display:grid!important;grid-template-columns:1fr 1fr 1.18fr 1fr 1fr!important;
+ gap:4px!important;background:rgba(255,255,255,.97)!important;
+ border:1px solid #dce5ef!important;border-radius:20px!important;
+ box-shadow:0 12px 32px rgba(15,23,42,.15)!important;
+ backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important
+}
+.bottom-nav .nav-item{
+ display:flex!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;
+ gap:2px!important;border:0!important;border-radius:13px!important;
+ background:transparent!important;color:#64748b!important;
+ font-size:10px!important;font-weight:850!important;padding:4px 2px!important
+}
+.bottom-nav .nav-item span:first-child{font-size:19px!important;line-height:1!important}
+.bottom-nav .nav-item.active{background:#2563eb!important;color:#fff!important}
+.bottom-nav .nav-item.nav-add{
+ background:#2563eb!important;color:#fff!important;border:4px solid #fff!important;
+ border-radius:50%!important;width:76px!important;height:76px!important;
+ justify-self:center!important;align-self:start!important;transform:translateY(-13px)!important;
+ box-shadow:0 10px 24px rgba(37,99,235,.28)!important;font-size:10px!important
+}
+.bottom-nav .nav-item.nav-add span:first-child{font-size:27px!important}
+#rahimo-status,.rahimo-status{display:none!important}
+
+/* Side menu */
+#r16Backdrop{display:none;position:fixed;inset:0;z-index:15001;background:rgba(15,23,42,.42);backdrop-filter:blur(2px)}
+#r16Backdrop.show{display:block}
+#r16Sidebar{
+ position:fixed;top:0;right:0;bottom:0;width:min(330px,88vw);z-index:15002;
+ background:#fff;box-shadow:-18px 0 45px rgba(15,23,42,.18);
+ transform:translateX(105%);transition:transform .2s ease;overflow:auto;padding:18px
+}
+#r16Sidebar.show{transform:translateX(0)}
+.r16-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.r16-close{border:0;background:#f1f5f9;border-radius:11px;width:38px;height:38px;font-size:21px}
+.r16-note{background:#f8fafc;color:#64748b;padding:11px;border-radius:13px;font-size:11px;line-height:1.7;margin-bottom:10px}
+.r16-side-btn{
+ width:100%;border:1px solid #edf1f6;background:#f8fafc;color:#0f172a;border-radius:13px;
+ padding:13px 12px;margin:6px 0;text-align:right;font:850 12px inherit
+}
+.modal{z-index:20000!important}
+.toast{z-index:21000!important}
+.fab{z-index:1200!important;bottom:92px!important}
+@media(max-width:520px){
+ .app{padding-left:8px;padding-right:8px}
+ .card{padding:14px!important}
+ .hero{padding:17px!important}
+ .bottom-nav{width:calc(100% - 12px)!important;bottom:6px!important}
+ .bottom-nav .nav-item{font-size:9px!important}
+ .bottom-nav .nav-item.nav-add{width:72px!important;height:72px!important}
+ .bottom-nav .nav-item.nav-add span:first-child{font-size:25px!important}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+
+
+<style id="dashboard-trip-removal">
+.dashboard-trip-hidden{display:none!important}
+</style>
+<style id="rahimo-restaurants-css">
+.restaurant-card{border:1px solid var(--line);border-radius:15px;padding:13px;background:#fff;margin-bottom:9px}
+.restaurant-name{font-weight:950;font-size:15px}
+.restaurant-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px;font-size:11px;color:#475569}
+.restaurant-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.restaurant-actions .btn{flex:1;min-width:95px}
+@media(max-width:520px){.restaurant-meta{grid-template-columns:1fr}}
+</style>
+<style id="rahimo-v18-css">#r18LocationsList .r18loc{padding:12px;border:1px solid #e2e8f0;border-radius:14px;background:#fff;text-align:right;font-weight:800;cursor:pointer}.r18loc small{display:block;color:#64748b;font-weight:500;margin-top:3px}.r18nav{margin-top:8px}</style>
+<style id="rahimo-reference-ui">
+/* Reference-inspired Rahimo UI: clean delivery-driver layout, green action language, compact cards. */
+:root{
+  --bg:#f5f7f6!important;--card:#fff!important;--text:#111827!important;--muted:#6b7280!important;
+  --line:#e5e7eb!important;--primary:#16a34a!important;--primary2:#15803d!important;
+  --success:#16a34a!important;--danger:#dc2626!important;--warning:#d97706!important;--info:#0ea5e9!important;
+  --shadow:0 7px 22px rgba(17,24,39,.07)!important;--shadow-sm:0 3px 12px rgba(17,24,39,.06)!important;--radius:17px!important;
+}
+body{background:#f5f7f6!important;color:#111827!important;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif!important}
+.app{max-width:760px!important;padding-bottom:104px!important}
+.topbar{background:rgba(255,255,255,.96)!important;border-bottom:1px solid #edf0ee!important;box-shadow:0 2px 12px rgba(17,24,39,.04)!important}
+.topbar-inner{min-height:72px!important;display:grid!important;grid-template-columns:42px 1fr auto!important;align-items:center!important;gap:10px!important;padding:8px 12px!important}
+.top-menu-btn{width:42px!important;height:42px!important;min-height:42px!important;padding:0!important;border-radius:12px!important;background:#f3f4f6!important;border:1px solid #e5e7eb!important;font-size:19px!important}
+.top-brand{text-align:center!important;min-width:0!important}.brand{font-size:18px!important;font-weight:950!important;letter-spacing:-.5px!important}.sub{font-size:10px!important;color:#6b7280!important;margin-top:2px!important}
+.driver-chip{border:0!important;background:transparent!important;display:flex!important;align-items:center!important;gap:5px!important;font:850 10px inherit!important;color:#111827!important;padding:0!important;white-space:nowrap!important}
+.driver-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#dcfce7;border:2px solid #bbf7d0;font-size:18px!important}.online-dot{color:#22c55e!important;font-size:10px!important}
+.card{border:1px solid #e8ece9!important;border-radius:17px!important;box-shadow:0 7px 22px rgba(17,24,39,.055)!important;background:#fff!important}
+.hero{background:linear-gradient(135deg,#16a34a 0%,#15803d 100%)!important;color:#fff!important;border:0!important;box-shadow:0 14px 30px rgba(22,163,74,.20)!important}
+.hero .muted,.hero .small{color:rgba(255,255,255,.78)!important}.hero .money{font-weight:950!important;letter-spacing:-.5px!important}
+.section-title{font-size:15px!important;font-weight:950!important;margin-bottom:11px!important}
+.quick{grid-template-columns:repeat(4,1fr)!important;gap:8px!important;margin:11px 0!important}.quick button{min-height:66px!important;border:1px solid #e5e7eb!important;border-radius:16px!important;background:#fff!important;color:#111827!important;font-weight:900!important;box-shadow:0 4px 14px rgba(17,24,39,.05)!important}.quick button:first-child{color:#15803d!important}
+.kpi,.stat{border:1px solid #e5e7eb!important;border-radius:15px!important;background:#fff!important;box-shadow:none!important}.kpi.green{background:#f0fdf4!important;border-color:#bbf7d0!important}.kpi.blue{background:#eff6ff!important;border-color:#bfdbfe!important}.kpi.amber{background:#fffbeb!important;border-color:#fde68a!important}
+.k-label{font-size:10px!important}.k-value{font-size:21px!important;font-weight:950!important}
+.input,.select,.textarea{background:#fff!important;border:1px solid #dfe5e1!important;border-radius:12px!important;min-height:46px!important}.input:focus,.select:focus,.textarea:focus{border-color:#4ade80!important;box-shadow:0 0 0 4px rgba(34,197,94,.10)!important}
+.btn{border-radius:12px!important;min-height:43px!important;font-weight:900!important}.btn-primary,.btn-success{background:#16a34a!important;border-color:#16a34a!important;color:#fff!important;box-shadow:0 7px 17px rgba(22,163,74,.17)!important}.btn-primary:hover,.btn-success:hover{background:#15803d!important}.btn-light{background:#f8faf9!important;border-color:#e2e8e5!important;color:#111827!important}.btn-danger{box-shadow:none!important}
+.badge.success{background:#dcfce7!important;color:#15803d!important}.badge.info{background:#e0f2fe!important;color:#0369a1!important}.badge.warn{background:#fef3c7!important;color:#92400e!important}
+.tabs{background:#f3f4f6!important;border-radius:12px!important;padding:4px!important}.tab{font-weight:850!important;border-radius:9px!important}.tab.active{background:#16a34a!important;color:#fff!important;box-shadow:none!important}
+.order,.restaurant-card{border:1px solid #e5e7eb!important;border-radius:15px!important;background:#fff!important;box-shadow:0 4px 13px rgba(17,24,39,.045)!important}
+.info-box{background:#f0fdf4!important;border-color:#bbf7d0!important;color:#166534!important}
+.bottom-nav{background:rgba(255,255,255,.98)!important;border:1px solid #e5e7eb!important;border-radius:21px!important;box-shadow:0 12px 30px rgba(17,24,39,.14)!important;height:72px!important}
+.bottom-nav .nav-item{color:#6b7280!important}.bottom-nav .nav-item.active{background:#dcfce7!important;color:#15803d!important}.bottom-nav .nav-item.nav-add{background:#16a34a!important;color:#fff!important;box-shadow:0 10px 24px rgba(22,163,74,.28)!important;border-color:#fff!important}
+#r16Sidebar{border-left:1px solid #e5e7eb!important}.r16-side-btn{background:#f8faf9!important;border-color:#e5e7eb!important}.r16-note{background:#f0fdf4!important;color:#166534!important}
+#r18TripPanel{overflow:hidden!important}.step.current{border-color:#bbf7d0!important;background:#f0fdf4!important}.step.current .step-icon{background:#dcfce7!important}
+#r18TripStatus{font-weight:900!important}.rahimo-status{display:none!important}
+@media(max-width:520px){.app{padding-left:8px!important;padding-right:8px!important}.topbar-inner{grid-template-columns:40px 1fr auto!important}.driver-chip span:nth-child(2){display:none!important}.quick{grid-template-columns:repeat(2,1fr)!important}.quick button{min-height:62px!important}.card{padding:14px!important}.hero{padding:17px!important}.bottom-nav{width:calc(100% - 12px)!important;bottom:6px!important}}
+</style>
+<style id="rahimo-trip-redesign">
+:root{--r18-green:#079447;--r18-green-dark:#05763a;--r18-green-soft:#eaf8ef;--r18-bg:#f6f8f7}
+#trip{padding:8px 10px 24px;background:var(--r18-bg)}
+#trip>.card{display:none}
+.r18-journey{max-width:760px;margin:auto;padding-bottom:96px}
+.r18-progress{display:flex;align-items:flex-start;gap:0;padding:10px 2px 16px;overflow:hidden}
+.r18-progress-item{flex:0 0 auto;min-width:58px;text-align:center;color:#94a3b8;font-size:10px;font-weight:800}
+.r18-progress-dot{width:34px;height:34px;margin:auto;border-radius:50%;display:grid;place-items:center;background:#e9edf0;color:#64748b;font-size:15px;font-weight:950;border:2px solid #e3e8e5}
+.r18-progress-item.active .r18-progress-dot,.r18-progress-item.done .r18-progress-dot{background:var(--r18-green);color:#fff;border-color:var(--r18-green)}
+.r18-progress-item.active,.r18-progress-item.done{color:var(--r18-green-dark)}
+.r18-progress-label{margin-top:5px;white-space:nowrap}
+.r18-progress-line{height:2px;flex:1;background:#dfe5e2;margin-top:16px;min-width:18px}
+.r18-progress-line.done{background:var(--r18-green)}
+.r18-card{background:#fff;border:1px solid #e4e9e6;border-radius:18px;padding:15px;margin-bottom:12px;box-shadow:0 5px 18px rgba(15,23,42,.055)}
+.r18-order-head,.r18-map-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.r18-order-head strong,.r18-map-top strong{display:block;font-size:18px;margin-top:3px}
+.r18-muted{display:block;color:#64748b;font-size:11px}
+.r18-mini-badge{background:#eaf8ef;color:var(--r18-green-dark);border-radius:9px;padding:7px 10px;font-size:11px;font-weight:900}
+.r18-restaurant{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #edf0ef;margin-bottom:12px}
+.r18-store-icon{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:#fff1dc;font-size:25px}
+.r18-restaurant h2{margin:0;font-size:18px}.r18-restaurant p{margin:3px 0 0;color:#64748b;font-size:11px;flex:1}
+.r18-card-title{font-weight:900;font-size:14px;margin:4px 0 10px}
+.r18-summary-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #eef1ef;font-size:13px}.r18-summary-row:last-child{border-bottom:0}.r18-summary-row span{color:#475569}.r18-summary-row b{font-weight:950}
+.r18-total{margin-top:12px;background:var(--r18-green-soft);border:1px solid #cdeed8;border-radius:13px;padding:12px;display:flex;justify-content:space-between;align-items:center;color:var(--r18-green-dark);font-weight:900}.r18-total b{font-size:19px}
+.r18-location{display:flex;gap:10px;align-items:flex-start;background:#fafcfb;border:1px solid #edf1ee;border-radius:13px;padding:12px;margin-bottom:10px}.r18-location b{display:block;font-size:13px}.r18-location span{display:block;color:#64748b;font-size:11px;margin-top:4px}
+.r18-btn{border:0;border-radius:13px;min-height:46px;padding:11px 14px;font-weight:900;font-family:inherit;cursor:pointer;transition:.15s}.r18-btn-block{width:100%}.r18-btn-primary{background:var(--r18-green);color:#fff;box-shadow:0 8px 20px rgba(7,148,71,.18)}.r18-btn-primary:hover{background:var(--r18-green-dark)}.r18-btn-outline{background:#fff;color:var(--r18-green-dark);border:1px solid #b9dec6}.r18-btn-light{background:#f2f5f3;color:#334155}.r18-btn-danger{background:#fff1f2;color:#b91c1c}.r18-main-action{font-size:15px;min-height:54px;margin:2px 0 10px}
+.r18-map-card{padding:0;overflow:hidden}.r18-map-top{padding:14px 15px}.r18-icon-btn{width:42px;height:42px;border-radius:50%;border:1px solid #dce6df;background:#fff;color:var(--r18-green);font-size:18px;font-weight:900}.r18-map-wrap{position:relative;background:#e8eef0}.r18-map-wrap iframe{display:block;width:100%;height:350px;border:0}.r18-map-overlay{position:absolute;right:12px;left:12px;top:12px;display:flex;justify-content:space-between;pointer-events:none}.r18-map-overlay span{background:rgba(255,255,255,.94);padding:8px 10px;border-radius:999px;font-size:11px;font-weight:900;box-shadow:0 4px 12px rgba(15,23,42,.08)}
+.r18-metrics{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #edf1ef}.r18-metrics>div{text-align:center;padding:11px 4px;border-left:1px solid #edf1ef}.r18-metrics>div:last-child{border-left:0}.r18-metrics span,.r18-metrics small{display:block;color:#64748b;font-size:10px}.r18-metrics b{display:block;font-size:18px;margin:3px 0;font-variant-numeric:tabular-nums}
+.r18-customer-card{display:flex;align-items:center;gap:11px}.r18-avatar{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:#eaf8ef;font-size:23px}.r18-customer-info{flex:1}.r18-customer-info span{display:block;color:#64748b;font-size:10px}.r18-customer-info strong{display:block;font-size:15px}.r18-customer-info small{display:block;color:#64748b;font-size:11px;margin-top:2px}.r18-customer-info b{display:block;color:var(--r18-green-dark);font-size:13px;margin-top:4px}.r18-actions-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.r18-payment-card{text-align:center}.r18-required-amount{font-size:34px;font-weight:950;color:var(--r18-green-dark);margin:2px 0 13px}.r18-exact-btn{font-size:15px;min-height:58px}.r18-exact-btn small{display:block;font-size:10px;font-weight:700;margin-top:2px;opacity:.9}.r18-or{display:flex;align-items:center;gap:10px;color:#94a3b8;font-size:11px;margin:15px 0}.r18-or:before,.r18-or:after{content:"";height:1px;background:#e6ebe8;flex:1}.r18-input-wrap{position:relative}.r18-input-wrap input{padding-left:48px;text-align:right}.r18-input-wrap span{position:absolute;left:14px;top:14px;color:#64748b;font-size:12px;font-weight:800}.r18-diff{min-height:8px;margin:9px 0;text-align:right}
+.r18-success-hero{text-align:center;padding:22px 10px 18px}.r18-success-icon{width:88px;height:88px;margin:auto;border-radius:50%;display:grid;place-items:center;background:var(--r18-green);color:#fff;font-size:55px;font-weight:700;box-shadow:0 14px 30px rgba(7,148,71,.18)}.r18-success-hero h2{margin:14px 0 5px;color:var(--r18-green-dark);font-size:24px}.r18-success-hero p{margin:0;color:#64748b;font-size:12px}.r18-green-text{color:var(--r18-green-dark)!important}.r18-bottom-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.r18-empty{text-align:center;padding:34px 18px}.r18-empty-icon{font-size:44px}.r18-empty h3{margin:8px 0 5px}.r18-empty p{color:#64748b;font-size:12px;margin:0 0 14px}
+@media(max-width:520px){#trip{padding-left:7px;padding-right:7px}.r18-progress-item{min-width:54px}.r18-progress-dot{width:32px;height:32px}.r18-map-wrap iframe{height:320px}.r18-bottom-actions{grid-template-columns:1fr}.r18-card{padding:14px}}
+</style>
+
+<style id="rahimo-theme-styles">
+body.dark-theme{--bg:#0b1220;--card:#111827;--text:#f8fafc;--muted:#94a3b8;--line:#263244;--primary:#16a34a;--primary2:#15803d;--success:#22c55e;--danger:#ef4444;--warning:#f59e0b;--info:#22d3ee;background:#0b1220;color:var(--text)}
+body.dark-theme .topbar{background:rgba(11,18,32,.88)!important;border-bottom-color:#263244}
+body.dark-theme .bottom-nav{background:rgba(17,24,39,.96);border-top-color:#263244}
+body.dark-theme .card,body.dark-theme .order,body.dark-theme .stat,body.dark-theme .kpi,body.dark-theme .quick button,body.dark-theme .tab,body.dark-theme .ai-card{background:var(--card)!important;color:var(--text);border-color:var(--line)!important}
+body.dark-theme .input,body.dark-theme .select,body.dark-theme .textarea{background:#0f172a;color:#f8fafc;border-color:#334155}
+body.dark-theme .btn-light{background:#1e293b;color:#e2e8f0}
+body.dark-theme .notice,body.dark-theme .ai-output{background:#0f172a;border-color:#263244;color:#e2e8f0}
+body.dark-theme .step.current{background:#10271b;border-color:#166534}
+body.dark-theme .step.done,.dark-theme .success-box{background:#0f2a1a;border-color:#166534}
+body.dark-theme .danger-box{background:#2a1115;border-color:#7f1d1d}
+body.dark-theme .info-box{background:#08212a;border-color:#155e75}
+body.dark-theme .divider{background:#263244}
+body.dark-theme .modal{background:rgba(0,0,0,.72)}
+body.dark-theme .sheet{background:#111827;color:#f8fafc}
+body.dark-theme .r18-card,body.dark-theme .restaurant-card{background:#111827!important;color:#f8fafc}
+body.dark-theme .r18-journey{color:#f8fafc}
+.theme-choice{display:flex;gap:8px;flex-wrap:wrap}
+.theme-choice button{flex:1;min-width:92px}
+.more-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+.more-item{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:16px;padding:14px;text-align:right;font-weight:850;min-height:62px}
+.more-item small{display:block;color:var(--muted);font-weight:600;margin-top:4px}
+.theme-card{border:1px solid var(--line);border-radius:16px;padding:14px;background:var(--card)}
+@media(max-width:420px){.more-grid{grid-template-columns:1fr}}
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+<div class="app">
+<header class="topbar"><div class="topbar-inner"><button class="btn btn-light top-menu-btn" type="button" onclick="document.getElementById('r16More')?.click()">☰</button><div class="top-brand"><div class="brand">🛵 رحيمو</div><div class="sub" id="currentDate">—</div></div><button class="driver-chip" onclick="showPage('profile')"><span class="driver-avatar">👤</span><span id="driverNameTop">السائق</span><span class="online-dot">●</span></button></div></header>
+
+
+<div class="rahimo-status" aria-hidden="true">
+  <span>●</span><span>النظام يعمل محليًا</span>
+</div>
+<style>
+.rahimo-status{
+ position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:45;
+ display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;
+ background:rgba(15,23,42,.88);color:#fff;font-size:10px;font-weight:800;
+ box-shadow:0 8px 24px rgba(15,23,42,.18);pointer-events:none;
+}
+.rahimo-status span:first-child{color:#34d399;font-size:9px}
+</style>
+<main>
+<section id="dashboard" class="page active">
+  <div class="card hero"><div class="between"><div><div class="muted small">مرحبًا بك</div>
+
+
+<h1 style="margin:4px 0 0;font-size:25px" id="driverNameHero">السائق</h1></div><div style="font-size:38px">🛵</div></div><div class="divider" style="background:rgba(255,255,255,.16)"></div><div class="grid g2"><div><div class="muted small">النقد الفعلي</div><div class="money" style="font-size:25px" id="cashBalance">0 دج</div></div></div></div>
+  <div class="quick"><button onclick="showPage('addOrder')">➕ طلب جديد</button><button onclick="showPage('orders')">📋 الطلبات</button><button onclick="showPage('earnings')">📊 الأرباح</button><button onclick="showPage('expenses')">💸 المصاريف والأرباح</button></div>
+  <div class="card" id="r18QuickLocations"><div class="between"><h2 class="section-title">⚡ الوصول السريع</h2><div class="actions"><button class="btn btn-light" onclick="r18AddLocation()">＋ إضافة</button><button class="btn btn-light" onclick="r18SaveCurrentLocation()">📍 موقعي</button></div></div><div class="small muted" style="margin-bottom:10px">المطاعم والمواقع المتكررة</div><div id="r18LocationsList" class="grid g2"></div></div>
+  <div class="card"><h2 class="section-title">📊 ملخص اليوم</h2><div class="grid g3"><div class="stat"><div class="label">الطلبات</div><div class="value" id="todayOrders">0</div></div><div class="stat"><div class="label">المستلم</div><div class="value" id="todayReceived">0</div></div><div class="stat"><div class="label">أجور التوصيل</div><div class="value" id="todayFees">0</div></div></div></div>
+  <div class="card"><h2 class="section-title">💼 الوضع المالي الآن</h2><div class="kpi-grid"><div class="kpi green"><div class="k-label">💵 النقد الفعلي</div><div class="k-value" id="cashKpi">0 دج</div></div><div class="kpi amber"><div class="k-label">🏪 ديون المطاعم</div><div class="k-value" id="debtKpi">0 دج</div></div><div class="kpi blue"><div class="k-label">💎 ربح اليوم</div><div class="k-value" id="profitKpi">0 دج</div></div><div class="kpi"><div class="k-label">📦 متوسط ربح الطلب</div><div class="k-value" id="avgProfitKpi">0 دج</div></div></div></div>
+  <div class="card dashboard-trip-hidden"><div class="between"><h2 class="section-title">🛵 الرحلات النشطة</h2><span class="badge info" id="activeCount">0</span></div><div id="activeOrders"></div></div>
+  <div class="card"><div class="between"><h2 class="section-title">🏪 مستحقات المطاعم</h2><span class="badge warn" id="debtCount">0</span></div><div id="dashboardDebts"></div></div>
+</section>
+
+<section id="addOrder" class="page">
+  <div class="card"><h2 class="section-title">➕ إضافة طلبية جديدة</h2>
+    <div class="field"><label class="label">رقم هاتف العميل *</label><div class="row"><input id="customerPhone" class="input" type="tel" inputmode="tel" placeholder="05XXXXXXXX" oninput="onPhoneInput()"><button class="btn btn-light" onclick="callPhoneById('customerPhone')">📞</button></div><div id="customerHint" class="small muted" style="margin-top:6px"></div></div>
+    <div class="field">
+      <label class="label">🏪 المطعم</label>
+      <div class="row">
+        <select id="storeName" class="select" onchange="onRestaurantSelected()"></select>
+        <button class="btn btn-light" type="button" onclick="openRestaurantModal()">＋</button>
+      </div>
+      <div id="restaurantHint" class="small muted" style="margin-top:6px"></div>
+    </div>
+    <div class="field"><label class="label">📍 موقع التسليم</label><input id="deliveryLocationText" class="input" placeholder="حي، شارع، معلم..."><div class="row" style="margin-top:7px"><button class="btn btn-light" onclick="captureGPS('new')">📍 استخدام GPS</button><button class="btn btn-light" onclick="openTypedLocation()">🗺️ فتح على الخريطة</button></div></div>
+    <div class="field"><label class="label">🔗 رابط الموقع (اختياري)</label><input id="locationLink" class="input" type="url" placeholder="https://maps.app.goo.gl/..."><input id="deliveryLat" type="hidden"><input id="deliveryLng" type="hidden"></div>
+    <div class="grid g2"><div class="field"><label class="label">ثمن الطلب (دج) *</label><input id="orderValue" class="input" type="number" min="1" inputmode="numeric" oninput="updateExpected()"></div><div class="field"><label class="label">أجرة التوصيل (دج) *</label><input id="deliveryFee" class="input" type="number" min="1" inputmode="numeric" oninput="updateExpected()"></div></div>
+    <div class="field"><label class="label">💳 حالة الدفع للمطعم</label><select id="paymentStatus" class="select"><option value="paid">✅ دفعت للمطعم الآن</option><option value="unpaid">⏳ لم أدفع — دين للمطعم</option></select></div>
+    <div class="info-box"><div class="between"><span>💰 المطلوب من العميل</span><strong id="expectedTotal">0 دج</strong></div><div class="small muted" style="margin-top:5px">ثمن الطلب + أجرة التوصيل</div></div>
+    <button class="btn btn-primary btn-block" style="margin-top:13px" onclick="createOrder()">💾 حفظ وبدء الرحلة</button>
+  </div>
+</section>
+
+<section id="trip" class="page"><div id="tripContent"></div></section>
+
+<section id="orders" class="page">
+  <div class="card"><div class="between"><h2 class="section-title">📋 سجل الطلبات</h2><span class="badge" id="ordersCount">0</span></div><input id="orderSearch" class="input" placeholder="🔎 بحث بالرقم، الهاتف أو المتجر" oninput="renderOrders()" style="margin-bottom:10px"><div class="tabs" style="margin-bottom:12px"><button class="tab active" data-filter="all" onclick="setOrderFilter('all',this)">الكل</button><button class="tab" data-filter="active" onclick="setOrderFilter('active',this)">جارية</button><button class="tab" data-filter="completed" onclick="setOrderFilter('completed',this)">مكتملة</button><button class="tab" data-filter="cancelled" onclick="setOrderFilter('cancelled',this)">ملغاة</button><button class="tab" data-filter="debt" onclick="setOrderFilter('debt',this)">ديون</button></div><div id="ordersList"></div></div>
+</section>
+
+<section id="restaurants" class="page">
+  <div class="card">
+    <div class="between">
+      <div>
+        <h2 class="section-title">🏪 قاعدة بيانات المطاعم</h2>
+        <div class="small muted">احفظ بيانات المطاعم ومواقعها واستعملها مباشرة عند إنشاء الطلبات.</div>
+      </div>
+      <button class="btn btn-primary" onclick="openRestaurantModal()">➕ إضافة مطعم</button>
+    </div>
+    <div class="kpi-grid" style="margin:12px 0">
+      <div class="kpi blue"><div class="k-label">🏪 المطاعم</div><div class="k-value" id="restaurantsCount">0</div></div>
+      <div class="kpi green"><div class="k-label">📦 الطلبات</div><div class="k-value" id="restaurantsOrdersCount">0</div></div>
+      <div class="kpi amber"><div class="k-label">💳 الديون</div><div class="k-value" id="restaurantsDebtTotal">0 دج</div></div>
+      <div class="kpi"><div class="k-label">💰 قيمة الطلبات</div><div class="k-value" id="restaurantsOrderValue">0 دج</div></div>
+    </div>
+    <input id="restaurantSearch" class="input" placeholder="🔎 بحث باسم المطعم أو الهاتف أو العنوان" oninput="renderRestaurants()" style="margin-bottom:10px">
+    <div id="restaurantsList"></div>
+  </div>
+</section>
+
+<section id="customers" class="page"><div class="card"><div class="between"><h2 class="section-title">👥 العملاء</h2><button class="btn btn-primary" onclick="openCustomerModal()">➕ إضافة</button></div><input id="customerSearch" class="input" placeholder="🔎 بحث برقم الهاتف" oninput="renderCustomers()" style="margin-bottom:10px"><div id="customersList"></div></div></section>
+
+<section id="expenses" class="page">
+<div class="card"><h2 class="section-title">💸 المصاريف</h2>
+<div class="field"><label class="label">المبلغ (دج) *</label><input id="expenseAmount" class="input" type="number" min="1" inputmode="numeric"></div>
+<div class="field"><label class="label">البيان</label><input id="expenseNote" class="input" placeholder="بنزين، صيانة، أكل... "></div>
+<button class="btn btn-danger btn-block" onclick="addExpense()">💾 تسجيل المصروف</button>
+</div>
+<div class="card"><h2 class="section-title">📜 مصاريف اليوم</h2><div id="expensesList"></div></div>
+<div class="card"><h2 class="section-title">💎 أرباح محققة خارج الطلبيات</h2>
+<div class="field"><label class="label">المبلغ (دج) *</label><input id="otherProfitAmount" class="input" type="number" min="1" inputmode="numeric" placeholder="مثال: 500"></div>
+<div class="field"><label class="label">البيان</label><input id="otherProfitNote" class="input" placeholder="عمولة، خدمة، ربح إضافي..."></div>
+<button class="btn btn-success btn-block" onclick="addOtherProfit()">💾 تسجيل الربح</button>
+<div id="otherProfitsList" style="margin-top:12px"></div>
+</div>
+</section>
+
+<section id="earnings" class="page"><div class="card hero"><div class="small muted">صافي الربح</div><div id="netProfit" style="font-size:34px;font-weight:950;margin:5px 0">0 دج</div><div class="small muted">أجور التوصيل + الزيادات − النقص − المصاريف</div></div><div class="card"><h2 class="section-title">📊 الإحصائيات الشاملة</h2><div class="tabs" style="margin-bottom:12px"><button class="tab active" onclick="setPeriod('today',this)">اليوم</button><button class="tab" onclick="setPeriod('week',this)">الأسبوع</button><button class="tab" onclick="setPeriod('month',this)">الشهر</button><button class="tab" onclick="setPeriod('all',this)">الكل</button></div><div id="periodStats"></div></div><div class="card" id="weeklyProfitChartCard">
+<h2 class="section-title">📈 صافي الأرباح خلال الأسبوع</h2>
+<div class="small muted" style="margin-bottom:10px">صافي الربح لكل يوم من الإثنين إلى الأحد</div>
+<div style="position:relative;width:100%;height:240px"><canvas id="weeklyProfitChart" aria-label="صافي أرباح كل يوم"></canvas></div>
+</div><div class="card"><h2 class="section-title">📦 تفاصيل الطلبات</h2><div id="orderStats"></div></div><div class="card"><h2 class="section-title">💰 التفاصيل المالية</h2><div id="financialStats"></div></div><div class="card"><h2 class="section-title">📈 مؤشرات الأداء</h2><div id="performanceStats"></div></div><div class="card"><h2 class="section-title">⏱️ الأداء الزمني</h2><div id="durationStats"></div></div><div class="card"><h2 class="section-title">🏪 الديون</h2><div id="earningsDebts"></div></div><div class="card"><h2 class="section-title">🏆 أكثر المتاجر طلبًا</h2><div id="storeStats"></div></div></section>
+
+<section id="ai" class="page">
+  <div class="card hero"><div class="between"><div><div class="small muted">مركز الذكاء الاصطناعي</div><h2 style="margin:5px 0">🤖 رحيمو AI</h2><div class="small muted">تحليل ذكي للأرباح، الأداء، العملاء والرحلات</div></div><div style="font-size:38px">🧠</div></div></div>
+  <div class="card"><div class="between"><h2 class="section-title">⚡ أدوات ذكية</h2><span class="ai-chip">AI</span></div>
+    <div class="ai-grid">
+      <button class="ai-card" onclick="runAI('daily')"><h3>📊 تحليل اليوم</h3><p>تلخيص الأداء المالي والتشغيلي واكتشاف أهم الملاحظات.</p></button>
+      <button class="ai-card" onclick="runAI('profit')"><h3>💰 خبير الأرباح</h3><p>تحليل مصادر الربح والمصاريف والفرص لتحسين الهامش.</p></button>
+      <button class="ai-card" onclick="runAI('operations')"><h3>🛵 تحسين التشغيل</h3><p>تحليل أوقات الرحلات والإلغاء والتحصيل واقتراح تحسينات.</p></button>
+      <button class="ai-card" onclick="runAI('customers')"><h3>👥 تحليل العملاء</h3><p>اكتشاف العملاء الأكثر طلبًا والفرص لإعادة الطلب.</p></button>
+      <button class="ai-card" onclick="runAI('stores')"><h3>🏪 تحليل المطاعم</h3><p>معرفة أكثر المتاجر نشاطًا وتأثيرها على العمل.</p></button>
+      <button class="ai-card" onclick="runAI('forecast')"><h3>🔮 توقع ضغط العمل</h3><p>تقدير ضغط الطلبات اعتمادًا على سجل الطلبات الحالي.</p></button>
+    </div>
+  </div>
+  <div class="card"><h2 class="section-title">✍️ مساعد الرسائل</h2><div class="field"><label class="label">نوع الرسالة</label><select id="aiMessageType" class="select"><option value="delay">تأخير في التوصيل</option><option value="arrival">وصلت للموقع</option><option value="confirmation">تأكيد الطلب</option><option value="thanks">شكر العميل</option><option value="custom">رسالة مخصصة</option></select></div><div class="field"><label class="label">تفاصيل إضافية</label><textarea id="aiMessageContext" class="textarea" placeholder="مثال: يوجد ازدحام 15 دقيقة"></textarea></div><button class="btn btn-primary btn-block" onclick="runAI('message')">✨ إنشاء رسالة</button></div>
+  <div class="card"><div class="between"><h2 class="section-title">💬 اسأل رحيمو AI</h2><span id="aiStatus" class="ai-status">يعمل بالتحليل المحلي أو مزود AI اختياري</span></div><div class="field"><textarea id="aiQuestion" class="textarea" placeholder="مثال: كيف أرفع صافي ربحي هذا الأسبوع؟"></textarea></div><button class="btn btn-dark btn-block" onclick="runAI('question')">🧠 تحليل وإجابة</button></div>
+  <div class="card"><div class="between"><h2 class="section-title">📝 نتيجة التحليل</h2><button class="btn btn-light" onclick="copyAIResult()">📋 نسخ</button></div><div id="aiOutput" class="ai-output">اختر أداة من الأعلى لبدء التحليل.</div></div>
+  <div class="card"><h2 class="section-title">⚙️ اتصال مزود الذكاء الاصطناعي</h2><div class="notice">يمكنك ربط التطبيق بأي API متوافق مع واجهة Chat Completions. إن لم تضف مفتاحًا، ستعمل الأدوات الأساسية بالتحليل المحلي دون إرسال بياناتك إلى الإنترنت.</div><div class="field" style="margin-top:12px"><label class="label">عنوان API (اختياري)</label><input id="aiEndpoint" class="input" placeholder="https://.../v1/chat/completions"></div><div class="field"><label class="label">API Key (اختياري)</label><input id="aiKey" class="input" type="password" placeholder="ضع المفتاح على جهازك فقط"></div><div class="field"><label class="label">اسم النموذج (اختياري)</label><input id="aiModel" class="input" placeholder="اسم النموذج"></div><div class="actions"><button class="btn btn-primary" onclick="saveAISettings()">💾 حفظ الاتصال</button><button class="btn btn-light" onclick="clearAISettings()">🗑️ حذف المفتاح</button></div><div class="small muted">تنبيه: لا تضع مفتاحًا سريًا داخل نسخة تنشرها للعامة؛ واجهة الإنتاج الأفضل تستخدم خادمًا وسيطًا آمنًا.</div></div>
+</section>
+<section id="profile" class="page"><div class="card hero"><div class="small muted">حساب السائق</div><h2 id="driverNameDisplay" style="margin:5px 0">السائق</h2><div class="small muted">رحيمو — نظام احترافي لإدارة الرحلات والحسابات</div></div><div class="card"><h2 class="section-title">⚙️ الإعدادات</h2><div class="field"><label class="label">اسم السائق</label><input id="driverNameInput" class="input"></div><button class="btn btn-primary btn-block" onclick="saveDriverName()">💾 حفظ الاسم</button><div class="divider"></div><div class="theme-card" style="margin-bottom:12px"><div class="between"><div><strong>📲 تثبيت رحيمو كتطبيق</strong><div class="small muted">أضف رحيمو إلى شاشة الهاتف ليعمل مثل تطبيق مستقل.</div></div><span class="badge">PWA</span></div><button id="pwaInstallBtn" class="btn btn-primary btn-block" style="margin-top:10px" onclick="installRahimoApp()">📲 تثبيت التطبيق</button><div id="pwaInstallHint" class="small muted" style="margin-top:8px">إذا لم يظهر التثبيت، افتح التطبيق من Chrome أو Safari عبر HTTPS.</div></div><div class="theme-card"><div class="between"><div><strong>🎨 سمة التطبيق</strong><div class="small muted">اختر مظهر رحيمو المناسب لك</div></div><span id="themeLabel" class="badge">فاتح</span></div><div class="theme-choice" style="margin-top:10px"><button class="btn btn-light" onclick="setAppTheme('light')">☀️ فاتح</button><button class="btn btn-light" onclick="setAppTheme('dark')">🌙 داكن</button><button class="btn btn-light" onclick="setAppTheme('system')">📱 تلقائي</button></div></div><div class="divider"></div><div class="theme-card" id="cloudSyncCard"><div class="between"><div><strong>☁️ مزامنة قاعدة البيانات</strong><div class="small muted">الطلبات + العملاء + المطاعم + المصاريف + الأرباح تتزامن بين أجهزتك.</div></div><span id="cloudSyncBadge" class="badge">غير متصل</span></div><div id="cloudSyncStatus" class="small muted" style="margin-top:8px">أدخل إعدادات Firebase مرة واحدة ثم اضغط اتصال.</div><div class="actions"><button class="btn btn-primary" onclick="openFirebaseConfig()">⚙️ إعداد Firebase</button><button class="btn btn-success" onclick="syncNow()">🔄 مزامنة الآن</button></div></div><div class="divider"></div><div class="grid g2"><button class="btn btn-light" onclick="exportBackup()">⬇️ نسخ احتياطي</button><button class="btn btn-light" onclick="document.getElementById('backupFile').click()">⬆️ استعادة</button></div><input id="backupFile" type="file" accept="application/json" class="hide" onchange="importBackup(event)"><div class="divider"></div><button class="btn btn-warning btn-block" onclick="resetTodayCash()">🔄 مطابقة النقد الفعلي</button><button class="btn btn-dark btn-block" style="margin-top:8px" onclick="showFinancialReport()">🧾 تقرير نهاية اليوم</button></div><div class="card danger-box"><strong>⚠️ منطقة خطرة</strong><p class="small">مسح البيانات نهائي ولا يمكن التراجع عنه. استخدم النسخ الاحتياطي أولًا.</p><button class="btn btn-danger btn-block" onclick="clearAllData()">🗑️ مسح كل البيانات</button></div></section>
+</main>
+
+<nav class="bottom-nav" aria-label="التنقل الرئيسي">
+<button class="nav-item active" data-page="dashboard" onclick="showPage('dashboard',this)"><span>🏠</span><span>الرئيسية</span></button>
+<button class="nav-item" data-page="orders" onclick="showPage('orders',this)"><span>📋</span><span>الطلبات</span></button>
+<button class="nav-item nav-add" data-page="addOrder" onclick="showPage('addOrder',this)"><span>＋</span><span>إضافة طلبية</span></button>
+<button class="nav-item" data-page="earnings" onclick="showPage('earnings',this)"><span>💰</span><span>الأرباح</span></button>
+<button class="nav-item" id="r16More" type="button" onclick="openMoreMenu()"><span>☰</span><span>المزيد</span></button>
+</nav>
+</div>
+
+<div id="toast" class="toast"></div>
+<div id="modal" class="modal"><div class="sheet" id="modalSheet"></div></div>
+
+<script>
+'use strict';
+const KEY='rahimoV3State', LEGACY_KEY='rahimoState';
+let timer=null, orderFilter='all', period='today', busyAction=false;
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('ar-DZ').format(Math.round(Number(n)||0))+' دج';
+const num=n=>Math.round(Number(n)||0);
+const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const uid=p=>p+'-'+Date.now()+'-'+Math.random().toString(36).slice(2,7);
+const nowISO=()=>new Date().toISOString();
+const todayKey=d=>new Date(d).toDateString();
+let state={version:3,driver:{name:'السائق'},orders:[],customers:[],restaurants:[],expenses:[],otherProfits:[],openingCash:0,ledger:[],currentTripId:null,lastCompletedTripId:null};
+
+function toast(msg){const t=$('toast');if(!t)return;t.textContent=msg;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2400)}
+function persist(){try{state.version=3;localStorage.setItem(KEY,JSON.stringify(state));window.dispatchEvent(new Event('rahimo-state-changed'));if(typeof window.r18CloudSchedule==='function')window.r18CloudSchedule()}catch(e){toast('⚠️ تعذر حفظ البيانات')}}
+function normalizeStep(d,completed=false){d=d||{};return {completed:!!d.completed||completed,startTime:d.startTime||null,endTime:d.endTime||null,duration:num(d.duration)}}
+function normalizeOrder(o){const x={...o};x.id=x.id||uid('ORD');x.phone=String(x.phone||'');x.store=x.store||'غير محدد';x.locationText=x.locationText||'';x.locationLink=x.locationLink||'';x.deliveryLat=x.deliveryLat??null;x.deliveryLng=x.deliveryLng??null;x.orderValue=num(x.orderValue);x.fee=num(x.fee);x.status=x.status||'in-progress';x.paymentStatus=x.paymentStatus||'paid';x.paymentPaidAt=x.paymentPaidAt||null;x.paymentReceived=!!x.paymentReceived;x.amountReceived=x.amountReceived==null?null:num(x.amountReceived);x.difference=num(x.difference);x.createdAt=x.createdAt||nowISO();x.completedAt=x.completedAt||null;x.cancelledAt=x.cancelledAt||null;x.currentStep=num(x.currentStep)||1;x.steps={1:normalizeStep(x.steps?.[1],x.currentStep>1||x.status==='completed'),2:normalizeStep(x.steps?.[2],x.currentStep>2||x.status==='completed'),3:normalizeStep(x.steps?.[3],x.status==='completed')};return x}
+function normalizeRestaurant(r){r=r||{};return {id:r.id||uid('REST'),name:String(r.name||'').trim(),phone:cleanPhone(r.phone||''),address:String(r.address||''),locationLink:String(r.locationLink||''),lat:r.lat??null,lng:r.lng??null,notes:String(r.notes||''),active:r.active!==false,createdAt:r.createdAt||nowISO()}}
+function normalizeState(){state.restaurants=(state.restaurants||[]).map(normalizeRestaurant).filter(r=>r.name);const seen={};state.restaurants.forEach(r=>seen[r.name.toLowerCase()]=true);(state.orders||[]).forEach(o=>{const n=String(o.store||'').trim();if(n&&n!=='غير محدد'&&!seen[n.toLowerCase()]){state.restaurants.push(normalizeRestaurant({name:n}));seen[n.toLowerCase()]=true}});state.otherProfits=(state.otherProfits||[]).map(x=>({...x,id:x.id||uid('PROFIT'),amount:num(x.amount),note:x.note||'ربح محقق',date:x.date||nowISO()})).filter(x=>x.amount>0);state.orders=(state.orders||[]).map(normalizeOrder);state.customers=(state.customers||[]).map(c=>({...c,id:c.id||uid('CUST'),phone:cleanPhone(c.phone||''),location:c.location||'',locationLink:c.locationLink||'',lat:c.lat??null,lng:c.lng??null})).filter(c=>c.phone);state.expenses=(state.expenses||[]).map(e=>({...e,id:e.id||uid('EXP'),amount:num(e.amount),note:e.note||'مصروف',date:e.date||nowISO()}));state.ledger=(state.ledger||[]).map(x=>({...x,id:x.id||uid('TX'),amount:num(x.amount),date:x.date||nowISO(),note:x.note||'',type:x.type||'other'}));state.driver=state.driver||{name:'السائق'};state.driver.name=state.driver.name||'السائق';state.openingCash=Number(state.openingCash)||0;state.lastCompletedTripId=state.lastCompletedTripId||null}
+function ledgerSum(){return state.ledger.reduce((s,x)=>s+num(x.amount),0)}
+function cashBalance(){return num(state.openingCash+ledgerSum())}
+function restaurantDebt(){return state.orders.filter(o=>o.status!=='cancelled'&&o.paymentStatus==='unpaid').reduce((s,o)=>s+o.orderValue,0)}
+function addLedger(type,amount,ref,note){state.ledger.unshift({id:uid('TX'),type,amount:num(amount),ref:ref||'',note:note||'',date:nowISO()})}
+function financialReconcile(){state.orders=state.orders.map(normalizeOrder);const debt=restaurantDebt();return debt}
+function rebuildLegacyLedger(legacy){const entries=[];for(const o of (legacy.orders||[]).map(normalizeOrder)){if(o.status==='cancelled'){if(o.paymentStatus==='paid')entries.push({type:'restaurant_refund',amount:o.orderValue,ref:o.id,note:'استرجاع طلب ملغى'});continue}if(o.paymentStatus==='paid')entries.push({type:'restaurant_payment',amount:-o.orderValue,ref:o.id,note:'دفع للمطعم'});if(o.paymentReceived)entries.push({type:'customer_payment',amount:o.amountReceived,ref:o.id,note:'استلام من العميل'})}for(const e of legacy.expenses||[])entries.push({type:'expense',amount:-num(e.amount),ref:e.id||'',note:e.note||'مصروف'});return entries}
+function migrate(){let raw=null;try{raw=localStorage.getItem(KEY)}catch(e){}if(raw){try{const parsed=JSON.parse(raw);const hadOpening=Object.prototype.hasOwnProperty.call(parsed,'openingCash');state={...state,...parsed};normalizeState();if(!hadOpening){const oldCash=num(parsed.cashBalance);state.openingCash=oldCash-ledgerSum()}persist();return}catch(e){}}try{const v2=JSON.parse(localStorage.getItem('rahimoV2State')||'null');if(v2){state={...state,version:3,driver:v2.driver||{name:'السائق'},orders:(v2.orders||[]).map(normalizeOrder),customers:v2.customers||[],expenses:(v2.expenses||[]).map(e=>({id:e.id||uid('EXP'),amount:num(e.amount),note:e.note||'مصروف',date:e.date||nowISO()})),ledger:v2.ledger||[],currentTripId:v2.currentTripId||null};normalizeState();if(!state.ledger.length)state.ledger=rebuildLegacyLedger(v2);state.openingCash=num(v2.cashBalance)-ledgerSum();persist();toast('✅ تم ترقية بيانات V2 إلى V3 بأمان');return}}catch(e){}try{const legacy=JSON.parse(localStorage.getItem(LEGACY_KEY)||'null');if(legacy){state={...state,version:3,driver:{name:legacy.driverInfo?.name||'السائق'},orders:(legacy.orders||[]).map(normalizeOrder),customers:legacy.customers||[],expenses:(legacy.expenses||[]).map(e=>({id:e.id||uid('EXP'),amount:num(e.amount),note:e.note||'مصروف',date:e.date||nowISO()})),ledger:[],currentTripId:legacy.currentTrip?.id||null};state.ledger=rebuildLegacyLedger(legacy);state.openingCash=num(legacy.pocketMoney)-ledgerSum();normalizeState();persist();toast('✅ تم نقل بيانات النسخة السابقة بأمان');return}}catch(e){}normalizeState();persist()}
+function showPage(id,nav){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$(id)?.classList.add('active');document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===id));if(nav)nav.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});({dashboard:renderDashboard,orders:renderOrders,restaurants:renderRestaurants,customers:renderCustomers,expenses:()=>{renderExpenses();renderOtherProfits()},earnings:renderEarnings,profile:renderProfile,trip:renderTrip,ai:renderAISettings}[id]||function(){})()}
+function setText(id,v){if($(id))$(id).textContent=v}
+function renderHeader(){const n=state.driver.name||'السائق';setText('driverNameTop',n);setText('driverNameHero',n);setText('driverNameDisplay',n);setText('currentDate',new Date().toLocaleDateString('ar-DZ',{weekday:'long',year:'numeric',month:'long',day:'numeric'}))}
+function activeOrders(){return state.orders.filter(o=>o.status==='in-progress')}
+function debts(){return state.orders.filter(o=>o.paymentStatus==='unpaid'&&o.status!=='cancelled')}
+function profitForOrder(o){if(!o||o.status==='cancelled'||!o.paymentReceived)return 0;return o.fee+Math.max(0,num(o.difference))-Math.max(0,-num(o.difference))}
+function periodData(p){const start=rangeStart(p);const os=state.orders.filter(o=>new Date(o.createdAt)>=start&&o.status!=='cancelled');const paid=os.filter(o=>o.paymentReceived);const fees=os.reduce((s,o)=>s+o.fee,0);const over=paid.reduce((s,o)=>s+Math.max(0,num(o.difference)),0);const under=paid.reduce((s,o)=>s+Math.max(0,-num(o.difference)),0);const ex=state.expenses.filter(e=>new Date(e.date)>=start).reduce((s,e)=>s+e.amount,0);const extra=state.otherProfits.filter(x=>new Date(x.date)>=start).reduce((s,x)=>s+num(x.amount),0);const distances=os.reduce((s,o)=>s+num(o.tripDistanceMeters),0);return {os,paid,fees,over,under,ex,extra,distances,profit:fees+over-under-ex+extra,received:paid.reduce((s,o)=>s+num(o.amountReceived),0)}}
+function renderDashboard(){renderHeader();const t=state.orders.filter(o=>todayKey(o.createdAt)===todayKey(Date.now())&&o.status!=='cancelled');const td=periodData('today');setText('cashBalance',money(cashBalance()));setText('restaurantDebt',money(restaurantDebt()));setText('todayOrders',t.length);setText('todayReceived',money(t.filter(o=>o.paymentReceived).reduce((s,o)=>s+num(o.amountReceived),0)));setText('todayFees',money(t.reduce((s,o)=>s+o.fee,0)));setText('cashKpi',money(cashBalance()));setText('debtKpi',money(restaurantDebt()));setText('profitKpi',money(td.profit));const completed=t.filter(o=>o.status==='completed');setText('avgProfitKpi',money(completed.length?completed.reduce((s,o)=>s+profitForOrder(o),0)/completed.length:0));const a=activeOrders();setText('activeCount',a.length);$('activeOrders').innerHTML=a.length?a.map(o=>orderCard(o,true)).join(''):'<div class="empty">لا توجد رحلة نشطة 🎉</div>';const d=debts();setText('debtCount',d.length);$('dashboardDebts').innerHTML=d.length?d.map(debtCard).join(''):'<div class="empty">لا توجد مستحقات للمطاعم 🎉</div>'}
+function orderStatus(o){return o.status==='completed'?'<span class="badge success">✅ مكتملة</span>':o.status==='cancelled'?'<span class="badge danger">✖ ملغاة</span>':'<span class="badge info">🛵 جارية</span>'}
+function payStatus(o){return o.paymentStatus==='paid'?'<span class="badge success">🏪 مدفوع للمطعم</span>':'<span class="badge warn">🏪 دين للمطعم</span>'}
+function orderCard(o){return `<div class="order"><div class="between"><div><div class="order-id">${esc(o.id)}</div><div class="order-title">🏪 ${esc(o.store)}</div></div>${orderStatus(o)}</div><div class="small muted">📞 ${esc(o.phone)}${o.locationText?' · 📍 '+esc(o.locationText):''}</div><div class="actions r18nav"><button class="btn btn-light" onclick="r18OrderNav('${o.id}','store')">🏪 المطعم</button><button class="btn btn-light" onclick="r18OrderNav('${o.id}','client')">🏠 العميل</button></div><div class="order-meta"><span>📦 ${money(o.orderValue)}</span><span>🛵 ${money(o.fee)}</span><span>💰 ${o.paymentReceived?money(o.amountReceived):'لم يُستلم'}</span><span>${payStatus(o)}</span></div>${o.paymentReceived&&o.difference?`<div class="small ${o.difference>0?'positive':'negative'}" style="margin-top:7px">${o.difference>0?'📤 زيادة':'📥 نقص'}: ${money(Math.abs(o.difference))}</div>`:''}<div class="actions"><button class="btn btn-light" onclick="viewOrder('${o.id}')">👁️ تفاصيل</button>${o.status==='in-progress'?`<button class="btn btn-primary" onclick="startTrip('${o.id}')">🛵 متابعة</button><button class="btn btn-light" onclick="editOrder('${o.id}')">✏️ تعديل</button><button class="btn btn-danger" onclick="cancelOrder('${o.id}')">✖ إلغاء</button>`:''}${o.paymentStatus==='unpaid'&&o.status!=='cancelled'?`<button class="btn btn-warning" onclick="payRestaurant('${o.id}')">💳 سداد المطعم</button>`:''}</div></div>`}
+function debtCard(o){return `<div class="summary-line"><span>🏪 ${esc(o.store)}<br><span class="small muted">${esc(o.phone)}</span></span><strong>${money(o.orderValue)}</strong><button class="btn btn-warning" onclick="payRestaurant('${o.id}')">سداد</button></div>`}
+function renderOrders(){const q=($('orderSearch')?.value||'').trim().toLowerCase();const arr=state.orders.filter(o=>{const matches=(o.id+' '+o.phone+' '+o.store+' '+o.locationText).toLowerCase().includes(q);const f=orderFilter;return matches&&(f==='all'||(f==='active'&&o.status==='in-progress')||(f==='completed'&&o.status==='completed')||(f==='cancelled'&&o.status==='cancelled')||(f==='debt'&&o.paymentStatus==='unpaid'&&o.status!=='cancelled'))});setText('ordersCount',arr.length);$('ordersList').innerHTML=arr.length?arr.map(orderCard).join(''):'<div class="empty">لا توجد نتائج</div>'}
+function setOrderFilter(f,btn){orderFilter=f;document.querySelectorAll('.tab[data-filter]').forEach(x=>x.classList.remove('active'));btn?.classList.add('active');renderOrders()}
+
+function restaurantById(id){return state.restaurants.find(r=>r.id===id)}
+function restaurantOrders(r){return state.orders.filter(o=>o.store===r.name)}
+function restaurantDebtAmount(r){return restaurantOrders(r).filter(o=>o.status!=='cancelled'&&o.paymentStatus==='unpaid').reduce((s,o)=>s+num(o.orderValue),0)}
+function populateRestaurantSelect(selected){
+  const el=$('storeName'); if(!el)return;
+  const active=state.restaurants.filter(r=>r.active).sort((a,b)=>a.name.localeCompare(b.name,'ar'));
+  const value=selected!==undefined?selected:(el.value||'');
+  el.innerHTML='<option value="">غير محدد — أدخل المطعم من قاعدة البيانات</option>'+
+    active.map(r=>`<option value="${esc(r.name)}">${esc(r.name)}${r.phone?' — '+esc(r.phone):''}</option>`).join('');
+  if(value && active.some(r=>r.name===value))el.value=value;
+  onRestaurantSelected();
+}
+function onRestaurantSelected(){
+  const name=$('storeName')?.value||'',r=state.restaurants.find(x=>x.name===name),hint=$('restaurantHint'); if(!hint)return;
+  hint.innerHTML=r?`✅ ${esc(r.address||'بيانات المطعم محفوظة')}${r.phone?' · 📞 '+esc(r.phone):''}`:'اختر مطعمًا محفوظًا أو أضفه بزر ＋';
+}
+function restaurantCard(r){
+  const os=restaurantOrders(r), debt=restaurantDebtAmount(r);
+  const valid=os.filter(o=>o.status!=='cancelled');
+  const value=valid.reduce((s,o)=>s+num(o.orderValue),0), fees=valid.reduce((s,o)=>s+num(o.fee),0);
+  const last=os.slice().sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))[0];
+  return `<div class="restaurant-card">
+    <div class="between"><div><div class="restaurant-name">🏪 ${esc(r.name)}</div><div class="small muted">${r.phone?'📞 '+esc(r.phone)+' · ':''}${r.address?'📍 '+esc(r.address):'📍 بدون عنوان'}</div></div>${r.active?'<span class="badge success">نشط</span>':'<span class="badge">متوقف</span>'}</div>
+    <div class="restaurant-meta"><span>📦 ${os.length} طلب</span><span>💰 قيمة ${money(value)}</span><span>🛵 أجور ${money(fees)}</span><span>💳 دين ${money(debt)}</span></div>
+    ${r.notes?`<div class="small muted" style="margin-top:8px">📝 ${esc(r.notes)}</div>`:''}
+    <div class="small muted" style="margin-top:7px">${last?'آخر طلب: '+new Date(last.createdAt).toLocaleDateString('ar-DZ'):'لم تُسجل طلبات بعد'}</div>
+    <div class="restaurant-actions">
+      ${r.locationLink||r.address||r.lat!=null?`<button class="btn btn-light" onclick="openRestaurantLocation('${r.id}')">📍 الموقع</button>`:''}
+      <button class="btn btn-light" onclick="useRestaurantForOrder('${r.id}')">➕ طلب</button>
+      <button class="btn btn-light" onclick="openRestaurantModal('${r.id}')">✏️ تعديل</button>
+      <button class="btn ${r.active?'btn-warning':'btn-success'}" onclick="toggleRestaurant('${r.id}')">${r.active?'⏸️ إيقاف':'▶️ تفعيل'}</button>
+      <button class="btn btn-danger" onclick="deleteRestaurant('${r.id}')">🗑️ حذف</button>
+    </div>
+  </div>`;
+}
+function showModal(html){$('modalSheet').innerHTML=html;$('modal').classList.add('show');document.body.style.overflow='hidden'}
+function closeModal(){$('modal').classList.remove('show');document.body.style.overflow=''}
+const THEME_KEY='rahimoAppTheme';
+let themeMemory='system';
+function getAppTheme(){try{return localStorage.getItem(THEME_KEY)||themeMemory}catch(e){return themeMemory}}
+function applyAppTheme(){const t=getAppTheme();const dark=t==='dark'||(t==='system'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.body.classList.toggle('dark-theme',!!dark);const l=$('themeLabel');if(l)l.textContent=t==='dark'?'داكن':t==='light'?'فاتح':'تلقائي'}
+function setAppTheme(theme){if(!['light','dark','system'].includes(theme))theme='system';themeMemory=theme;try{localStorage.setItem(THEME_KEY,theme)}catch(e){}applyAppTheme();toast('🎨 تم تغيير سمة التطبيق')}
+function openMoreMenu(){showModal(`<div class="between"><div><h2 class="section-title" style="margin:0">☰ المزيد</h2><div class="small muted">الوصول السريع إلى أقسام التطبيق والإعدادات</div></div><button class="btn btn-light" onclick="closeModal()">✕</button></div><div class="more-grid"><button class="more-item" onclick="closeModal();showPage('restaurants')">🏪 المطاعم<small>قاعدة بيانات المطاعم</small></button><button class="more-item" onclick="closeModal();showPage('customers')">👥 العملاء<small>العملاء والمواقع</small></button><button class="more-item" onclick="closeModal();showPage('expenses')">💸 المصاريف<small>المصاريف والأرباح</small></button><button class="more-item" onclick="closeModal();showPage('earnings')">📊 الأرباح<small>التقارير المالية</small></button><button class="more-item" onclick="closeModal();showPage('trip')">🛵 الرحلة<small>الرحلة الحالية وGPS</small></button><button class="more-item" onclick="closeModal();showPage('ai')">✨ رحيمو AI<small>التحليل والمساعد</small></button><button class="more-item" onclick="closeModal();showPage('profile')">⚙️ الإعدادات<small>الحساب والنسخ الاحتياطي</small></button><button class="more-item" onclick="openThemeMenu()">🎨 سمة التطبيق<small>فاتح، داكن أو تلقائي</small></button></div>`)}
+function openThemeMenu(){showModal(`<div class="between"><div><h2 class="section-title" style="margin:0">🎨 سمة التطبيق</h2><div class="small muted">اختر المظهر الذي تفضله</div></div><button class="btn btn-light" onclick="openMoreMenu()">↩ رجوع</button></div><div class="theme-card" style="margin-top:14px"><div class="theme-choice"><button class="btn btn-light" onclick="setAppTheme('light');openMoreMenu()">☀️ فاتح</button><button class="btn btn-dark" onclick="setAppTheme('dark');openMoreMenu()">🌙 داكن</button><button class="btn btn-light" onclick="setAppTheme('system');openMoreMenu()">📱 تلقائي</button></div></div>`)}
+function renderAll(){normalizeState();renderHeader();renderDashboard();renderOrders();renderCustomers();renderExpenses();renderEarnings();renderProfile();renderTrip();renderAISettings()}
+const AI_KEY='rahimoAISettings';
+function aiSettings(){try{return JSON.parse(localStorage.getItem(AI_KEY)||'{}')}catch(e){return {}}}
+function saveAISettings(){const cfg={endpoint:$('aiEndpoint').value.trim(),key:$('aiKey').value.trim(),model:$('aiModel').value.trim()};try{localStorage.setItem(AI_KEY,JSON.stringify(cfg));toast('✅ تم حفظ إعدادات AI على الجهاز')}catch(e){toast('⚠️ تعذر الحفظ')}}
+function clearAISettings(){localStorage.removeItem(AI_KEY);if($('aiEndpoint'))$('aiEndpoint').value='';if($('aiKey'))$('aiKey').value='';if($('aiModel'))$('aiModel').value='';toast('🗑️ تم حذف إعدادات AI')}
+function renderAISettings(){const c=aiSettings();if($('aiEndpoint'))$('aiEndpoint').value=c.endpoint||'';if($('aiKey'))$('aiKey').value=c.key||'';if($('aiModel'))$('aiModel').value=c.model||'';if($('aiStatus'))$('aiStatus').textContent=c.endpoint&&c.key?'متصل بمزود AI اختياري':'يعمل بالتحليل المحلي أو مزود AI اختياري'}
+function aiSnapshot(){const all=periodData('all');const today=periodData('today');const completed=all.os.filter(o=>o.status==='completed');const stores={};all.os.forEach(o=>stores[o.store]=(stores[o.store]||0)+1);const topStores=Object.entries(stores).sort((a,b)=>b[1]-a[1]).slice(0,5);return {today:{orders:today.os.length,received:today.received,fees:today.fees,expenses:today.ex,profit:today.profit},all:{orders:all.os.length,completed:completed.length,received:all.received,fees:all.fees,expenses:all.ex,profit:all.profit,debt:restaurantDebt(),cash:cashBalance()},performance:{completionRate:all.os.length?Math.round(completed.length/all.os.length*100):0,collectionRate:all.os.length?Math.round(all.paid.length/all.os.length*100):0,avgProfit:completed.length?Math.round(completed.reduce((s,o)=>s+profitForOrder(o),0)/completed.length):0},stores:topStores,customers:state.customers.length,active:activeOrders().length}};
+function localAI(type){const s=aiSnapshot();const n=s.today, a=s.all, p=s.performance;let out='';if(type==='daily'){out=`📊 تحليل اليوم\n\nالطلبات: ${n.orders}\nالمستلم: ${money(n.received)}\nأجور التوصيل: ${money(n.fees)}\nالمصاريف: ${money(n.expenses)}\nصافي الربح: ${money(n.profit)}\n\n🔎 الملاحظة: ${n.orders===0?'لم تسجل طلبات اليوم بعد.':n.profit>0?'اليوم يحقق ربحًا إيجابيًا.':'راجع المصاريف والنواقص لتحسين الربحية.'}`}
+else if(type==='profit'){out=`💰 خبير الأرباح\n\nصافي الربح الكلي: ${money(a.profit)}\nمتوسط ربح الطلب: ${money(p.avgProfit)}\nأجور التوصيل: ${money(a.fees)}\nالمصاريف: ${money(a.expenses)}\nالنواقص والزيادات تدخل في صافي الربح.\n\n🎯 توصية: ركز على رفع متوسط أجرة التوصيل وتقليل المصاريف والنواقص، مع متابعة المطاعم الأعلى نشاطًا.`}
+else if(type==='operations'){const avgDur=state.orders.filter(o=>o.status==='completed').flatMap(o=>Object.values(o.steps||{}).map(x=>num(x.duration)).filter(Boolean));const avg=avgDur.length?Math.round(avgDur.reduce((x,y)=>x+y,0)/avgDur.length):0;out=`🛵 تحسين التشغيل\n\nالرحلات النشطة: ${s.active}\nنسبة إتمام الطلبات: ${p.completionRate}%\nنسبة التحصيل: ${p.collectionRate}%\nمتوسط زمن المراحل المسجلة: ${avg} ثانية\n\n🎯 توصية: قلل زمن الانتظار بين استلام الطلب والانطلاق، وثبت الموقع قبل إنهاء الرحلة.`}
+else if(type==='customers'){out=`👥 تحليل العملاء\n\nعدد العملاء المسجلين: ${s.customers}\nعدد الطلبات الكلي: ${a.orders}\n\n🎯 توصية: راقب العملاء المتكررين واحتفظ بمواقعهم الصحيحة لتقليل وقت إدخال الطلبات.`}
+else if(type==='stores'){out='🏪 تحليل المطاعم\n\n'+(s.stores.length?s.stores.map((x,i)=>`${i+1}. ${x[0]} — ${x[1]} طلب`).join('\n'):'لا توجد بيانات كافية')+'\n\n🎯 توصية: أعط الأولوية للمطاعم الأعلى طلبًا عند تحسين مسار العمل.'}
+else if(type==='forecast'){const days={};state.orders.forEach(o=>{const k=new Date(o.createdAt).toLocaleDateString('ar-DZ',{weekday:'long'});days[k]=(days[k]||0)+1});const top=Object.entries(days).sort((a,b)=>b[1]-a[1])[0];out=`🔮 توقع ضغط العمل\n\nالطلبات المسجلة: ${a.orders}\nأكثر يوم نشاطًا في السجل: ${top?top[0]+' ('+top[1]+' طلب)':'غير متاح'}\nالرحلات النشطة الآن: ${s.active}\n\n🎯 ملاحظة: هذا تقدير مبني على بيانات التطبيق الحالية وليس توقعًا إحصائيًا متقدمًا.`}
+else if(type==='message'){const kind=$('aiMessageType').value,ctx=$('aiMessageContext').value.trim();const m={delay:'مرحبًا، أعتذر عن التأخير البسيط في التوصيل. يوجد ازدحام حاليًا، وسأصل إليك في أقرب وقت ممكن.',arrival:'مرحبًا، وصلت إلى موقع التسليم. أنا بانتظارك.',confirmation:'مرحبًا، تم تأكيد طلبك وسأبدأ التوصيل الآن.',thanks:'شكرًا لك على طلبك وثقتك بنا. سعدت بخدمتك.',custom:ctx||'مرحبًا، أتواصل معك بخصوص طلبك.'};out='✍️ الرسالة المقترحة\n\n'+m[kind]+(kind!=='custom'&&ctx?'\n\n'+ctx:'')}
+else if(type==='question'){const q=$('aiQuestion').value.trim();if(!q)return 'اكتب سؤالك أولًا.';out=`🧠 إجابة مبنية على بيانات التطبيق\n\nسؤالك: ${q}\n\nالمؤشرات الحالية: ${a.orders} طلب، ${money(a.profit)} صافي ربح، ${money(a.debt)} ديون مطاعم، ${money(a.cash)} نقد فعلي.\n\nاقتراح عملي: راقب المؤشر الأكثر تأثيرًا على هدفك ثم قارن نتيجته أسبوعيًا.`}return out}
+async function callAI(prompt){const c=aiSettings();if(!c.endpoint||!c.key)return null;const body={model:c.model||'default',messages:[{role:'system',content:'أنت مساعد ذكي لتطبيق رحيمو لإدارة التوصيل. أجب بالعربية باختصار وبدقة. استخدم البيانات المرسلة فقط ولا تخترع أرقامًا.'},{role:'user',content:prompt}],temperature:0.2};try{const r=await fetch(c.endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+c.key},body:JSON.stringify(body)});if(!r.ok)throw Error('HTTP '+r.status);const j=await r.json();return j.choices?.[0]?.message?.content||j.output_text||null}catch(e){toast('⚠️ تعذر الاتصال بمزود AI، تم استخدام التحليل المحلي');return null}}
+async function runAI(type){const out=$('aiOutput');if(!out)return;out.textContent='⏳ جاري التحليل...';const snap=aiSnapshot();const local=localAI(type);const q=type==='question'?$('aiQuestion').value.trim():type==='message'?$('aiMessageContext').value.trim():'';const prompt=`المهمة: ${type}\nبيانات التطبيق: ${JSON.stringify(snap)}\n${q?'السياق/السؤال: '+q:''}\nاكتب نتيجة عملية بالعربية مع نقاط واضحة وتوصيات قابلة للتنفيذ.`;const remote=await callAI(prompt);out.textContent=remote||local;}
+function copyAIResult(){const t=$('aiOutput')?.textContent||'';navigator.clipboard?.writeText(t).then(()=>toast('📋 تم النسخ')).catch(()=>toast('⚠️ تعذر النسخ'))}
+function renderRestaurants(){
+  const q=($('restaurantSearch')?.value||'').trim().toLowerCase();
+  const arr=state.restaurants.filter(r=>(r.name+' '+r.phone+' '+r.address+' '+r.notes).toLowerCase().includes(q)).sort((a,b)=>a.name.localeCompare(b.name,'ar'));
+  const validOrders=state.orders.filter(o=>o.status!=='cancelled'&&o.store&&o.store!=='غير محدد');
+  setText('restaurantsCount',state.restaurants.length);setText('restaurantsOrdersCount',validOrders.length);
+  setText('restaurantsDebtTotal',money(state.restaurants.reduce((s,r)=>s+restaurantDebtAmount(r),0)));
+  setText('restaurantsOrderValue',money(validOrders.reduce((s,o)=>s+num(o.orderValue),0)));
+  const el=$('restaurantsList');if(!el)return;
+  el.innerHTML=arr.length?arr.map(restaurantCard).join(''):'<div class="empty">لا توجد مطاعم محفوظة. أضف أول مطعم الآن 🏪</div>';
+}
+function openRestaurantModal(id){
+  const r=id?restaurantById(id):null;
+  showModal(`<h2 class="section-title">${r?'✏️ تعديل المطعم':'➕ إضافة مطعم'}</h2>
+    <input id="restaurantEditId" type="hidden" value="${r?esc(r.id):''}">
+    <div class="field"><label class="label">اسم المطعم *</label><input id="restaurantEditName" class="input" value="${r?esc(r.name):''}" placeholder="مثال: مطعم الزيتونة"></div>
+    <div class="grid g2"><div class="field"><label class="label">📞 الهاتف</label><input id="restaurantEditPhone" class="input" type="tel" value="${r?esc(r.phone):''}" placeholder="05XXXXXXXX"></div>
+    <div class="field"><label class="label">📍 العنوان</label><input id="restaurantEditAddress" class="input" value="${r?esc(r.address):''}" placeholder="الحي، الشارع..."></div></div>
+    <div class="field"><label class="label">🔗 رابط الموقع</label><input id="restaurantEditLink" class="input" type="url" value="${r?esc(r.locationLink):''}" placeholder="https://maps.google.com/..."></div>
+    <div class="field"><label class="label">📝 ملاحظات</label><textarea id="restaurantEditNotes" class="textarea" placeholder="أوقات العمل، ملاحظات التسليم...">${r?esc(r.notes):''}</textarea></div>
+    <div class="info-box">بيانات المطعم تُحفظ محليًا داخل التطبيق ويمكن تضمينها في النسخة الاحتياطية.</div>
+    <div class="actions"><button class="btn btn-primary" onclick="saveRestaurant()">💾 حفظ</button><button class="btn btn-light" onclick="closeModal()">إلغاء</button></div>`);
+}
+function saveRestaurant(){
+  const id=$('restaurantEditId').value,name=$('restaurantEditName').value.trim(),phone=cleanPhone($('restaurantEditPhone').value),address=$('restaurantEditAddress').value.trim(),link=$('restaurantEditLink').value.trim(),notes=$('restaurantEditNotes').value.trim();
+  if(!name)return toast('⚠️ اسم المطعم مطلوب');
+  if(state.restaurants.some(r=>r.name.toLowerCase()===name.toLowerCase()&&r.id!==id))return toast('⚠️ هذا المطعم موجود بالفعل');
+  let r=id?restaurantById(id):null;if(!r){r=normalizeRestaurant({name});state.restaurants.push(r)}
+  const oldName=r.name;r.name=name;r.phone=phone;r.address=address;r.locationLink=link;r.notes=notes;r.active=true;
+  if(oldName!==name)state.orders.forEach(o=>{if(o.store===oldName)o.store=name});
+  persist();closeModal();renderAll();toast('✅ تم حفظ المطعم في قاعدة البيانات');
+}
+function toggleRestaurant(id){const r=restaurantById(id);if(!r)return;r.active=!r.active;persist();renderAll();toast(r.active?'✅ تم تفعيل المطعم':'⏸️ تم إيقاف المطعم')}
+function deleteRestaurant(id){
+  const r=restaurantById(id);if(!r)return;const count=restaurantOrders(r).length;
+  if(count&&!confirm(`هذا المطعم مرتبط بـ ${count} طلب. سيتم حذفه من قاعدة المطاعم مع بقاء الطلبات محفوظة. متابعة؟`))return;
+  if(!count&&!confirm('حذف المطعم من قاعدة البيانات؟'))return;
+  state.restaurants=state.restaurants.filter(x=>x.id!==id);persist();renderAll();toast('🗑️ تم حذف المطعم');
+}
+function openRestaurantLocation(id){
+  const r=restaurantById(id);if(!r)return;
+  const d=r.locationLink||r.address||r.name;
+  window.open(r.locationLink||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d)),'_blank','noopener');
+}
+function useRestaurantForOrder(id){
+  const r=restaurantById(id);if(!r)return;
+  showPage('addOrder');setTimeout(()=>{populateRestaurantSelect(r.name);if(r.address&&!$('deliveryLocationText').value)$('deliveryLocationText').value=r.address;if(r.locationLink&&!$('locationLink').value)$('locationLink').value=r.locationLink;toast('✅ تم اختيار '+r.name)},0);
+}
+
+function renderCustomers(){const q=($('customerSearch')?.value||'').trim();const arr=state.customers.filter(c=>c.phone.includes(q)||String(c.location||'').includes(q));$('customersList').innerHTML=arr.length?arr.map(c=>{const os=state.orders.filter(o=>o.phone===c.phone);const total=os.filter(o=>o.paymentReceived).reduce((s,o)=>s+num(o.amountReceived),0);return `<div class="order"><div class="between"><div><strong>📞 ${esc(c.phone)}</strong><div class="small muted">${c.location?'📍 '+esc(c.location):'📍 بدون موقع'}</div></div><span class="badge">${os.length} طلب</span></div><div class="small" style="margin-top:7px">💰 إجمالي المستلم: <b>${money(total)}</b></div><div class="actions"><button class="btn btn-success" onclick="callPhone('${esc(c.phone)}')">📞 اتصال</button><button class="btn btn-light" onclick="editCustomer('${c.id}')">✏️ تعديل</button>${c.location||c.locationLink?`<button class="btn btn-light" onclick="openLocation('${encodeURIComponent(c.location||'')}','${encodeURIComponent(c.locationLink||'')}')">📍 موقع</button>`:''}</div></div>`}).join(''):'<div class="empty">لا يوجد عملاء</div>'}
+function renderExpenses(){const arr=state.expenses.filter(e=>todayKey(e.date)===todayKey(Date.now()));$('expensesList').innerHTML=arr.length?arr.map(e=>`<div class="summary-line"><span>💸 ${esc(e.note)}</span><strong class="negative">-${money(e.amount)}</strong></div>`).join(''):'<div class="empty">لا توجد مصاريف اليوم</div>'}
+function rangeStart(p){const n=new Date();if(p==='today')return new Date(n.getFullYear(),n.getMonth(),n.getDate());if(p==='week'){const d=n.getDay()||7;const x=new Date(n);x.setDate(n.getDate()-d+1);x.setHours(0,0,0,0);return x}if(p==='month')return new Date(n.getFullYear(),n.getMonth(),1);return new Date(0)}
+
+function renderWeeklyProfitChart(){
+ const c=$('weeklyProfitChart'); if(!c)return;
+ const r=c.parentElement.getBoundingClientRect(),dpr=devicePixelRatio||1,w=Math.max(280,Math.floor(r.width)),h=Math.max(180,Math.floor(r.height));
+ c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';
+ const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,w,h);
+ const n=new Date(),day=n.getDay()||7,m=new Date(n);m.setDate(n.getDate()-day+1);m.setHours(0,0,0,0);
+ const labels=['الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت','الأحد'],v=[];
+ for(let i=0;i<7;i++){let s=new Date(m);s.setDate(m.getDate()+i);let e=new Date(s);e.setDate(s.getDate()+1);
+  const o=state.orders.filter(q=>{let t=new Date(q.createdAt);return t>=s&&t<e&&q.status!=='cancelled'});
+  const f=o.reduce((a,q)=>a+num(q.fee),0),up=o.filter(q=>q.paymentReceived).reduce((a,q)=>a+Math.max(0,num(q.difference)),0),dn=o.filter(q=>q.paymentReceived).reduce((a,q)=>a+Math.max(0,-num(q.difference)),0);
+  const ex=state.expenses.filter(q=>{let t=new Date(q.date);return t>=s&&t<e}).reduce((a,q)=>a+num(q.amount),0),extra=state.otherProfits.filter(q=>{let t=new Date(q.date);return t>=s&&t<e}).reduce((a,q)=>a+num(q.amount),0);v.push(f+up-dn-ex+extra);
+ }
+ const p={l:58,r:14,t:24,b:42},cw=w-p.l-p.r,ch=h-p.t-p.b,M=Math.max(100,...v.map(q=>Math.abs(q))),Y=Math.ceil(M/100)*100;
+ const X=i=>p.l+i*cw/6,V=q=>p.t+(Y-q)/(2*Y)*ch;
+ x.font='10px system-ui';x.textAlign='right';x.textBaseline='middle';
+ for(let k=-2;k<=2;k++){let q=k*Y/2,yy=V(q);x.strokeStyle='#e5eaf2';x.beginPath();x.moveTo(p.l,yy);x.lineTo(w-p.r,yy);x.stroke();x.fillStyle='#64748b';x.fillText(String(Math.round(q)),p.l-7,yy)}
+ x.strokeStyle='#94a3b8';x.beginPath();x.moveTo(p.l,V(0));x.lineTo(w-p.r,V(0));x.stroke();
+ const pts=v.map((q,i)=>[X(i),V(q)]);x.strokeStyle='#2563eb';x.lineWidth=3;x.lineJoin='round';x.beginPath();pts.forEach((q,i)=>i?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1]));x.stroke();
+ x.textAlign='center';x.textBaseline='top';pts.forEach((q,i)=>{x.fillStyle='#2563eb';x.beginPath();x.arc(q[0],q[1],4,0,Math.PI*2);x.fill();x.fillStyle='#0f172a';x.font='bold 10px system-ui';x.fillText(money(v[i]).replace(' دج',''),q[0],Math.max(2,q[1]-21));x.fillStyle='#64748b';x.font='10px system-ui';x.fillText(labels[i],q[0],h-p.b+12)});
+}
+
+function renderEarnings(){
+const d=periodData(period), os=d.os, paid=d.paid;
+const completed=os.filter(o=>o.status==='completed'), active=os.filter(o=>o.status==='in-progress'), cancelled=state.orders.filter(o=>o.status==='cancelled'&&new Date(o.createdAt)>=rangeStart(period));
+const restaurantPaid=os.filter(o=>o.paymentStatus==='paid'), restaurantUnpaid=os.filter(o=>o.paymentStatus==='unpaid');
+const orderValue=os.reduce((s,o)=>s+o.orderValue,0), expected=os.reduce((s,o)=>s+o.orderValue+o.fee,0), received=d.received;
+const pendingCustomer=Math.max(0,expected-received), avgOrder=os.length?orderValue/os.length:0, avgFee=os.length?d.fees/os.length:0, avgProfit=completed.length?completed.reduce((s,o)=>s+profitForOrder(o),0)/completed.length:0;
+const collectionRate=expected?received/expected*100:0, completionRate=os.length?completed.length/os.length*100:0, cancellationRate=(os.length+cancelled.length)?cancelled.length/(os.length+cancelled.length)*100:0;
+const uniqueCustomers=new Set(os.map(o=>o.phone).filter(Boolean)).size, totalTransactions=state.ledger.filter(x=>new Date(x.date)>=rangeStart(period)).length;
+setText('netProfit',money(d.profit));
+$('periodStats').innerHTML=`<div class="kpi-grid"><div class="kpi blue"><div class="k-label">📦 الطلبات</div><div class="k-value">${os.length}</div></div><div class="kpi green"><div class="k-label">💎 صافي الربح</div><div class="k-value">${money(d.profit)}</div></div><div class="kpi"><div class="k-label">👥 العملاء</div><div class="k-value">${uniqueCustomers}</div></div><div class="kpi amber"><div class="k-label">🏪 ديون الفترة</div><div class="k-value">${money(restaurantUnpaid.reduce((s,o)=>s+o.orderValue,0))}</div><div class="kpi"><div class="k-label">🚗 إجمالي المسافة</div><div class="k-value">${(d.distances/1000).toFixed(2)} كم</div></div><div class="kpi"><div class="k-label">📏 متوسط المسافة</div><div class="k-value">${(os.length?d.distances/os.length/1000:0).toFixed(2)} كم</div></div></div></div>`;
+$('orderStats').innerHTML=`<div class="summary-line"><span>📦 إجمالي الطلبات</span><b>${os.length}</b></div><div class="summary-line"><span>✅ الطلبات المكتملة</span><b class="positive">${completed.length}</b></div><div class="summary-line"><span>🛵 الطلبات الجارية</span><b>${active.length}</b></div><div class="summary-line"><span>❌ الطلبات الملغاة</span><b class="negative">${cancelled.length}</b></div><div class="summary-line"><span>🏪 مدفوع للمطاعم</span><b>${restaurantPaid.length}</b></div><div class="summary-line"><span>⏳ غير مدفوع للمطاعم</span><b class="warning">${restaurantUnpaid.length}</b></div><div class="summary-line"><span>👥 عدد العملاء الفريدين</span><b>${uniqueCustomers}</b></div>`;
+$('financialStats').innerHTML=`<div class="summary-line"><span>📦 قيمة الطلبات</span><b>${money(orderValue)}</b></div><div class="summary-line"><span>🧾 إجمالي المطلوب من العملاء</span><b>${money(expected)}</b></div><div class="summary-line"><span>💰 إجمالي المستلم</span><b class="positive">${money(received)}</b></div><div class="summary-line"><span>⏳ المتبقي من العملاء</span><b class="warning">${money(pendingCustomer)}</b></div><div class="summary-line"><span>🛵 أجور التوصيل</span><b class="positive">+${money(d.fees)}</b></div><div class="summary-line"><span>📤 الزيادات</span><b class="positive">+${money(d.over)}</b></div><div class="summary-line"><span>📥 النواقص</span><b class="negative">-${money(d.under)}</b></div><div class="summary-line"><span>💸 المصاريف</span><b class="negative">-${money(d.ex)}</b></div><div class="summary-line"><span>💎 أرباح محققة خارج الطلبيات</span><b class="positive">+${money(d.extra)}</b></div><div class="summary-line"><span>💎 صافي الربح</span><b class="positive">${money(d.profit)}</b></div><div class="summary-line"><span>👛 النقد الفعلي الآن</span><b>${money(cashBalance())}</b></div><div class="summary-line"><span>🏪 إجمالي ديون المطاعم الحالية</span><b class="warning">${money(restaurantDebt())}</b></div><div class="summary-line"><span>🧾 عدد الحركات المالية</span><b>${totalTransactions}</b></div>`;
+$('performanceStats').innerHTML=`<div class="summary-line"><span>📈 نسبة تحصيل العملاء</span><b>${collectionRate.toFixed(1)}%</b></div><div class="summary-line"><span>✅ نسبة إتمام الطلبات</span><b>${completionRate.toFixed(1)}%</b></div><div class="summary-line"><span>❌ نسبة الإلغاء</span><b>${cancellationRate.toFixed(1)}%</b></div><div class="summary-line"><span>💵 متوسط قيمة الطلب</span><b>${money(avgOrder)}</b></div><div class="summary-line"><span>🛵 متوسط أجرة التوصيل</span><b>${money(avgFee)}</b></div><div class="summary-line"><span>💎 متوسط ربح الطلب المكتمل</span><b class="positive">${money(avgProfit)}</b></div><div class="summary-line"><span>📊 هامش الربح على أجور التوصيل والفرق</span><b>${d.fees+ d.over ? (d.profit/(d.fees+d.over)*100).toFixed(1):'0.0'}%</b></div>`;
+const completedAll=state.orders.filter(o=>o.status==='completed'),a2=completedAll.map(o=>o.steps?.[2]?.duration||0).filter(Boolean),a3=completedAll.map(o=>o.steps?.[3]?.duration||0).filter(Boolean),avg=a=>a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):0;
+const p2=os.filter(o=>o.steps?.[2]?.duration).map(o=>o.steps[2].duration),p3=os.filter(o=>o.steps?.[3]?.duration).map(o=>o.steps[3].duration);
+$('durationStats').innerHTML=`<div class="summary-line"><span>🛵 متوسط "في الطريق"</span><b>${formatDuration(p2.length?avg(p2):avg(a2))}</b></div><div class="summary-line"><span>✅ متوسط "التسليم"</span><b>${formatDuration(p3.length?avg(p3):avg(a3))}</b></div><div class="summary-line"><span>⏱️ إجمالي وقت "في الطريق"</span><b>${formatDuration(p2.reduce((s,x)=>s+x,0))}</b></div><div class="summary-line"><span>⏱️ إجمالي وقت "التسليم"</span><b>${formatDuration(p3.reduce((s,x)=>s+x,0))}</b></div>`;
+const storeMap={};os.forEach(o=>{storeMap[o.store]=(storeMap[o.store]||{count:0,value:0,fees:0});storeMap[o.store].count++;storeMap[o.store].value+=o.orderValue;storeMap[o.store].fees+=o.fee});const stores=Object.entries(storeMap).sort((a,b)=>b[1].count-a[1].count).slice(0,10);
+$('storeStats').innerHTML=stores.length?stores.map(([name,x],i)=>`<div class="summary-line"><span>🏆 ${i+1}. ${esc(name)}<br><span class="small muted">${x.count} طلب · قيمة ${money(x.value)}</span></span><b>${money(x.fees)}</b></div>`).join(''):'<div class="empty">لا توجد بيانات</div>';
+const currentDebts=debts();$('earningsDebts').innerHTML=currentDebts.length?currentDebts.map(debtCard).join(''):'<div class="success-box">لا توجد ديون للمطاعم 🎉</div>';renderOtherProfits();renderLedger();renderWeeklyProfitChart()}
+
+function addExpenseFromEarnings(){
+ const amount=num($('earningsExpenseAmount')?.value),note=$('earningsExpenseNote')?.value.trim()||'مصروف';
+ if(amount<=0)return toast('⚠️ أدخل مبلغًا صحيحًا');
+ state.expenses.unshift({id:uid('EXP'),amount,note,date:nowISO()});
+ addLedger('expense',-amount,'',note);
+ persist();$('earningsExpenseAmount').value='';$('earningsExpenseNote').value='';renderAll();toast('✅ تم تسجيل المصروف');
+}
+function addOtherProfitFromEarnings(){
+ const amount=num($('earningsOtherProfitAmount')?.value),note=$('earningsOtherProfitNote')?.value.trim()||'ربح محقق';
+ if(amount<=0)return toast('⚠️ أدخل مبلغًا صحيحًا');
+ const p={id:uid('PROFIT'),amount,note,date:nowISO()};
+ state.otherProfits.unshift(p);
+ addLedger('other_profit',amount,p.id,note);
+ persist();$('earningsOtherProfitAmount').value='';$('earningsOtherProfitNote').value='';renderAll();toast('✅ تم تسجيل الربح المحقق');
+}
+
+function addOtherProfit(){
+ const amount=num($('otherProfitAmount')?.value),note=$('otherProfitNote')?.value.trim()||'ربح محقق';
+ if(amount<=0)return toast('⚠️ أدخل مبلغًا صحيحًا');
+ const p={id:uid('PROFIT'),amount,note,date:nowISO()};
+ state.otherProfits.unshift(p);
+ addLedger('other_profit',amount,p.id,note);
+ persist();$('otherProfitAmount').value='';$('otherProfitNote').value='';renderAll();
+ toast('✅ تم تسجيل الربح المحقق');
+}
+function renderOtherProfits(){
+ const arr=state.otherProfits.slice(0,20);
+ const el=$('otherProfitsList');if(!el)return;
+ el.innerHTML=arr.length?arr.map(x=>`<div class="summary-line"><span>💎 ${esc(x.note)}<br><span class="small muted">${new Date(x.date).toLocaleString('ar-DZ')}</span></span><strong class="positive">+${money(x.amount)}</strong></div>`).join(''):'<div class="empty">لا توجد أرباح إضافية مسجلة</div>';
+}
+function renderLedger(){const el=$('ledgerList');setText('ledgerCount',state.ledger.length);if(!el)return;const arr=state.ledger.slice(0,20);el.innerHTML=arr.length?arr.map(x=>{const positive=x.amount>=0;const icon=x.type==='customer_payment'?'💰':x.type==='restaurant_payment'?'🏪':x.type==='expense'?'💸':x.type==='restaurant_refund'?'↩️':'🧾';return `<div class="tx"><div class="tx-icon">${icon}</div><div><div class="tx-title">${esc(x.note)}</div><div class="tx-meta">${new Date(x.date).toLocaleString('ar-DZ')} · ${esc(x.ref||'—')}</div></div><strong class="${positive?'positive':'negative'}">${positive?'+':''}${money(x.amount)}</strong></div>`}).join(''):'<div class="empty">لا توجد حركات مالية</div>'}
+function setPeriod(p,btn){period=p;document.querySelectorAll('#earnings .tab').forEach(x=>x.classList.remove('active'));btn?.classList.add('active');renderEarnings()}
+function formatDuration(s){if(!s)return '—';const m=Math.floor(s/60),sec=s%60;return m?`${m} د ${sec} ث`:`${sec} ث`}
+function renderProfile(){$('driverNameInput').value=state.driver.name||'';applyAppTheme()}
+function onPhoneInput(){const p=cleanPhone($('customerPhone').value);const c=state.customers.find(x=>x.phone===p);$('customerHint').textContent=c?(c.location||c.locationLink?'✅ عميل محفوظ — تم العثور على موقعه':'⚠️ عميل محفوظ — الموقع غير محفوظ'):'عميل جديد';if(c){if(c.location&&!$('deliveryLocationText').value)$('deliveryLocationText').value=c.location;if(c.locationLink&&!$('locationLink').value)$('locationLink').value=c.locationLink;if(c.lat!=null&&!$('deliveryLat').value)$('deliveryLat').value=c.lat;if(c.lng!=null&&!$('deliveryLng').value)$('deliveryLng').value=c.lng}}
+function cleanPhone(p){return String(p||'').replace(/[^\d+]/g,'').replace(/(?!^)\+/g,'')}
+function callPhone(p){p=cleanPhone(p);if(p)location.href='tel:'+p;else toast('⚠️ رقم غير صالح')}
+function callPhoneById(id){callPhone($(id).value)}
+function updateExpected(){const a=num($('orderValue').value),b=num($('deliveryFee').value);setText('expectedTotal',money(a+b))}
+function saveCustomerLocationFromOrder(o){if(!o||!o.phone)return false;let c=state.customers.find(x=>x.phone===o.phone);if(!c){c={id:uid('CUST'),phone:o.phone,location:'',locationLink:'',lat:null,lng:null};state.customers.push(c)}if(!o.locationText&&!o.locationLink&&!o.deliveryLat)return false;c.location=o.locationText||c.location||'';c.locationLink=o.locationLink||c.locationLink||'';c.lat=o.deliveryLat??c.lat??null;c.lng=o.deliveryLng??c.lng??null;return !!(c.locationLink||c.location||c.lat!=null)}
+function captureGPS(mode){if(!navigator.geolocation)return toast('❌ GPS غير مدعوم');toast('📍 جارٍ تحديد الموقع...');navigator.geolocation.getCurrentPosition(pos=>{const lat=Number(pos.coords.latitude.toFixed(6)),lng=Number(pos.coords.longitude.toFixed(6));const link=`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;if(mode==='new'){$('deliveryLocationText').value=`${lat}, ${lng}`;$('locationLink').value=link;$('deliveryLat').value=lat;$('deliveryLng').value=lng}else if(mode==='modal'){const o=currentTrip();if(o){o.deliveryLat=lat;o.deliveryLng=lng;o.locationText=`${lat}, ${lng}`;o.locationLink=link;saveCustomerLocationFromOrder(o);persist();closeModal();openPaymentModal()}}else if(state.currentTripId){const o=findOrder(state.currentTripId);if(o){o.deliveryLat=lat;o.deliveryLng=lng;o.locationText=`${lat}, ${lng}`;o.locationLink=link;saveCustomerLocationFromOrder(o);persist();renderTrip()}}toast('✅ تم تحديد الموقع وحفظه للعميل')},()=>toast('❌ تعذر تحديد الموقع'),{enableHighAccuracy:true,timeout:10000,maximumAge:0})}
+function openTypedLocation(){const t=$('deliveryLocationText').value.trim(),l=$('locationLink').value.trim();if(l)window.open(l,'_blank','noopener');else if(t)window.open('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(t),'_blank','noopener');else toast('📍 أدخل الموقع أولًا')}
+function openLocation(enc,link){if(link)window.open(decodeURIComponent(link),'_blank','noopener');else if(enc)window.open('https://www.google.com/maps/search/?api=1&query='+decodeURIComponent(enc),'_blank','noopener')}
+function createOrder(){if(busyAction)return;busyAction=true;try{try{if(typeof r18ResetTripMetrics==='function')r18ResetTripMetrics()}catch(e){}const phone=cleanPhone($('customerPhone').value),store=$('storeName').value.trim()||'غير محدد',loc=$('deliveryLocationText').value.trim(),link=$('locationLink').value.trim(),value=num($('orderValue').value),fee=num($('deliveryFee').value),status=$('paymentStatus').value,lat=$('deliveryLat')?.value||null,lng=$('deliveryLng')?.value||null;if(!phone||phone.length<5)return toast('⚠️ أدخل رقم هاتف صحيح');if(value<=0)return toast('⚠️ أدخل ثمن الطلب');if(fee<=0)return toast('⚠️ أدخل أجرة التوصيل');let c=state.customers.find(x=>x.phone===phone);if(!c){c={id:uid('CUST'),phone,location:loc||'',locationLink:link||'',lat:lat?Number(lat):null,lng:lng?Number(lng):null};state.customers.push(c)}else{if(loc)c.location=loc;if(link)c.locationLink=link;if(lat!=null)c.lat=Number(lat);if(lng!=null)c.lng=Number(lng)}const t=nowISO(),o={id:uid('ORD'),phone,store,locationText:loc,locationLink:link,deliveryLat:lat,deliveryLng:lng,orderValue:value,fee,status:'in-progress',paymentStatus:status,paymentPaidAt:status==='paid'?t:null,paymentReceived:false,amountReceived:null,difference:0,createdAt:t,currentStep:1,steps:{1:{completed:false,startTime:t,endTime:null,duration:0},2:{completed:false,startTime:null,endTime:null,duration:0},3:{completed:false,startTime:null,endTime:null,duration:0}}};state.orders.unshift(o);state.currentTripId=o.id;if(status==='paid')addLedger('restaurant_payment',-value,o.id,'دفع للمطعم عند إنشاء الطلب');else addLedger('restaurant_debt',0,o.id,'تسجيل دين للمطعم — الرصيد مشتق من الطلبات');persist();clearOrderForm();renderAll();showPage('trip');toast('✅ تم حفظ الطلب وبدأت الرحلة')}finally{busyAction=false}}
+function clearOrderForm(){['customerPhone','deliveryLocationText','locationLink','orderValue','deliveryFee','deliveryLat','deliveryLng'].forEach(id=>$(id)&&($(id).value=''));if($('storeName'))$('storeName').value='';$('paymentStatus').value='paid';$('customerHint').textContent='';onRestaurantSelected();updateExpected()}
+function findOrder(id){return state.orders.find(o=>o.id===id)}
+function startTrip(id){const o=findOrder(id);if(!o||o.status!=='in-progress')return toast('⚠️ الرحلة غير متاحة');if(state.currentTripId&&state.currentTripId!==id)return toast('⚠️ لديك رحلة نشطة أخرى');state.currentTripId=id;state.lastCompletedTripId=null;o.currentStep=o.currentStep||1;o.steps=o.steps||{1:normalizeStep(),2:normalizeStep(),3:normalizeStep()};o.steps[1]=normalizeStep(o.steps[1]);o.steps[2]=normalizeStep(o.steps[2]);o.steps[3]=normalizeStep(o.steps[3]);o.steps[1].startTime=o.steps[1].startTime||nowISO();persist();showPage('trip');renderTrip()}
+function currentTrip(){return state.currentTripId?findOrder(state.currentTripId):null}
+function tripProgress(step){
+  const labels=[['1','📦','الاستلام'],['2','🛵','في الطريق'],['3','🏠','التسليم'],['4','✓','مكتمل']];
+  return `<div class="r18-progress">${labels.map((x,i)=>{const n=i+1,done=step>n,active=step===n;return `<div class="r18-progress-item ${done?'done':''} ${active?'active':''}"><div class="r18-progress-dot">${done?'✓':x[1]}</div><div class="r18-progress-label">${x[2]}</div></div>${i<3?`<div class="r18-progress-line ${step>n?'done':''}"></div>`:''}`}).join('')}</div>`
+}
+function tripCustomer(o){const c=state.customers.find(x=>x.phone===o.phone)||{};return {name:c.name||'العميل',phone:o.phone,address:o.locationText||c.location||'موقع العميل'} }
+function renderTrip(){
+  stopTimer();
+  const o=currentTrip();
+  const completed=o&&o.status==='completed'?o:null;
+  const summaryId=state.lastCompletedTripId;
+  const summary=completed||findOrder(summaryId);
+  if(!o||o.status!=='in-progress'){
+    if(summary&&summary.status==='completed'){
+      const c=tripCustomer(summary);
+      $('tripContent').innerHTML=`<div class="r18-journey">${tripProgress(4)}<div class="r18-success-hero"><div class="r18-success-icon">✓</div><h2>تمت الرحلة بنجاح!</h2><p>شكرًا لك على إتمام التوصيل</p></div><div class="r18-card"><div class="r18-order-head"><div><span class="r18-muted">رقم الطلب</span><strong>${esc(summary.id)}</strong></div><span class="r18-mini-badge">مكتمل</span></div><div class="r18-summary-row"><span>🏪 المطعم</span><b>${esc(summary.store)}</b></div><div class="r18-summary-row"><span>👤 العميل</span><b>${esc(c.name)}</b></div><div class="r18-summary-row"><span>🛣️ المسافة</span><b>${num(summary.tripDistanceMeters).toFixed(2)} كم</b></div><div class="r18-summary-row"><span>⏱️ مدة الرحلة</span><b>${formatDuration(Math.max(0,Math.floor((num(summary.steps?.[2]?.duration)+num(summary.steps?.[3]?.duration))||0)))}</b></div><div class="r18-summary-row"><span>💰 المبلغ المستلم</span><b class="r18-green-text">${money(summary.amountReceived)}</b></div><div class="r18-summary-row"><span>🛵 أجرة التوصيل</span><b>${money(summary.fee)}</b></div></div><div class="r18-bottom-actions"><button class="r18-btn r18-btn-outline" onclick="viewOrder('${esc(summary.id)}')">📄 تفاصيل الطلب</button><button class="r18-btn r18-btn-primary" onclick="state.lastCompletedTripId=null;persist();showPage('dashboard')">🏠 العودة للرئيسية</button></div></div>`;
+      return
+    }
+    $('tripContent').innerHTML='<div class="r18-journey">'+tripProgress(1)+'<div class="r18-card r18-empty"><div class="r18-empty-icon">🛵</div><h3>لا توجد رحلة حالية</h3><p>ابدأ رحلة من سجل الطلبات للمتابعة خطوة بخطوة.</p><button class="r18-btn r18-btn-primary" onclick="showPage(\'addOrder\')">➕ إنشاء طلب</button></div></div>';
+    return
+  }
+  const c=tripCustomer(o),expected=o.orderValue+o.fee;
+  if(o.currentStep===1){
+    $('tripContent').innerHTML=`<div class="r18-journey">${tripProgress(1)}<div class="r18-card"><div class="r18-order-head"><div><span class="r18-muted">رحلة الطلب</span><strong>${esc(o.id)}</strong></div><span class="r18-mini-badge">طلب جديد</span></div><div class="r18-restaurant"><div class="r18-store-icon">🍽️</div><div><h2>${esc(o.store)}</h2><p>${esc(o.restaurantAddress||'بيانات المطعم المحفوظة في قاعدة البيانات')}</p></div><span>📍</span></div><div class="r18-card-title">تفاصيل الطلب</div><div class="r18-summary-row"><span>قيمة الطلب</span><b>${money(o.orderValue)}</b></div><div class="r18-summary-row"><span>أجرة التوصيل</span><b>${money(o.fee)}</b></div><div class="r18-total"><span>المبلغ المطلوب من العميل</span><b>${money(expected)}</b></div></div><div class="r18-card"><div class="r18-card-title">موقع المطعم</div><div class="r18-location">📍 <div><b>${esc(o.restaurantAddress||o.store)}</b><span>افتح الموقع في الخريطة عند الحاجة</span></div></div><button class="r18-btn r18-btn-outline r18-btn-block" onclick="r18OrderNav('${esc(o.id)}','store')">📍 فتح في الخريطة</button></div><button class="r18-btn r18-btn-primary r18-btn-block r18-main-action" onclick="advanceTrip(1)">📦 تم استلام الطلب</button></div>`;
+  }else if(o.currentStep===2){
+    $('tripContent').innerHTML=`<div class="r18-journey">${tripProgress(2)}<div class="r18-card r18-map-card"><div class="r18-map-top"><div><span class="r18-muted">في الطريق إلى العميل</span><strong>${esc(o.id)}</strong></div><button class="r18-icon-btn" onclick="callPhone('${esc(c.phone)}')">☎</button></div><div class="r18-map-wrap"><iframe id="r18Map" title="خريطة الرحلة" src="https://www.google.com/maps?q=${encodeURIComponent(o.locationText||'Algeria')}&output=embed" loading="lazy"></iframe><div class="r18-map-overlay"><span>🟢 GPS نشط</span><span id="r18Distance">0.00 كم</span></div></div><div class="r18-metrics"><div><span>السرعة</span><b id="r18Speed">—</b><small>كم/س</small></div><div><span>المسافة</span><b id="r18DistanceMetric">0.00</b><small>كم</small></div><div><span>المدة</span><b id="r18DurationMetric">00:00</b><small>دقيقة</small></div></div></div><div class="r18-card r18-customer-card"><div class="r18-avatar">👤</div><div class="r18-customer-info"><span>العميل</span><strong>${esc(c.name)}</strong><small>${esc(c.address)}</small><b>${esc(c.phone)}</b></div><button class="r18-icon-btn" onclick="callPhone('${esc(c.phone)}')">☎</button></div><div class="r18-card"><div class="r18-card-title">الملاحة</div><button class="r18-btn r18-btn-outline r18-btn-block" onclick="tripLocation()">🧭 الاتجاه إلى موقع العميل</button><div class="r18-actions-row"><button class="r18-btn r18-btn-light" onclick="r18StartGPS()">📍 تحديث GPS</button><button class="r18-btn r18-btn-danger" onclick="cancelTrip()">✖ إلغاء الرحلة</button></div></div><button class="r18-btn r18-btn-primary r18-btn-block r18-main-action" onclick="advanceTrip(2)">🏠 وصلت للعميل</button></div>`;
+    r18StartGPS(); startTimer();
+  }else if(o.currentStep===3){
+    const received=num(o.amountReceived||0); const diff=received-expected;
+    $('tripContent').innerHTML=`<div class="r18-journey">${tripProgress(3)}<div class="r18-card r18-customer-card"><div class="r18-avatar">👤</div><div class="r18-customer-info"><span>العميل</span><strong>${esc(c.name)}</strong><small>${esc(c.address)}</small><b>${esc(c.phone)}</b></div><button class="r18-icon-btn" onclick="callPhone('${esc(c.phone)}')">☎</button></div><div class="r18-card r18-payment-card"><div class="r18-card-title">المبلغ المطلوب من العميل</div><div class="r18-required-amount">${money(expected)}</div><button class="r18-btn r18-btn-primary r18-btn-block r18-exact-btn" onclick="confirmExactPayment()">💰 استلام كامل المبلغ ${money(expected)}<small>(نفس المبلغ)</small></button><div class="r18-or"><span>أو</span></div><div class="r18-card-title">دفع العميل مبلغًا مختلفًا</div><div class="r18-input-wrap"><input id="receivedInput" class="input" type="number" min="1" inputmode="numeric" value="${received||''}" oninput="showDifference()" placeholder="أدخل المبلغ المستلم"><span>دج</span></div><div id="paymentDiff" class="r18-diff">${received?((diff===0)?'<div class="success-box">✅ المبلغ مطابق تمامًا</div>':diff>0?`<div class="success-box">📤 زيادة: <b>${money(diff)}</b></div>`:`<div class="danger-box">📥 نقص: <b>${money(Math.abs(diff))}</b></div>`):''}</div><button class="r18-btn r18-btn-outline r18-btn-block" onclick="confirmPayment()">✅ تم التسليم بالمبلغ المدخل</button></div><div class="r18-card"><div class="r18-summary-row"><span>المطلوب</span><b>${money(expected)}</b></div><div class="r18-summary-row"><span>المسافة الحالية</span><b id="r18DistanceMetric">${num(o.tripDistanceMeters).toFixed(2)} كم</b></div><div class="r18-summary-row"><span>مدة الرحلة</span><b id="r18DurationMetric">${formatDuration(num(o.steps?.[2]?.duration)||0)}</b></div></div></div>`;
+    startTimer();
+  }
+}
+function startTimer(){const o=currentTrip();if(!o||o.status!=='in-progress')return;const d=o.steps[o.currentStep];if(!d.startTime){d.startTime=nowISO();persist()}const start=new Date(d.startTime).getTime();const tick=()=>setText('tripTimer','⏱️ '+formatDuration(Math.max(0,Math.floor((Date.now()-start)/1000))));tick();timer=setInterval(tick,1000)}
+function stopTimer(){if(timer){clearInterval(timer);timer=null}}
+function advanceTrip(n){
+  const o=currentTrip(); if(!o||o.currentStep!==n)return;
+  if(n===1){
+    const d=o.steps[1]; d.completed=true; d.endTime=nowISO(); d.duration=Math.max(0,Math.floor((new Date(d.endTime)-new Date(d.startTime||d.endTime))/1000));
+    o.currentStep=2; o.steps[2].startTime=o.steps[2].startTime||nowISO(); persist(); renderTrip(); toast('🛵 تم استلام الطلب — بدأ تتبع GPS تلقائيًا'); return
+  }
+  if(n===2){
+    const d=o.steps[2]; d.completed=true; d.endTime=nowISO(); d.duration=Math.max(0,Math.floor((new Date(d.endTime)-new Date(d.startTime||d.endTime))/1000));
+    o.currentStep=3; o.steps[3].startTime=o.steps[3].startTime||nowISO(); persist(); renderTrip(); toast('🏠 وصلت للعميل — جاهز لاستلام المبلغ'); return
+  }
+}
+function openLocationRequired(){const o=currentTrip();showModal(`<h2 class="section-title">📍 بيانات موقع العميل مطلوبة</h2><div class="notice">هذا العميل لا يملك موقعًا محفوظًا. قبل إتمام التسليم يجب حفظ رقم الهاتف مع وصف الموقع ورابط الخريطة في قاعدة بيانات العملاء.</div><div class="field" style="margin-top:12px"><label class="label">رقم الهاتف</label><input class="input" value="${esc(o?.phone||'')}" disabled></div><div class="field"><label class="label">📍 وصف الموقع *</label><input id="modalLocationText" class="input" placeholder="حي، شارع، معلم..."></div><div class="field"><label class="label">🔗 رابط الموقع *</label><input id="modalLocationLink" class="input" type="url" placeholder="https://maps.google.com/..." ></div><div class="actions"><button class="btn btn-primary" onclick="saveRequiredLocation()">💾 حفظ للعميل ومتابعة</button><button class="btn btn-light" onclick="captureGPS('modal')">📍 استخدام GPS وحفظ</button><button class="btn btn-light" onclick="closeModal()">إلغاء</button></div>`)}
+function saveRequiredLocation(){const o=currentTrip();const t=$('modalLocationText').value.trim();let l=$('modalLocationLink').value.trim();if(!o||!t)return toast('⚠️ أدخل وصف الموقع');if(!l)l='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(t);o.locationText=t;o.locationLink=l;saveCustomerLocationFromOrder(o);persist();closeModal();openPaymentModal();toast('✅ تم حفظ موقع العميل في قاعدة البيانات')}
+function tripLocation(){const o=currentTrip();if(!o)return;if(o.locationLink)window.open(o.locationLink,'_blank','noopener');else if(o.locationText)window.open('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(o.locationText),'_blank','noopener');else toast('📍 لا يوجد موقع')}
+function openPaymentModal(){renderTrip()}
+function showDifference(){const o=currentTrip(),r=num($('receivedInput')?.value);if(!o)return;const d=r-(o.orderValue+o.fee);const el=$('paymentDiff');if(!el)return;el.innerHTML=!r?'':d===0?'<div class="success-box">✅ المبلغ مطابق تمامًا</div>':d>0?`<div class="success-box">📤 زيادة: <b>${money(d)}</b> — تدخل ضمن الربح</div>`:`<div class="danger-box">📥 نقص: <b>${money(Math.abs(d))}</b> — يخصم من الربح</div>`}
+function confirmExactPayment(){const o=currentTrip();if(!o)return;confirmPaymentAmount(o.orderValue+o.fee)}
+function confirmPayment(){const r=num($('receivedInput')?.value);confirmPaymentAmount(r)}
+function confirmPaymentAmount(r){
+  if(busyAction)return; const o=currentTrip(); if(!o||o.status!=='in-progress')return toast('⚠️ الرحلة غير متاحة'); if(r<=0)return toast('⚠️ أدخل المبلغ المستلم');
+  busyAction=true; try{
+    const expected=o.orderValue+o.fee,diff=r-expected,d=o.steps[3];
+    try{if(typeof r18GetDistance==='function'&&r18GetDistance()>0)o.tripDistanceMeters=Math.round(Number(r18GetDistance())*100)/100}catch(e){}
+    try{if(typeof r18ResetTripMetrics==='function')r18ResetTripMetrics()}catch(e){}
+    d.completed=true;d.endTime=nowISO();d.startTime=d.startTime||nowISO();d.duration=Math.max(0,Math.floor((new Date(d.endTime)-new Date(d.startTime))/1000));
+    o.paymentReceived=true;o.amountReceived=r;o.difference=diff;o.status='completed';o.completedAt=nowISO();o.tripDistanceMeters=Number(o.tripDistanceMeters||0);
+    addLedger('customer_payment',r,o.id,'استلام من العميل'); state.lastCompletedTripId=o.id; state.currentTripId=null; persist(); renderAll(); showPage('trip'); renderTrip(); toast('🎉 تم التسليم وتحديث الحسابات');
+  }finally{busyAction=false}
+}
+function cancelTrip(){const o=currentTrip();if(!o)return;if(!confirm('إلغاء الرحلة؟ سيبقى السجل محفوظًا كملغى.'))return;o.status='cancelled';o.cancelledAt=nowISO();state.currentTripId=null;if(o.paymentStatus==='paid')addLedger('restaurant_refund',o.orderValue,o.id,'استرجاع مبلغ المطعم بسبب الإلغاء');persist();renderAll();showPage('dashboard');toast('تم إلغاء الرحلة')}
+function payRestaurant(id){const o=findOrder(id);if(!o||o.paymentStatus==='paid')return toast('هذه الطلبية مدفوعة بالفعل');if(!confirm(`سداد ${money(o.orderValue)} للمطعم؟`))return;o.paymentStatus='paid';o.paymentPaidAt=nowISO();addLedger('restaurant_payment',-o.orderValue,o.id,'سداد دين للمطعم');persist();renderAll();toast('✅ تم سداد المطعم')}
+function addExpense(){const amount=num($('expenseAmount').value),note=$('expenseNote').value.trim()||'مصروف';if(amount<=0)return toast('⚠️ أدخل مبلغًا صحيحًا');const e={id:uid('EXP'),amount,note,date:nowISO()};state.expenses.unshift(e);addLedger('expense',-amount,e.id,note);persist();$('expenseAmount').value='';$('expenseNote').value='';renderAll();toast('✅ تم تسجيل المصروف')}
+function editOrder(id){const o=findOrder(id);if(!o||o.status!=='in-progress')return toast('⚠️ لا يمكن تعديل طلب مكتمل');showModal(`<h2 class="section-title">✏️ تعديل الطلب</h2><div class="notice">التعديل متاح فقط قبل التسليم حتى لا تتغير السجلات المالية بعد الإتمام.</div><div class="field" style="margin-top:12px"><label class="label">رقم الهاتف</label><input id="editPhone" class="input" value="${esc(o.phone)}"></div><div class="field"><label class="label">المتجر</label><input id="editStore" class="input" value="${esc(o.store)}"></div><div class="field"><label class="label">الموقع</label><input id="editLoc" class="input" value="${esc(o.locationText)}"></div><div class="grid g2"><div class="field"><label class="label">ثمن الطلب</label><input id="editValue" class="input" type="number" min="1" value="${o.orderValue}"></div><div class="field"><label class="label">أجرة التوصيل</label><input id="editFee" class="input" type="number" min="1" value="${o.fee}"></div></div><div class="actions"><button class="btn btn-primary" onclick="saveEditOrder('${o.id}')">💾 حفظ التعديل</button><button class="btn btn-light" onclick="closeModal()">إلغاء</button></div>`)}
+function saveEditOrder(id){const o=findOrder(id);if(!o||o.status!=='in-progress')return toast('⚠️ لا يمكن التعديل الآن');const nv=num($('editValue').value),nf=num($('editFee').value);if(nv<=0||nf<=0)return toast('⚠️ القيم المالية غير صحيحة');const old=o.orderValue,newStatus=o.paymentStatus;o.phone=cleanPhone($('editPhone').value);o.store=$('editStore').value.trim()||'غير محدد';o.locationText=$('editLoc').value.trim();o.orderValue=nv;o.fee=nf;if(newStatus==='paid'&&nv!==old)addLedger('restaurant_adjustment',old-nv,o.id,'تصحيح مبلغ المطعم بعد تعديل الطلب');persist();closeModal();renderAll();toast('✅ تم تعديل الطلب قبل التسليم')}
+function viewOrder(id){const o=findOrder(id);if(!o)return;showModal(`<div class="between"><h2 class="section-title">📋 تفاصيل الطلبية</h2>${orderStatus(o)}</div><div class="summary-line"><span>الرقم</span><b>${esc(o.id)}</b></div><div class="summary-line"><span>العميل</span><b>${esc(o.phone)}</b></div><div class="summary-line"><span>المتجر</span><b>${esc(o.store)}</b></div><div class="summary-line"><span>ثمن الطلب</span><b>${money(o.orderValue)}</b></div><div class="summary-line"><span>أجرة التوصيل</span><b>${money(o.fee)}</b></div><div class="summary-line"><span>المطلوب</span><b>${money(o.orderValue+o.fee)}</b></div><div class="summary-line"><span>المستلم</span><b>${o.paymentReceived?money(o.amountReceived):'—'}</b></div><div class="summary-line"><span>الربح من الطلب</span><b class="positive">${money(profitForOrder(o))}</b></div><div class="summary-line"><span>حالة المطعم</span>${payStatus(o)}</div><div class="summary-line"><span>الموقع</span><span>${o.locationText?esc(o.locationText):'غير محدد'}</span></div><div class="actions">${o.locationText||o.locationLink?`<button class="btn btn-light" onclick="tripLocationByOrder('${o.id}')">📍 فتح الموقع</button>`:''}<button class="btn btn-success" onclick="callPhone('${esc(o.phone)}')">📞 اتصال</button>${o.status==='in-progress'?`<button class="btn btn-primary" onclick="closeModal();startTrip('${o.id}')">🛵 متابعة</button>`:''}${o.paymentStatus==='unpaid'&&o.status!=='cancelled'?`<button class="btn btn-warning" onclick="closeModal();payRestaurant('${o.id}')">💳 سداد</button>`:''}</div>`)}
+function tripLocationByOrder(id){const o=findOrder(id);if(!o)return;if(o.locationLink)window.open(o.locationLink,'_blank','noopener');else if(o.locationText)window.open('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(o.locationText),'_blank','noopener')}
+function cancelOrder(id){const o=findOrder(id);if(!o||o.status==='cancelled')return;if(o.status==='completed')return toast('⚠️ الطلب المكتمل لا يُلغى مباشرة حفاظًا على السجل المالي');if(!confirm('إلغاء الطلب؟ سيبقى في السجل كملغى.'))return;o.status='cancelled';o.cancelledAt=nowISO();if(state.currentTripId===id)state.currentTripId=null;if(o.paymentStatus==='paid')addLedger('restaurant_refund',o.orderValue,id,'استرجاع مبلغ المطعم بسبب الإلغاء');persist();renderAll();toast('تم إلغاء الطلب')}
+function openCustomerModal(id){const c=id?state.customers.find(x=>x.id===id):null;showModal(`<h2 class="section-title">${c?'✏️ تعديل العميل':'➕ إضافة عميل'}</h2><input id="customerEditId" type="hidden" value="${c?c.id:''}"><div class="field"><label class="label">رقم الهاتف *</label><input id="customerEditPhone" class="input" value="${c?esc(c.phone):''}" type="tel"></div><div class="field"><label class="label">📍 الموقع</label><input id="customerEditLocation" class="input" value="${c?esc(c.location||''):''}"></div><div class="field"><label class="label">🔗 رابط الموقع</label><input id="customerEditLink" class="input" value="${c?esc(c.locationLink||''):''}" type="url"></div><div class="actions"><button class="btn btn-primary" onclick="saveCustomer()">💾 حفظ</button><button class="btn btn-light" onclick="closeModal()">إلغاء</button></div>`)}
+function editCustomer(id){openCustomerModal(id)}
+function saveCustomer(){const id=$('customerEditId').value,p=cleanPhone($('customerEditPhone').value),loc=$('customerEditLocation').value.trim(),link=$('customerEditLink').value.trim();if(!p)return toast('⚠️ رقم الهاتف مطلوب');if(state.customers.some(c=>c.phone===p&&c.id!==id))return toast('⚠️ العميل موجود');if(id){const c=state.customers.find(x=>x.id===id);if(c){const old=c.phone;c.phone=p;c.location=loc;c.locationLink=link;state.orders.forEach(o=>{if(o.phone===old)o.phone=p})}}else state.customers.push({id:uid('CUST'),phone:p,location:loc,locationLink:link,lat:null,lng:null});persist();closeModal();renderCustomers();toast('✅ تم حفظ العميل')}
+function saveDriverName(){const n=$('driverNameInput').value.trim();if(!n)return toast('⚠️ الاسم مطلوب');state.driver.name=n;persist();renderHeader();toast('✅ تم حفظ الاسم')}
+function resetTodayCash(){const v=prompt('أدخل النقد الفعلي الموجود الآن في جيبك:');if(v===null)return;const n=Number(v);if(!Number.isFinite(n))return toast('⚠️ قيمة غير صحيحة');const delta=Math.round(n-cashBalance());if(delta===0)return toast('✅ النقد مطابق بالفعل');addLedger('manual_cash',delta,'manual','مطابقة النقد الفعلي');persist();renderAll();toast('✅ تمت مطابقة النقد وتسجيل الفرق')}
+function exportBackup(){const data={...state,exportedAt:nowISO(),app:'Rahimo V3'};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rahimo-v3-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),500);toast('⬇️ تم إنشاء النسخة الاحتياطية')}
+function importBackup(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x||!Array.isArray(x.orders)||!Array.isArray(x.customers)||!Array.isArray(x.expenses))throw Error();if(!confirm('استبدال البيانات الحالية بالنسخة الاحتياطية؟'))return;state={...state,...x};normalizeState();if(state.openingCash===undefined)state.openingCash=num(state.cashBalance)-ledgerSum();persist();renderAll();toast('✅ تمت استعادة النسخة الاحتياطية')}catch(err){toast('❌ ملف النسخة الاحتياطية غير صالح')}};r.readAsText(f);e.target.value=''}
+function showFinancialReport(){const d=periodData('today'),debt=restaurantDebt(),cash=cashBalance();showModal(`<h2 class="section-title">🧾 تقرير نهاية اليوم</h2><div class="notice">تقرير مختصر قابل للمراجعة قبل إغلاق يوم العمل.</div><div class="kpi-grid" style="margin-top:12px"><div class="kpi"><div class="k-label">الطلبات</div><div class="k-value">${d.os.length}</div></div><div class="kpi green"><div class="k-label">صافي الربح</div><div class="k-value">${money(d.profit)}</div></div><div class="kpi blue"><div class="k-label">النقد الحالي</div><div class="k-value">${money(cash)}</div></div><div class="kpi amber"><div class="k-label">ديون المطاعم</div><div class="k-value">${money(debt)}</div></div></div><div style="margin-top:12px"><div class="summary-line"><span>💰 إجمالي المستلم</span><b>${money(d.received)}</b></div><div class="summary-line"><span>🛵 أجور التوصيل</span><b class="positive">+${money(d.fees)}</b></div><div class="summary-line"><span>📤 زيادات</span><b class="positive">+${money(d.over)}</b></div><div class="summary-line"><span>📥 نواقص</span><b class="negative">-${money(d.under)}</b></div><div class="summary-line"><span>💸 المصاريف</span><b class="negative">-${money(d.ex)}</b></div></div><div class="actions"><button class="btn btn-dark" onclick="window.print()">🖨️ طباعة / PDF</button><button class="btn btn-light" onclick="closeModal()">إغلاق</button></div>`)}
+function clearAllData(){
+  if(!confirm('هل أنت متأكد من حذف بيانات التشغيل؟ سيتم الاحتفاظ ببيانات العملاء والمطاعم. لا يمكن التراجع.')) return;
+  normalizeState();
+  state.orders=[];
+  state.expenses=[];
+  state.otherProfits=[];
+  state.openingCash=0;
+  state.ledger=[];
+  state.currentTripId=null;
+  persist();
+  renderAll();
+  toast('تم حذف بيانات التشغيل مع الاحتفاظ بالعملاء والمطاعم');
+}
+</script>\n<script id="rahimo-v18-js">
+(function(){
+const LK='rahimo_v18_locations';let w=null,last=null,meters=0,started=null,tick=null;
+function getL(){try{return JSON.parse(localStorage.getItem(LK)||'[]')}catch(e){return[]}}
+function setL(a){localStorage.setItem(LK,JSON.stringify(a));renderL()}
+function esc18(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function renderL(){let b=document.getElementById('r18LocationsList');if(!b)return;let a=getL();b.innerHTML=a.length?a.map((x,i)=>`<button class="r18loc" onclick="r18OpenLocation(${i})">📍 ${esc18(x.name)}<small>🧭 فتح المسار</small></button>`).join(''):'<div class="notice">أضف مطاعمك المتكررة للوصول إليها بسرعة.</div>'}
+window.r18AddLocation=function(){let n=prompt('اسم المطعم أو الموقع:');if(!n)return;let q=prompt('العنوان أو إحداثيات الموقع (اختياري):')||'';let a=getL();a.push({name:n.trim(),query:q.trim(),lat:null,lng:null});setL(a)};
+window.r18SaveCurrentLocation=function(){if(!navigator.geolocation)return alert('GPS غير متاح.');navigator.geolocation.getCurrentPosition(p=>{let n=prompt('اسم المطعم:');if(!n)return;let a=getL();a.push({name:n.trim(),query:'',lat:p.coords.latitude,lng:p.coords.longitude});setL(a);alert('تم حفظ موقعك الحالي.');},()=>alert('تعذر الحصول على موقعك الحالي.'))};
+window.r18OpenLocation=function(i){let x=getL()[i];if(!x)return;let d=(x.lat!=null&&x.lng!=null)?x.lat+','+x.lng:(x.query||x.name);window.open('https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(d)+'&travelmode=driving','_blank','noopener')};
+function dist(a,b){let R=6371000,r=Math.PI/180,dLat=(b.lat-a.lat)*r,dLon=(b.lng-a.lng)*r,q=Math.sin(dLat/2)**2+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(q))}
+function dur(ms){let x=Math.floor(ms/1000),h=Math.floor(x/3600),m=Math.floor(x%3600/60),z=x%60;return (h?String(h).padStart(2,'0')+':':'')+String(m).padStart(2,'0')+':'+String(z).padStart(2,'0')}
+function ui(){let d=document.getElementById('r18Distance'),t=document.getElementById('r18Duration'),dm=document.getElementById('r18DistanceMetric'),tm=document.getElementById('r18DurationMetric');if(d)d.textContent=(meters/1000).toFixed(2)+' كم';if(t)t.textContent=started?dur(Date.now()-started):'00:00';if(dm)dm.textContent=(meters/1000).toFixed(2);if(tm)tm.textContent=started?dur(Date.now()-started):'00:00'}
+window.r18StartGPS=function(){if(!navigator.geolocation){alert('GPS غير متاح.');return false}if(w!==null)return true;started=started||Date.now();const n=document.getElementById('r18TripStatus');if(n)n.textContent='🟢 جاري تشغيل GPS...';try{w=navigator.geolocation.watchPosition(p=>{let cur={lat:p.coords.latitude,lng:p.coords.longitude,acc:p.coords.accuracy||999};if(last){let d=dist(last,cur);if(d<=500&&cur.acc<=100)meters+=d}last=cur;let m=document.getElementById('r18Map');if(m)m.src='https://www.google.com/maps?q='+cur.lat+','+cur.lng+'&output=embed';const s=document.getElementById('r18TripStatus');if(s)s.textContent='🟢 تتبع نشط';ui()},()=>{let s=document.getElementById('r18TripStatus');if(s)s.textContent='⚠️ تعذر تحديد GPS';}, {enableHighAccuracy:true,maximumAge:3000,timeout:10000});tick=setInterval(ui,1000);return true}catch(e){w=null;let s=document.getElementById('r18TripStatus');if(s)s.textContent='⚠️ GPS غير متاح';return false}};
+window.r18NavigateCurrent=function(){let o=typeof currentTrip==='function'?currentTrip():null;if(!o)return alert('لا توجد رحلة نشطة.');let d=(o.deliveryLat!=null&&o.deliveryLng!=null)?o.deliveryLat+','+o.deliveryLng:(o.locationLink||o.locationText);if(!d)return alert('لا يوجد موقع للعميل.');window.open('https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(d)+'&travelmode=driving','_blank','noopener')};
+window.r18AddOrderToTrip=function(){if(typeof showPage==='function')showPage('addOrder')};
+window.r18GetDistance=function(){return meters};
+window.r18ResetTripMetrics=function(){if(w!==null){navigator.geolocation.clearWatch(w);w=null}if(tick){clearInterval(tick);tick=null}let result={meters,startedAt:started,finishedAt:new Date().toISOString()};try{let o=typeof currentTrip==='function'?currentTrip():null;if(o){o.tripDistanceMeters=meters;o.tripDurationSeconds=started?Math.floor((Date.now()-started)/1000):0}}catch(e){}meters=0;last=null;started=null;ui();let n=document.getElementById('r18TripStatus');if(n)n.textContent='تم الحفظ';return result};
+window.r18OrderNav=function(id,type){let o=typeof findOrder==='function'?findOrder(id):null;if(!o)return;let d=type==='store'?(o.store||''):((o.deliveryLat!=null&&o.deliveryLng!=null)?o.deliveryLat+','+o.deliveryLng:(o.locationLink||o.locationText));if(!d)return alert('الموقع غير متوفر.');window.open('https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(d)+'&travelmode=driving','_blank','noopener')};
+document.addEventListener('DOMContentLoaded',()=>{applyAppTheme();renderL();ui();const mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)');if(mq)mq.addEventListener?.('change',()=>{if(getAppTheme()==='system')applyAppTheme()})});
+})();
+</script><script id="rahimo-cloud-sync">
+(function(){
+  const CFG_KEY='rahimoFirebaseConfigV1';
+  const SYNC_KEY='rahimoCloudSyncV1';
+  let db=null, auth=null, user=null, unsub=null, timer=null, applyingRemote=false;
+  function cfg(){try{return JSON.parse(localStorage.getItem(CFG_KEY)||'null')}catch(e){return null}}
+  function configured(){const c=cfg();return !!(c&&c.apiKey&&c.authDomain&&c.projectId&&c.appId)}
+  function setStatus(text,ok){const e=document.getElementById('cloudSyncStatus'),b=document.getElementById('cloudSyncBadge');if(e)e.textContent=text;if(b){b.textContent=ok?'متصل':'غير متصل';b.className='badge '+(ok?'success':'warn')}}
+  function safeConfig(c){return {apiKey:String(c.apiKey||'').trim(),authDomain:String(c.authDomain||'').trim(),projectId:String(c.projectId||'').trim(),appId:String(c.appId||'').trim(),storageBucket:String(c.storageBucket||'').trim(),messagingSenderId:String(c.messagingSenderId||'').trim()}}
+  function init(){if(!window.firebase){setStatus('تعذر تحميل Firebase. تحقق من الإنترنت.',false);return false}if(!configured()){setStatus('غير مفعّل — أدخل إعدادات Firebase.',false);return false}try{const c=safeConfig(cfg());if(!firebase.apps.length)firebase.initializeApp(c);auth=firebase.auth();db=firebase.firestore();return true}catch(e){console.error(e);setStatus('إعداد Firebase غير صالح.',false);return false}}
+  function docRef(){return db.collection('rahimo_users').doc(user.uid).collection('app').doc('state')}
+  function localSnapshot(){try{return JSON.parse(JSON.stringify(state))}catch(e){return null}}
+  async function push(reason){if(!db||!user||applyingRemote)return;const snap=localSnapshot();if(!snap)return;snap._sync={updatedAt:firebase.firestore.FieldValue.serverTimestamp(),deviceId:localStorage.getItem('rahimoDeviceId')||null,reason:reason||'local'};try{await docRef().set(snap,{merge:false});setStatus('متصل • تمت المزامنة '+new Date().toLocaleTimeString('ar-DZ'),true);localStorage.setItem(SYNC_KEY,Date.now().toString())}catch(e){console.error(e);setStatus('فشل رفع البيانات: '+(e.message||'تحقق من قواعد Firestore'),false)}}
+  function schedule(reason){if(!user||applyingRemote)return;clearTimeout(timer);timer=setTimeout(()=>push(reason),700)}
+  async function connect(){if(!init())return;try{await auth.signInAnonymously();user=auth.currentUser;if(!user){setStatus('تعذر تسجيل الدخول المجهول.',false);return}setStatus('متصل — جاري تحميل قاعدة البيانات...',true);if(unsub)unsub();unsub=docRef().onSnapshot(async snap=>{if(!snap.exists){await push('initial');return}const remote=snap.data()||{};delete remote._sync;applyingRemote=true;try{state={...state,...remote};if(typeof normalizeState==='function')normalizeState();if(typeof persist==='function'){localStorage.setItem(KEY,JSON.stringify(state))}if(typeof renderAll==='function')renderAll();setStatus('متصل • آخر مزامنة '+new Date().toLocaleTimeString('ar-DZ'),true)}catch(e){console.error(e)}finally{applyingRemote=false}},e=>{console.error(e);setStatus('تعذر قراءة قاعدة البيانات: '+(e.message||''),false)});}
+  catch(e){console.error(e);setStatus('تعذر الاتصال: '+(e.message||''),false)}}
+  window.openFirebaseConfig=function(){const c=cfg()||{};showModal(`<h2 class="section-title">☁️ إعداد مزامنة قاعدة البيانات</h2><div class="notice">هذه الإعدادات من Firebase Console → Project settings → Your apps → Web app. بعد الحفظ ستتم مزامنة <b>الطلبات والعملاء والمطاعم والمصاريف والأرباح</b> معًا.</div><div class="field"><label class="label">apiKey</label><input id="fbApiKey" class="input" value="${esc(c.apiKey||'')}"></div><div class="field"><label class="label">authDomain</label><input id="fbAuthDomain" class="input" value="${esc(c.authDomain||'')}"></div><div class="field"><label class="label">projectId</label><input id="fbProjectId" class="input" value="${esc(c.projectId||'')}"></div><div class="field"><label class="label">appId</label><input id="fbAppId" class="input" value="${esc(c.appId||'')}"></div><div class="field"><label class="label">storageBucket (اختياري)</label><input id="fbStorageBucket" class="input" value="${esc(c.storageBucket||'')}"></div><div class="field"><label class="label">messagingSenderId (اختياري)</label><input id="fbMessagingSenderId" class="input" value="${esc(c.messagingSenderId||'')}"></div><div class="notice">فعّل Anonymous Authentication وأنشئ Firestore Database في مشروع Firebase. لا تضع مفاتيح خادم أو مفاتيح Admin SDK هنا.</div><div class="actions"><button class="btn btn-primary" onclick="saveFirebaseConfig()">💾 حفظ واتصال</button><button class="btn btn-light" onclick="closeModal()">إلغاء</button></div>`)}
+  window.saveFirebaseConfig=function(){const c=safeConfig({apiKey:$('fbApiKey')?.value,authDomain:$('fbAuthDomain')?.value,projectId:$('fbProjectId')?.value,appId:$('fbAppId')?.value,storageBucket:$('fbStorageBucket')?.value,messagingSenderId:$('fbMessagingSenderId')?.value});if(!c.apiKey||!c.authDomain||!c.projectId||!c.appId)return toast('⚠️ أكمل بيانات Firebase المطلوبة');try{localStorage.setItem(CFG_KEY,JSON.stringify(c));closeModal();connect()}catch(e){toast('❌ تعذر حفظ إعدادات Firebase')}}
+  window.syncNow=async function(){if(!configured()){openFirebaseConfig();return}if(!user){await connect();return}await push('manual')}
+  const oldPersist=window.persist;
+  // persist is a lexical function in the main script, so wrap global calls through a lightweight hook.
+  window.addEventListener('rahimo-state-changed',()=>schedule('change'));
+  document.addEventListener('DOMContentLoaded',()=>{try{if(!localStorage.getItem('rahimoDeviceId'))localStorage.setItem('rahimoDeviceId','DEV-'+Math.random().toString(36).slice(2));if(configured())connect();}catch(e){}});
+  window.r18CloudSchedule=function(){schedule('change')};
+})();
+</script>
+<script id="rahimo-pwa-js">
+(function(){
+  let deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault(); deferredPrompt=e;
+    const b=document.getElementById('pwaInstallBtn'); if(b){b.style.display='block';b.disabled=false}
+    const h=document.getElementById('pwaInstallHint'); if(h)h.textContent='التطبيق جاهز للتثبيت على جهازك.';
+  });
+  window.addEventListener('appinstalled',function(){
+    deferredPrompt=null;
+    const b=document.getElementById('pwaInstallBtn'); if(b){b.textContent='✅ تم تثبيت رحيمو';b.disabled=true}
+    const h=document.getElementById('pwaInstallHint'); if(h)h.textContent='رحيمو مثبت الآن ويمكن فتحه من شاشة التطبيقات.';
+  });
+  window.installRahimoApp=async function(){
+    if(deferredPrompt){
+      deferredPrompt.prompt();
+      try{await deferredPrompt.userChoice}catch(e){}
+      deferredPrompt=null; return;
+    }
+    const h=document.getElementById('pwaInstallHint');
+    if(h)h.textContent='من قائمة المتصفح اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية». يجب تشغيله عبر HTTPS.';
+    if(typeof toast==='function')toast('📲 افتح قائمة المتصفح واختر تثبيت التطبيق');
+  };
+  if('serviceWorker' in navigator && location.protocol!=='file:'){
+    window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(function(e){console.warn('PWA service worker:',e)})});
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    const b=document.getElementById('pwaInstallBtn');
+    if(b && !deferredPrompt){
+      // Keep the install action visible; browsers may expose installation through their own menu.
+      b.style.display='block';
+    }
+  });
+})();
+</script></body>
+</html>
