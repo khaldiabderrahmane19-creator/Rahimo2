@@ -6,13 +6,7 @@
 <meta name="theme-color" content="#090d16">
 <meta name="color-scheme" content="dark">
 <title>رحيمو — نظام إدارة التوصيل</title>
-<link rel="manifest" href="./manifest.json">
-<meta name="application-name" content="Rahimo">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Rahimo">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="manifest" href='data:application/manifest+json,{"name":"رحيمو","short_name":"Rahimo","start_url":".","display":"standalone","background_color":"%23090d16","theme_color":"%23090d16"}'>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{
@@ -117,7 +111,6 @@ button{cursor:pointer}
 .btn-light{background:#1e293b;color:#f1f5f9;border:1px solid rgba(255,255,255,0.05)}
 .btn-dark{background:#090d16;color:#fff;border:1px solid var(--line)}
 .btn-block{width:100%}
-.btn-whatsapp{background:#10b981;color:#fff;box-shadow:0 6px 16px rgba(16,185,129,0.25)}
 .btn-ghost{background:transparent;border:1px dashed var(--line);color:var(--muted)}
 
 .row{display:flex;gap:10px;align-items:center}
@@ -131,20 +124,21 @@ button{cursor:pointer}
 .badge.warn{background:rgba(245,158,11,0.15);color:#fbbf24}
 .badge.danger{background:rgba(239,68,68,0.15);color:#f87171}
 .badge.info{background:rgba(6,182,212,0.15);color:#22d3ee}
-.badge.whatsapp{background:rgba(16,185,129,0.15);color:#34d399}
 .badge.free{background:rgba(236,72,153,0.15);color:#f472b6}
 .badge.compensated{background:rgba(139,92,246,0.15);color:#a78bfa}
 
 .section-title{font-size:17px;font-weight:900;margin:0 0 14px;color:#fff}
 
-.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 16px}
+/* ✅ 5 أزرار سريعة */
+.quick{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0 16px}
 .quick button{
-  min-height:68px;border:1px solid var(--line);background:var(--card);
-  border-radius:16px;font-weight:800;font-size:12px;
-  box-shadow:var(--shadow);color:var(--text);display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;
-  transition:.2s;
+  min-height:66px;border:1px solid var(--line);background:var(--card);
+  border-radius:16px;font-weight:800;font-size:11px;
+  box-shadow:var(--shadow);color:var(--text);display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center;
+  transition:.2s;padding:6px 4px;
 }
 .quick button:hover{border-color:var(--primary);background:var(--card-hover)}
+.quick button span:first-child{font-size:22px;line-height:1}
 
 .kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .kpi{padding:16px;border-radius:18px;border:1px solid var(--line);background:var(--card)}
@@ -235,11 +229,13 @@ button{cursor:pointer}
   border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;white-space:nowrap;transition:.2s;
 }
 .chip:hover{background:rgba(59,130,246,0.2)}
+.chip.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 .chip.store{background:rgba(245,158,11,0.1);color:#fcd34d;border-color:rgba(245,158,11,0.3)}
 .chip.amount{background:rgba(16,185,129,0.1);color:#6ee7b7;border-color:rgba(16,185,129,0.3)}
 .chip.location{background:rgba(139,92,246,0.1);color:#c4b5fd;border-color:rgba(139,92,246,0.3)}
+.chip.income{background:rgba(236,72,153,0.1);color:#f472b6;border-color:rgba(236,72,153,0.3)}
+.chip.income.active{background:#ec4899;color:#fff;border-color:#ec4899}
 
-/* 🆕 قائمة المواقع السريعة */
 .loc-quick-list{display:grid;gap:8px;margin-top:6px}
 .loc-quick-btn{
   text-align:right;padding:12px 14px;border:1px solid var(--line);
@@ -258,7 +254,6 @@ button{cursor:pointer}
 #mapPick{height:320px;border-radius:16px;overflow:hidden;border:1px solid var(--line);margin:10px 0;background:#0b111e}
 .map-offline-badge{position:absolute;top:14px;right:14px;z-index:1000;background:rgba(245,158,11,0.9);color:#000;padding:6px 12px;border-radius:999px;font-size:11px;font-weight:900;box-shadow:var(--shadow)}
 
-.receipt-thumb{width:68px;height:68px;border-radius:14px;object-fit:cover;border:1px solid var(--line)}
 .receipt-preview{max-width:100%;max-height:340px;border-radius:16px;border:1px solid var(--line);display:block;margin:12px auto}
 
 .loc-card{border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;background:#0b111e}
@@ -270,6 +265,15 @@ button{cursor:pointer}
 .store-card:hover{border-color:rgba(59,130,246,0.4)}
 .store-name{font-weight:900;font-size:15px;color:#fff}
 .store-loc{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+
+.income-card{
+  border:1px solid rgba(236,72,153,0.25);border-radius:16px;padding:14px;margin-bottom:10px;
+  background:rgba(236,72,153,0.05);
+}
+.income-card .income-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.income-card .income-amount{font-size:18px;font-weight:900;color:#f472b6;font-variant-numeric:tabular-nums}
+.income-card .income-cat{font-size:11px;color:var(--muted);margin-top:3px}
+.income-card .income-date{font-size:10px;color:#64748b;margin-top:2px}
 
 #r16Backdrop{display:none;position:fixed;inset:0;z-index:15001;background:rgba(5,8,15,0.7);backdrop-filter:blur(4px)}
 #r16Backdrop.show{display:block}
@@ -300,7 +304,9 @@ button{cursor:pointer}
 
 @media(max-width:520px){
  .app{padding-left:8px;padding-right:8px}
- .g3{grid-template-columns:1fr 1fr}.quick{grid-template-columns:repeat(2,1fr)}
+ .g3{grid-template-columns:1fr 1fr}
+ .quick{grid-template-columns:repeat(3,1fr);gap:6px}
+ .quick button{min-height:60px;font-size:10px}
  .order-meta{grid-template-columns:1fr}
  .card{padding:14px}.bottom-nav{width:calc(100% - 16px);bottom:8px}
  .nav-item{font-size:9px}.nav-item.nav-add{width:72px;height:72px}
@@ -330,7 +336,6 @@ button{cursor:pointer}
 <main>
 <div class="offline-banner" id="offlineBanner">📴 أنت غير متصل بالإنترنت — بعض الميزات قد لا تعمل (الخريطة، AI)</div>
 
-<!-- ============ الرئيسية ============ -->
 <section id="dashboard" class="page active">
   <div class="card hero">
     <div class="between">
@@ -349,6 +354,7 @@ button{cursor:pointer}
     <button onclick="showPage('orders')"><span>📋</span>الطلبات</button>
     <button onclick="showPage('trip')"><span>🛵</span>الرحلة</button>
     <button onclick="showPage('earnings')"><span>📊</span>الأرباح</button>
+    <button onclick="openExtraIncomeModal()"><span>💎</span>دخل إضافي</button>
   </div>
   <div class="card"><h2 class="section-title">📊 ملخص اليوم</h2>
     <div class="grid g3">
@@ -367,7 +373,7 @@ button{cursor:pointer}
     <div class="kpi-grid" style="margin-top:12px">
       <div class="kpi red"><div class="k-label">💳 عمولات متراكمة</div><div class="k-value" id="commissionKpi">0 دج</div></div>
       <div class="kpi"><div class="k-label">🎁 تعويض مجاني مستحق</div><div class="k-value" id="compensationKpi">0 دج</div></div>
-      <div class="kpi pink"><div class="k-label">🎁 تعويض التطبيق (اليوم)</div><div class="k-value" id="appCompensationKpi">0 دج</div></div>
+      <div class="kpi pink"><div class="k-label">💎 دخل إضافي (اليوم)</div><div class="k-value" id="extraIncomeKpi">0 دج</div></div>
       <div class="kpi"><div class="k-label">🧾 صافي التسوية المتوقع</div><div class="k-value" id="expectedSettlementKpi">0 دج</div></div>
     </div>
     <div id="financialAlertBox"></div>
@@ -376,7 +382,6 @@ button{cursor:pointer}
   <div class="card"><div class="between"><h2 class="section-title">🏪 مستحقات المطاعم</h2><span class="badge warn" id="debtCount">0</span></div><div id="dashboardDebts"></div></div>
 </section>
 
-<!-- ============ إضافة طلب ============ -->
 <section id="addOrder" class="page">
   <div class="card">
     <h2 class="section-title">➕ إضافة طلبية جديدة</h2>
@@ -470,10 +475,8 @@ button{cursor:pointer}
   </div>
 </section>
 
-<!-- ============ الرحلة ============ -->
 <section id="trip" class="page"><div id="tripContent"></div></section>
 
-<!-- ============ الطلبات ============ -->
 <section id="orders" class="page">
   <div class="card">
     <div class="between"><h2 class="section-title">📋 سجل الطلبات</h2><span class="badge" id="ordersCount">0</span></div>
@@ -491,7 +494,6 @@ button{cursor:pointer}
   </div>
 </section>
 
-<!-- ============ العملاء ============ -->
 <section id="customers" class="page">
   <div class="card">
     <div class="between"><h2 class="section-title">👥 العملاء</h2><button class="btn btn-primary" onclick="openCustomerModal()">➕ إضافة</button></div>
@@ -500,7 +502,6 @@ button{cursor:pointer}
   </div>
 </section>
 
-<!-- ============ المتاجر ============ -->
 <section id="stores" class="page">
   <div class="card">
     <div class="between"><h2 class="section-title">🏪 المتاجر</h2><button class="btn btn-primary" onclick="openStoreModal()">➕ إضافة متجر</button></div>
@@ -510,7 +511,6 @@ button{cursor:pointer}
   </div>
 </section>
 
-<!-- ============ المصاريف ============ -->
 <section id="expenses" class="page">
   <div class="card">
     <h2 class="section-title">💸 تسجيل مصروف</h2>
@@ -525,12 +525,11 @@ button{cursor:pointer}
   <div class="card"><h2 class="section-title">📜 مصاريف اليوم</h2><div id="expensesList"></div></div>
 </section>
 
-<!-- ============ الأرباح ============ -->
 <section id="earnings" class="page">
   <div class="card hero">
     <div class="small muted">صافي الربح الحقيقي</div>
     <div id="netProfit" style="font-size:36px;font-weight:900;margin:6px 0">0 دج</div>
-    <div class="small muted">أجور التوصيل + الزيادات − النقص − المصاريف</div>
+    <div class="small muted">أجور التوصيل + دخول إضافية + الزيادات − النقص − المصاريف</div>
   </div>
 
   <div class="card">
@@ -568,6 +567,17 @@ button{cursor:pointer}
     </button>
   </div>
 
+  <div class="card" style="border-color:rgba(236,72,153,0.3)">
+    <div class="between">
+      <h2 class="section-title">💎 أرباح خارج الطلبات</h2>
+      <button class="btn btn-primary" onclick="openExtraIncomeModal()">➕ إضافة</button>
+    </div>
+    <div class="notice" style="margin-bottom:12px">
+      💡 سجّل هنا أي دخل لا ينتج عن طلب توصيل: بقشيش، مكافأة، رحلة خارج التطبيق، هدية...
+    </div>
+    <div id="extraIncomesList"></div>
+  </div>
+
   <div class="card">
     <h2 class="section-title">📊 الإحصائيات الشاملة</h2>
     <div class="tabs" style="margin-bottom:14px">
@@ -588,7 +598,6 @@ button{cursor:pointer}
   <div class="card"><h2 class="section-title">🧾 آخر الحركات المالية</h2><div id="ledgerList"></div></div>
 </section>
 
-<!-- ============ AI ============ -->
 <section id="ai" class="page">
   <div class="card hero">
     <div class="between">
@@ -640,7 +649,6 @@ button{cursor:pointer}
   </div>
 </section>
 
-<!-- ============ الإعدادات ============ -->
 <section id="profile" class="page">
   <div class="card hero">
     <div class="small muted">حساب السائق</div>
@@ -700,13 +708,19 @@ button{cursor:pointer}
 'use strict';
 
 /* ============================================================
-   رحيمو V21 — نظام مالي كامل + تعبئة تلقائية لموقع العميل
+   رحيمو V25
+   - إصلاح: 5 أزرار سريعة (الرحلة عادت)
+   - إصلاح: الرسم البياني يشمل الدخل الإضافي
+   - إضافة: تعديل الدخل الإضافي
+   - إضافة: حماية busyAction في saveExtraIncome
    ============================================================ */
 
 const KEY='rahimoV3State';
 let timer=null, orderFilter='all', period='today', busyAction=false;
 let mapInstance=null, mapMarker=null, mapOfflineMode=false;
-let _autoFilledValue=''; // 🆕 ذاكرة القيمة المملوءة تلقائيًا
+let _autoFilledValue='';
+let _lastPhoneChecked='';
+let _editingExtraIncomeId=null;
 
 const $=id=>document.getElementById(id);
 const money=n=>new Intl.NumberFormat('ar-DZ').format(Math.round(Number(n)||0))+' دج';
@@ -716,21 +730,39 @@ const uid=p=>p+'-'+Date.now()+'-'+Math.random().toString(36).slice(2,7);
 const nowISO=()=>new Date().toISOString();
 const todayKey=d=>new Date(d).toDateString();
 
+const EXTRA_CATEGORIES={
+  tip:{label:'🎁 بقشيش',icon:'🎁'},
+  bonus:{label:'🏆 مكافأة',icon:'🏆'},
+  external_trip:{label:'🛵 رحلة خارجية',icon:'🛵'},
+  other:{label:'💼 أخرى',icon:'💼'}
+};
+
 let state={
-  version:7,
+  version:10,
   driver:{name:'السائق'},
   orders:[],customers:[],expenses:[],ledger:[],settlements:[],
+  extraIncomes:[],
   openingCash:0,currentTripId:null,
   templates:[],
   stores:[],
   autoBackup:true
 };
 
-/* ============ أدوات ============ */
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2400)}
-function persist(){try{state.version=7;localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast('⚠️ تعذر حفظ البيانات')}}
+function persist(){try{state.version=10;localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast('⚠️ تعذر حفظ البيانات')}}
 function setText(id,v){if($(id))$(id).textContent=v}
 function cleanPhone(p){return String(p||'').replace(/[^\d+]/g,'').replace(/(?!^)\+/g,'')}
+
+function haversine(lat1,lng1,lat2,lng2){
+  const R=6371000,toRad=x=>x*Math.PI/180;
+  const dLat=toRad(lat2-lat1),dLng=toRad(lng2-lng1);
+  const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)**2;
+  return 2*R*Math.asin(Math.sqrt(a));
+}
+
+function isCoordsOnly(t){
+  return !t || /^[\d\s.,\-]+$/.test(String(t).trim());
+}
 
 /* ============ تطبيع ============ */
 function normalizeStep(d,c=false){d=d||{};return {completed:!!d.completed||c,startTime:d.startTime||null,endTime:d.endTime||null,duration:num(d.duration)}}
@@ -759,7 +791,6 @@ function normalizeOrder(o){
   return x;
 }
 
-/* 🆕 تطبيع العميل مع دعم lastUsedLocationId و lastUsed لكل موقع */
 function normalizeCustomer(c){
   c.id=c.id||uid('CUST');
   c.phone=String(c.phone||'');
@@ -798,11 +829,23 @@ function normalizeSettlement(s){
   };
 }
 
+function normalizeExtraIncome(e){
+  return {
+    id:e.id||uid('INC'),
+    amount:num(e.amount),
+    category:e.category||'other',
+    note:e.note||'دخل إضافي',
+    date:e.date||nowISO(),
+    updatedAt:e.updatedAt||null
+  };
+}
+
 function normalizeState(){
   state.orders=(state.orders||[]).map(normalizeOrder);
   state.customers=(state.customers||[]).map(normalizeCustomer);
   state.stores=(state.stores||[]).map(normalizeStore);
   state.settlements=(state.settlements||[]).map(normalizeSettlement);
+  state.extraIncomes=(state.extraIncomes||[]).map(normalizeExtraIncome);
   state.expenses=(state.expenses||[]).map(e=>({...e,id:e.id||uid('EXP'),amount:num(e.amount),note:e.note||'مصروف',date:e.date||nowISO()}));
   state.ledger=(state.ledger||[]).map(x=>({...x,id:x.id||uid('TX'),amount:num(x.amount),date:x.date||nowISO(),note:x.note||'',type:x.type||'other'}));
   state.templates=state.templates||[];
@@ -823,6 +866,13 @@ function findStore(name){return state.stores.find(s=>s.name.trim()===String(name
 function findCustomer(phone){return state.customers.find(c=>c.phone===cleanPhone(phone))}
 
 /* ============ الحسابات المالية ============ */
+function extraIncomeForPeriod(p){
+  const start=rangeStart(p);
+  return state.extraIncomes
+    .filter(e=>new Date(e.date)>=start)
+    .reduce((s,e)=>s+num(e.amount),0);
+}
+
 function netProfitForPeriod(p){
   const start=rangeStart(p);
   const os=state.orders.filter(o=>new Date(o.createdAt)>=start&&o.status!=='cancelled');
@@ -830,7 +880,8 @@ function netProfitForPeriod(p){
   const over=os.filter(o=>o.paymentReceived).reduce((s,o)=>s+Math.max(0,num(o.difference)),0);
   const under=os.filter(o=>o.paymentReceived).reduce((s,o)=>s+Math.max(0,-num(o.difference)),0);
   const ex=state.expenses.filter(e=>new Date(e.date)>=start).reduce((s,e)=>s+e.amount,0);
-  return fees+over-under-ex;
+  const extra=extraIncomeForPeriod(p);
+  return fees+over-under-ex+extra;
 }
 
 function unpaidCommissions(){
@@ -875,6 +926,249 @@ function profitForOrder(o){
   return num(o.fee)+Math.max(0,num(o.difference))-Math.max(0,-num(o.difference));
 }
 
+/* ============ مزامنة موقع الطلب مع العميل ============ */
+function syncOrderLocationToCustomer(o){
+  if(!o||!o.phone)return;
+  const c=findCustomer(o.phone);
+  if(!c)return;
+
+  const loc=(o.locationText||'').trim();
+  const link=(o.locationLink||'').trim();
+  const lat=(o.deliveryLat!=null&&o.deliveryLat!=='')?Number(o.deliveryLat):null;
+  const lng=(o.deliveryLng!=null&&o.deliveryLng!=='')?Number(o.deliveryLng):null;
+
+  if(!loc && !link && lat===null) return;
+
+  let target = c.lastUsedLocationId
+    ? c.locations.find(l=>l.id===c.lastUsedLocationId)
+    : null;
+
+  if(target){
+    const textMatch = loc && (target.text||'')===loc;
+    const geoMatch = lat!==null && target.lat!=null && target.lng!=null &&
+                     haversine(target.lat,target.lng,lat,lng) < 100;
+    if(!textMatch && !geoMatch){
+      target = null;
+    }
+  }
+
+  if(!target && lat!==null && lng!==null){
+    target = c.locations.find(l =>
+      l.lat!=null && l.lng!=null && haversine(l.lat,l.lng,lat,lng) < 50
+    );
+  }
+
+  if(!target && loc){
+    target = c.locations.find(l => (l.text||'')===loc);
+  }
+
+  if(target){
+    if(lat!==null) target.lat = lat;
+    if(lng!==null) target.lng = lng;
+    if(link)       target.link = link;
+    if(loc && !target.text) target.text = loc;
+    target.lastUsed = nowISO();
+    c.lastUsedLocationId = target.id;
+  } else {
+    const newLoc = {
+      id: uid('LOC'),
+      label: `موقع ${c.locations.length + 1}`,
+      text: loc || link || `${lat}, ${lng}`,
+      lat, lng, link,
+      isDefault: c.locations.length === 0,
+      lastUsed: nowISO()
+    };
+    c.locations.push(newLoc);
+    c.lastUsedLocationId = newLoc.id;
+
+    if(c.locations.length > 5){
+      const sorted = [...c.locations].sort((a,b)=>
+        new Date(b.lastUsed||0) - new Date(a.lastUsed||0)
+      );
+      const keep = new Set(sorted.slice(0,5).map(l=>l.id));
+      c.locations = c.locations.filter(l=>keep.has(l.id));
+      if(!c.locations.find(l=>l.id===c.lastUsedLocationId))
+        c.lastUsedLocationId = c.locations[0]?.id || null;
+    }
+  }
+
+  const preserved = (target && (target.text || target.link)) || loc || link || '';
+  c.location = preserved;
+  persist();
+}
+
+/* ============ الأرباح الخارجية ============ */
+/* ✅ حفظ: يدعم الإنشاء والتعديل + حماية busyAction */
+function saveExtraIncome(){
+  if(busyAction)return;
+  busyAction=true;
+  try{
+    const amount=num($('extraIncomeAmount').value);
+    if(amount<=0)return toast('⚠️ أدخل المبلغ');
+    const cat=$('extraIncomeCategory').value||'other';
+    const noteRaw=$('extraIncomeNote').value.trim();
+    const note=noteRaw||EXTRA_CATEGORIES[cat]?.label||'دخل إضافي';
+
+    if(_editingExtraIncomeId){
+      // ✅ تعديل
+      const entry=state.extraIncomes.find(x=>x.id===_editingExtraIncomeId);
+      if(!entry)return toast('⚠️ غير موجود');
+      const oldAmount=entry.amount;
+      const oldNote=entry.note;
+
+      entry.amount=amount;
+      entry.category=cat;
+      entry.note=note;
+      entry.updatedAt=nowISO();
+
+      // عكس القيد القديم وإضافة الجديد
+      const diff=amount-oldAmount;
+      if(diff!==0){
+        addLedger('extra_income_edit',diff,entry.id,
+          `تعديل دخل: ${oldAmount} ← ${amount}`);
+      } else if(oldNote!==note){
+        addLedger('extra_income_edit',0,entry.id,
+          `تعديل بيان: ${note}`);
+      }
+
+      persist();
+      closeModal();
+      renderAll();
+      toast(`✅ تم التعديل: ${money(amount)}`);
+    } else {
+      // ✅ إنشاء
+      const entry={
+        id:uid('INC'),
+        amount,
+        category:cat,
+        note,
+        date:nowISO(),
+        updatedAt:null
+      };
+      state.extraIncomes.unshift(entry);
+      addLedger('extra_income',amount,entry.id,note);
+      persist();
+      closeModal();
+      renderAll();
+      toast('✅ تم تسجيل دخل إضافي: '+money(amount));
+    }
+  } finally {
+    busyAction=false;
+    _editingExtraIncomeId=null;
+  }
+}
+
+/* ✅ فتح modal: إنشاء أو تعديل */
+function openExtraIncomeModal(id){
+  const editEntry=id?state.extraIncomes.find(x=>x.id===id):null;
+  _editingExtraIncomeId=editEntry?editEntry.id:null;
+
+  const curCat=editEntry?.category||'tip';
+  const curAmount=editEntry?.amount||'';
+  const curNote=editEntry?.note||'';
+  const title=editEntry?'✏️ تعديل دخل إضافي':'💎 تسجيل دخل إضافي';
+  const btnLabel=editEntry?'💾 حفظ التعديل':'💾 حفظ';
+
+  showModal(`
+    <h2 class="section-title">${title}</h2>
+    <div class="notice" style="margin-bottom:14px">
+      ${editEntry
+        ? '📝 عدّل المبلغ أو البيان أو النوع.'
+        : '💡 سجّل أي دخل لا ينتج عن طلب توصيل — سيُضاف إلى نقدك ويدخل في حساب الربح.'}
+    </div>
+    <div class="field">
+      <label class="label">نوع الدخل</label>
+      <div class="chip-row" id="extraIncomeChips">
+        ${Object.entries(EXTRA_CATEGORIES).map(([k,v])=>
+          `<button type="button" class="chip income ${k===curCat?'active':''}" onclick="setExtraCategory('${k}',this)">${v.label}</button>`
+        ).join('')}
+      </div>
+      <input type="hidden" id="extraIncomeCategory" value="${curCat}">
+    </div>
+    <div class="field">
+      <label class="label">المبلغ (دج) *</label>
+      <input id="extraIncomeAmount" class="input" type="number" min="1" inputmode="numeric" placeholder="0" value="${curAmount}">
+      <div class="chip-row" style="margin-top:8px">
+        ${[100,200,300,500,1000].map(v=>`<button type="button" class="chip amount" onclick="document.getElementById('extraIncomeAmount').value=${v}">${v}</button>`).join('')}
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">البيان (اختياري)</label>
+      <input id="extraIncomeNote" class="input" placeholder="مثال: بقشيش من عميل، مكافأة نهاية الأسبوع..." value="${esc(curNote)}">
+    </div>
+    <div class="actions" style="margin-top:14px">
+      <button class="btn btn-primary" onclick="saveExtraIncome()">${btnLabel}</button>
+      <button class="btn btn-light" onclick="closeExtraIncomeModal()">إلغاء</button>
+    </div>
+  `);
+  setTimeout(()=>$('extraIncomeAmount')?.focus(),200);
+}
+
+function closeExtraIncomeModal(){
+  _editingExtraIncomeId=null;
+  closeModal();
+}
+
+function editExtraIncome(id){
+  openExtraIncomeModal(id);
+}
+
+function setExtraCategory(cat,btn){
+  $('extraIncomeCategory').value=cat;
+  document.querySelectorAll('#extraIncomeChips .chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function deleteExtraIncome(id){
+  const e=state.extraIncomes.find(x=>x.id===id);
+  if(!e)return;
+  if(!confirm(`حذف هذا الدخل (${money(e.amount)})؟`))return;
+  state.extraIncomes=state.extraIncomes.filter(x=>x.id!==id);
+  addLedger('extra_income_reverse',-e.amount,e.id,'حذف دخل: '+e.note);
+  persist();
+  renderAll();
+  toast('🗑️ تم الحذف');
+}
+
+function renderExtraIncomes(){
+  const box=$('extraIncomesList');
+  if(!box)return;
+  const arr=state.extraIncomes.slice(0,10);
+  if(!arr.length){
+    box.innerHTML='<div class="empty" style="padding:16px">لا توجد أرباح خارج الطلبات بعد</div>';
+    return;
+  }
+  const total=state.extraIncomes.reduce((s,e)=>s+e.amount,0);
+  box.innerHTML=`
+    <div class="summary-line" style="border-bottom:1px solid var(--line);margin-bottom:10px;padding-bottom:10px">
+      <span><b>💰 الإجمالي الكلي</b></span>
+      <b class="positive" style="font-size:16px">${money(total)}</b>
+    </div>
+    ${arr.map(e=>{
+      const cat=EXTRA_CATEGORIES[e.category]||EXTRA_CATEGORIES.other;
+      const d=new Date(e.date);
+      const dateStr=d.toLocaleDateString('ar-DZ')+' '+d.toLocaleTimeString('ar-DZ',{hour:'2-digit',minute:'2-digit'});
+      const edited=e.updatedAt?`<span style="color:#fbbf24"> · مُعدّل</span>`:'';
+      return `<div class="income-card">
+        <div class="income-head">
+          <div style="flex:1">
+            <div style="font-weight:900;color:#fff;font-size:13px">${cat.icon} ${esc(e.note)}</div>
+            <div class="income-cat">${cat.label}${edited}</div>
+            <div class="income-date">${dateStr}</div>
+          </div>
+          <div style="text-align:left">
+            <div class="income-amount">+${money(e.amount)}</div>
+            <div class="row" style="gap:6px;margin-top:6px;justify-content:flex-end">
+              <button class="btn btn-light" style="padding:6px 10px;min-height:32px;font-size:11px" onclick="editExtraIncome('${e.id}')">✏️</button>
+              <button class="btn btn-danger" style="padding:6px 10px;min-height:32px;font-size:11px" onclick="deleteExtraIncome('${e.id}')">🗑️</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }).join('')}
+  `;
+}
+
 /* ============ الترحيل ============ */
 function migrate(){
   try{
@@ -917,7 +1211,7 @@ function renderDashboard(){
   setText('profitKpi',money(netProfitForPeriod('today')));
   setText('commissionKpi',money(unpaidCommissions()));
   setText('compensationKpi',money(pendingOfficeCompensation()));
-  setText('appCompensationKpi',money(appCompensationForPeriod('today')));
+  setText('extraIncomeKpi',money(extraIncomeForPeriod('today')));
   setText('expectedSettlementKpi',money(expectedSettlement()));
 
   const alertBox=$('financialAlertBox');
@@ -942,7 +1236,6 @@ function renderDashboard(){
       <div class="between">
         <div><div class="small muted">رحلة جارية الآن</div><strong style="font-size:15px;color:#fff">🏪 ${esc(ct.store)}</strong><div class="small muted">📞 ${esc(ct.phone)}</div></div>
         <div class="row">
-          <button class="btn btn-whatsapp" onclick="shareLiveLocationToCustomer('${ct.id}')" title="مشاركة موقعي">📲</button>
           <button class="btn btn-primary" onclick="showPage('trip')">🛵 متابعة</button>
         </div>
       </div>
@@ -999,7 +1292,7 @@ function orderCard(o){
       <button class="btn btn-light" onclick="editOrder('${o.id}')">✏️</button>
       <button class="btn btn-danger" onclick="cancelOrder('${o.id}')">✖</button>`:''}
       ${o.paymentStatus==='unpaid'&&o.status!=='cancelled'?`<button class="btn btn-warning" onclick="payRestaurant('${o.id}')">💳 سداد</button>`:''}
-      ${(o.locationText||o.locationLink)?`<button class="btn btn-light" onclick="shareOrderLocation('${o.id}')" title="مشاركة الموقع">📲</button>`:''}
+      ${o.locationText||o.locationLink?`<button class="btn btn-light" onclick="tripLocationByOrder('${o.id}')" title="فتح الموقع">🗺️</button>`:''}
     </div>
   </div>`;
 }
@@ -1049,10 +1342,9 @@ function renderCustomers(){
       </div>
       <div class="small" style="margin-top:8px">💰 إجمالي المستلم: <b style="color:#fff">${money(total)}</b></div>
       <div class="actions">
-        <button class="btn btn-success" onclick="callPhone('${esc(c.phone)}')">📞</button>
-        <button class="btn btn-whatsapp" onclick="openWhatsApp('${esc(c.phone)}','مرحباً 👋')">📲</button>
+        <button class="btn btn-success" onclick="callPhone('${esc(c.phone)}')">📞 اتصال</button>
         <button class="btn btn-primary" onclick="openCustomerLocations('${c.id}')">📍 المواقع</button>
-        <button class="btn btn-light" onclick="editCustomer('${c.id}')">✏️</button>
+        <button class="btn btn-light" onclick="editCustomer('${c.id}')">✏️ تعديل</button>
       </div>
     </div>`;
   }).join(''):'<div class="empty">لا يوجد عملاء</div>';
@@ -1076,9 +1368,8 @@ function openCustomerLocations(customerId){
         </div>
         <div class="actions" style="margin-top:10px">
           ${l.text||l.link?`<button class="btn btn-light" onclick="openLocation('${encodeURIComponent(l.text||'')}','${encodeURIComponent(l.link||'')}')">🗺️ فتح</button>`:''}
-          <button class="btn btn-whatsapp" onclick="shareLocation('${encodeURIComponent(l.text||'')}','${encodeURIComponent(l.link||'')}','${esc(c.phone)}')">📲</button>
-          <button class="btn btn-light" onclick="openEditCustomerLocation('${c.id}','${l.id}')">✏️</button>
-          ${locs.length>1?`<button class="btn btn-danger" onclick="deleteCustomerLocation('${c.id}','${l.id}')">🗑️</button>`:''}
+          <button class="btn btn-light" onclick="openEditCustomerLocation('${c.id}','${l.id}')">✏️ تعديل</button>
+          ${locs.length>1?`<button class="btn btn-danger" onclick="deleteCustomerLocation('${c.id}','${l.id}')">🗑️ حذف</button>`:''}
         </div>
       </div>
     `).join(''):'<div class="empty">لا توجد مواقع محفوظة</div>'}
@@ -1258,7 +1549,8 @@ function periodData(p){
   const under=paid.reduce((s,o)=>s+Math.max(0,-num(o.difference)),0);
   const ex=state.expenses.filter(e=>new Date(e.date)>=start).reduce((s,e)=>s+e.amount,0);
   const appComp=appCompensationForPeriod(p);
-  return {os,paid,fees,over,under,ex,appComp,profit:fees+over-under-ex,received:paid.reduce((s,o)=>s+num(o.amountReceived),0)};
+  const extra=extraIncomeForPeriod(p);
+  return {os,paid,fees,over,under,ex,appComp,extra,profit:fees+over-under-ex+extra,received:paid.reduce((s,o)=>s+num(o.amountReceived),0)};
 }
 
 function renderEarnings(){
@@ -1286,7 +1578,7 @@ function renderEarnings(){
   $('periodStats').innerHTML=`<div class="kpi-grid">
     <div class="kpi blue"><div class="k-label">📦 الطلبات</div><div class="k-value">${os.length}</div></div>
     <div class="kpi green"><div class="k-label">💎 صافي الربح</div><div class="k-value">${money(netProfitForPeriod(period))}</div></div>
-    <div class="kpi pink"><div class="k-label">🎁 تعويض التطبيق</div><div class="k-value">${money(d.appComp)}</div></div>
+    <div class="kpi pink"><div class="k-label">💎 دخل إضافي</div><div class="k-value">${money(d.extra)}</div></div>
     <div class="kpi amber"><div class="k-label">🏪 ديون الفترة</div><div class="k-value">${money(restaurantUnpaid.reduce((s,o)=>s+o.orderValue,0))}</div></div>
   </div>`;
 
@@ -1306,6 +1598,7 @@ function renderEarnings(){
     <div class="summary-line"><span>💰 المستلم</span><b class="positive">${money(received)}</b></div>
     <div class="summary-line"><span>⏳ المتبقي</span><b class="warning">${money(pendingCustomer)}</b></div>
     <div class="summary-line"><span>🛵 أجور</span><b class="positive">+${money(d.fees)}</b></div>
+    <div class="summary-line"><span>💎 دخل إضافي</span><b class="positive">+${money(d.extra)}</b></div>
     <div class="summary-line"><span>🎁 تعويض التطبيق</span><b class="positive">+${money(d.appComp)}</b></div>
     <div class="summary-line"><span>📤 زيادات</span><b class="positive">+${money(d.over)}</b></div>
     <div class="summary-line"><span>📥 نواقص</span><b class="negative">-${money(d.under)}</b></div>
@@ -1348,6 +1641,7 @@ function renderEarnings(){
 
   const currentDebts=debts();
   $('earningsDebts').innerHTML=currentDebts.length?currentDebts.map(debtCard).join(''):'<div class="success-box">لا توجد ديون 🎉</div>';
+  renderExtraIncomes();
   renderLedger();renderChart();
 }
 function renderLedger(){
@@ -1361,6 +1655,9 @@ function renderLedger(){
                x.type==='settlement_received'?'✅':
                x.type==='settlement_paid'?'💳':
                x.type==='app_compensation'?'🎁':
+               x.type==='extra_income'?'💎':
+               x.type==='extra_income_edit'?'✏️':
+               x.type==='extra_income_reverse'?'↩️':
                x.type==='cancellation_refund'?'↩️':'🧾';
     return `<div class="summary-line">
       <span>${icon} ${esc(x.note)}<br><span class="small muted">${new Date(x.date).toLocaleString('ar-DZ')}</span></span>
@@ -1368,15 +1665,22 @@ function renderLedger(){
     </div>`;
   }).join(''):'<div class="empty">لا توجد حركات</div>';
 }
+
+/* ✅ الرسم البياني يشمل الدخل الإضافي */
 function renderChart(){
   const box=$('chartBox');if(!box)return;
   const days=[],values=[];
   for(let i=6;i>=0;i--){
     const d=new Date();d.setDate(d.getDate()-i);
     const key=todayKey(d);
-    const profit=state.orders.filter(o=>todayKey(o.createdAt)===key&&o.status==='completed').reduce((s,o)=>s+profitForOrder(o),0);
+    const orderProfit=state.orders
+      .filter(o=>todayKey(o.createdAt)===key&&o.status==='completed')
+      .reduce((s,o)=>s+profitForOrder(o),0);
+    const extraProfit=state.extraIncomes
+      .filter(e=>todayKey(e.date)===key)
+      .reduce((s,e)=>s+num(e.amount),0);
     days.push(d.toLocaleDateString('ar-DZ',{weekday:'short'}));
-    values.push(profit);
+    values.push(orderProfit+extraProfit);
   }
   const max=Math.max(...values,1);
   const W=box.clientWidth||600,H=180,pad=25;
@@ -1473,7 +1777,7 @@ function renderSettlements(){
   `).join('');
 }
 
-/* ============ إلغاء الطلبات مع تعويض ============ */
+/* ============ إلغاء الطلبات ============ */
 function openCancellationModal(o){
   showModal(`
     <h2 class="section-title">✖ إلغاء الطلب</h2>
@@ -1581,9 +1885,13 @@ function renderProfile(){
   if(b)b.textContent='🔄 النسخ التلقائي: '+(state.autoBackup?'مُفعّل':'مُعطّل');
 }
 
-/* ============ 🆕 التعبئة التلقائية لموقع العميل ============ */
+/* ============ التعبئة التلقائية لموقع العميل ============ */
 function onPhoneInput(){
   const p=cleanPhone($('customerPhone').value);
+  if(p !== _lastPhoneChecked){
+    _autoFilledValue='';
+    _lastPhoneChecked=p;
+  }
   const c=findCustomer(p);
   const hint=$('customerHint');
   const box=$('customerLocationsBox');
@@ -1605,13 +1913,11 @@ function onPhoneInput(){
     return;
   }
 
-  // 🎯 إيجاد آخر موقع مستخدم
   const lastUsed=c.lastUsedLocationId
     ? locs.find(l=>l.id===c.lastUsedLocationId)
     : null;
   const defaultLoc=lastUsed || locs.find(l=>l.isDefault) || locs[0];
 
-  // ✅ التعبئة التلقائية (فقط إذا الحقل فارغ أو لم يُعدّل يدويًا)
   const currentVal=locField.value.trim();
   const canAutoFill=!currentVal || currentVal===_autoFilledValue;
 
@@ -1627,7 +1933,6 @@ function onPhoneInput(){
     hint.innerHTML=`✅ ${orderCount} طلب محفوظ — اختر موقعًا من الأسفل`;
   }
 
-  // عرض كل المواقع كبطاقات كبيرة للتبديل السريع
   if(box){
     box.innerHTML=`
       <div class="small muted" style="margin-top:10px;margin-bottom:6px">📍 تبديل سريع:</div>
@@ -1658,7 +1963,7 @@ function applyCustomerLocation(customerId,locId){
   c.lastUsedLocationId=l.id;
   persist();
   toast('📍 تم تطبيق الموقع');
-  onPhoneInput(); // تحديث التظليل والحالة
+  onPhoneInput();
 }
 
 function clearLatLngIfTyping(){$('deliveryLat').value='';$('deliveryLng').value=''}
@@ -1725,59 +2030,38 @@ function captureGPS(mode){
     const lat=Number(pos.coords.latitude.toFixed(6)),lng=Number(pos.coords.longitude.toFixed(6));
     const link=`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
     if(mode==='new'){
-      $('deliveryLocationText').value=`${lat}, ${lng}`;
+      const current=$('deliveryLocationText').value.trim();
+      if(!current || isCoordsOnly(current)){
+        $('deliveryLocationText').value=`${lat}, ${lng}`;
+      }
       $('locationLink').value=link;
       $('deliveryLat').value=lat;$('deliveryLng').value=lng;
     } else if(mode==='trip'){
       const o=currentTrip();
-      if(o){o.deliveryLat=lat;o.deliveryLng=lng;o.locationText=`${lat}, ${lng}`;o.locationLink=link;persist();renderTrip()}
+      if(o){
+        o.deliveryLat=lat;o.deliveryLng=lng;
+        if(isCoordsOnly(o.locationText)){
+          o.locationText=`${lat}, ${lng}`;
+        }
+        o.locationLink=link;
+        syncOrderLocationToCustomer(o);
+        persist();renderTrip();
+      }
     } else if(mode==='cust'){
-      $('locText').value=`${lat}, ${lng}`;$('locLat').value=lat;$('locLng').value=lng;$('locLink').value=link;
+      const cur=$('locText').value.trim();
+      if(!cur || isCoordsOnly(cur)){
+        $('locText').value=`${lat}, ${lng}`;
+      }
+      $('locLat').value=lat;$('locLng').value=lng;$('locLink').value=link;
     } else if(mode==='store'){
-      $('storeEditLocation').value=`${lat}, ${lng}`;$('storeLat').value=lat;$('storeLng').value=lng;
+      const cur=$('storeEditLocation').value.trim();
+      if(!cur || isCoordsOnly(cur)){
+        $('storeEditLocation').value=`${lat}, ${lng}`;
+      }
+      $('storeLat').value=lat;$('storeLng').value=lng;
     }
     toast('✅ تم تحديد الموقع');
   },()=>toast('❌ تعذر تحديد الموقع'),{enableHighAccuracy:true,timeout:15000,maximumAge:0});
-}
-
-/* ============ WhatsApp ============ */
-function openWhatsApp(phone,message){
-  let p=cleanPhone(phone).replace(/^0/,'213');
-  if(!p)return toast('⚠️ رقم غير صالح');
-  const url=`https://wa.me/${p}?text=${encodeURIComponent(message||'')}`;
-  window.open(url,'_blank','noopener');
-}
-function shareOrderLocation(orderId){
-  const o=findOrder(orderId);if(!o)return;
-  let loc='';
-  if(o.locationLink)loc=o.locationLink;
-  else if(o.deliveryLat)loc=`https://www.google.com/maps/search/?api=1&query=${o.deliveryLat},${o.deliveryLng}`;
-  else if(o.locationText)loc=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.locationText)}`;
-  else return toast('📍 لا يوجد موقع');
-  const msg=`📍 موقع التسليم:\n${o.locationText||''}\n${loc}`;
-  openWhatsApp(o.phone,msg);
-}
-function shareLiveLocationToCustomer(orderId){
-  const o=findOrder(orderId);if(!o)return;
-  toast('📍 جارٍ تحديد موقعك الحالي...');
-  navigator.geolocation.getCurrentPosition(pos=>{
-    const lat=Number(pos.coords.latitude.toFixed(6)),lng=Number(pos.coords.longitude.toFixed(6));
-    const link=`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-    const msg=`🛵 مرحباً، أنا في الطريق إليك الآن.\n\n📍 موقعي الحالي:\n${link}\n\nسأصل قريباً بإذن الله.`;
-    openWhatsApp(o.phone,msg);
-    toast('✅ تم تجهيز الرسالة');
-  },()=>toast('❌ تعذر تحديد موقعك'),{enableHighAccuracy:true,timeout:10000});
-}
-function shareLocation(encText,encLink,phone){
-  const text=decodeURIComponent(encText),link=decodeURIComponent(encLink);
-  const finalUrl=link||(text?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(text)}`:'');
-  if(!finalUrl)return toast('⚠️ لا يوجد موقع');
-  openWhatsApp(phone,`📍 الموقع:\n${text}\n${finalUrl}`);
-}
-function shareOrderDetails(orderId){
-  const o=findOrder(orderId);if(!o)return;
-  const msg=`🧾 تفاصيل الطلب:\n🏪 ${o.store}\n📦 ${money(o.orderValue)}\n🛵 ${money(o.fee)}\n💰 المطلوب: ${money(o.orderValue+o.fee+o.commission)}`;
-  openWhatsApp(o.phone,msg);
 }
 
 /* ============ خريطة ============ */
@@ -1832,11 +2116,23 @@ function confirmMapPick(purpose){
   const text=`${lat.toFixed(6)}, ${lng.toFixed(6)}`;
   if(purpose==='order'){
     $('deliveryLat').value=lat;$('deliveryLng').value=lng;
-    $('deliveryLocationText').value=text;$('locationLink').value=link;
+    const cur=$('deliveryLocationText').value.trim();
+    if(!cur || isCoordsOnly(cur)){
+      $('deliveryLocationText').value=text;
+    }
+    $('locationLink').value=link;
   } else if(purpose==='cust'){
-    $('locText').value=text;$('locLat').value=lat;$('locLng').value=lng;$('locLink').value=link;
+    const cur=$('locText').value.trim();
+    if(!cur || isCoordsOnly(cur)){
+      $('locText').value=text;
+    }
+    $('locLat').value=lat;$('locLng').value=lng;$('locLink').value=link;
   } else if(purpose==='store'){
-    $('storeEditLocation').value=text;$('storeLat').value=lat;$('storeLng').value=lng;
+    const cur=$('storeEditLocation').value.trim();
+    if(!cur || isCoordsOnly(cur)){
+      $('storeEditLocation').value=text;
+    }
+    $('storeLat').value=lat;$('storeLng').value=lng;
   }
   closeModal();
   toast('✅ تم حفظ الموقع');
@@ -1874,6 +2170,15 @@ function createOrder(){
     let c=findCustomer(phone);
     if(!c){
       c=normalizeCustomer({id:uid('CUST'),phone,location:loc||link||''});
+      if(c.locations.length && (loc||link||lat)){
+        const first=c.locations[0];
+        first.lat = lat?Number(lat):null;
+        first.lng = lng?Number(lng):null;
+        first.link = link||'';
+        first.text = loc||link||`${lat}, ${lng}`;
+        first.lastUsed = nowISO();
+        c.lastUsedLocationId = first.id;
+      }
       state.customers.push(c);
     } else {
       if(!c.locations)c.locations=[];
@@ -1894,7 +2199,6 @@ function createOrder(){
           };
           c.locations.push(target);
 
-          // 🧹 حد أقصى 5 مواقع — حذف الأقدم استخدامًا
           if(c.locations.length>5){
             const sorted=[...c.locations].sort((a,b)=>
               new Date(b.lastUsed||0)-new Date(a.lastUsed||0)
@@ -1903,7 +2207,6 @@ function createOrder(){
             c.locations=c.locations.filter(l=>keepIds.has(l.id));
           }
         }
-        // 🎯 تحديث آخر استخدام
         target.lastUsed=nowISO();
         c.lastUsedLocationId=target.id;
         c.location=loc||link;
@@ -1956,6 +2259,7 @@ function clearOrderForm(){
   $('customerHint').textContent='';
   if($('customerLocationsBox'))$('customerLocationsBox').innerHTML='';
   _autoFilledValue='';
+  _lastPhoneChecked='';
   updateExpected();renderTemplates();renderStoreChips();
   onDeliveryTypeChange();
 }
@@ -2063,12 +2367,9 @@ function renderTrip(){
     </div>
 
     <div class="card">
-      <h3 class="section-title">📲 تواصل ومشاركة</h3>
+      <h3 class="section-title">📞 تواصل</h3>
       <div class="actions">
-        <button class="btn btn-success" onclick="callPhone('${esc(o.phone)}')">📞 اتصال</button>
-        <button class="btn btn-whatsapp" onclick="shareLiveLocationToCustomer('${o.id}')">📲 شارك موقعي</button>
-        <button class="btn btn-whatsapp" onclick="shareOrderLocation('${o.id}')">📍 موقع العميل</button>
-        <button class="btn btn-whatsapp" onclick="shareOrderDetails('${o.id}')">🧾 تفاصيل</button>
+        <button class="btn btn-success btn-block" onclick="callPhone('${esc(o.phone)}')">📞 اتصال بالعميل</button>
       </div>
     </div>
 
@@ -2199,6 +2500,7 @@ function confirmPayment(){
     o.paymentReceived=true;o.amountReceived=r;o.difference=diff;
     o.status='completed';o.completedAt=nowISO();
     if(window._pendingReceipt){o.receipt=window._pendingReceipt;window._pendingReceipt=null}
+    syncOrderLocationToCustomer(o);
     addLedger('customer_payment',r,o.id,'استلام من العميل');
     state.currentTripId=null;
     persist();closeModal();renderAll();showPage('dashboard');
@@ -2216,6 +2518,7 @@ function quickFinish(){
   d.duration=Math.max(0,Math.floor((new Date(d.endTime)-new Date(d.startTime))/1000));
   o.paymentReceived=true;o.amountReceived=expected;o.difference=0;
   o.status='completed';o.completedAt=nowISO();
+  syncOrderLocationToCustomer(o);
   addLedger('customer_payment',expected,o.id,'تسليم سريع');
   state.currentTripId=null;
   persist();renderAll();showPage('dashboard');
@@ -2269,13 +2572,20 @@ function saveEditOrder(id){
   const nv=num($('editValue').value),nf=num($('editFee').value),nc=num($('editCommission').value);
   if(nv<=0||nf<=0)return toast('⚠️ القيم غير صحيحة');
   const old=o.orderValue;
-  o.phone=cleanPhone($('editPhone').value);
+  const newPhone=cleanPhone($('editPhone').value);
+  const phoneChanged = newPhone !== o.phone;
+  o.phone=newPhone;
   o.store=$('editStore').value.trim()||'غير محدد';
   o.locationText=$('editLoc').value.trim();
   o.orderValue=nv;o.fee=nf;o.commission=nc;
   if(o.isFreeDelivery)o.officeCompensation=nf;
   if(o.paymentStatus==='paid'&&nv!==old)addLedger('restaurant_adjustment',old-nv,o.id,'تصحيح');
-  persist();closeModal();renderAll();toast('✅ تم التعديل');
+  if(phoneChanged){
+    o.locationText='';o.locationLink='';o.deliveryLat=null;o.deliveryLng=null;
+    toast('⚠️ تم مسح الموقع (تغيّر الهاتف)');
+  }
+  persist();closeModal();renderAll();
+  if(!phoneChanged)toast('✅ تم التعديل');
 }
 function viewOrder(id){
   const o=findOrder(id);if(!o)return;
@@ -2306,11 +2616,9 @@ function viewOrder(id){
     ${o.receipt?`<div class="summary-line"><span>الإيصال</span><a href="javascript:viewReceipt('${o.id}')" style="color:var(--primary)">📸 عرض</a></div>`:''}
     ${cancelDetails}
     <div class="actions" style="margin-top:14px">
-      ${o.locationText||o.locationLink?`<button class="btn btn-light" onclick="tripLocationByOrder('${o.id}')">📍</button>`:''}
-      <button class="btn btn-success" onclick="callPhone('${esc(o.phone)}')">📞</button>
-      <button class="btn btn-whatsapp" onclick="shareOrderLocation('${o.id}')">📲</button>
-      <button class="btn btn-whatsapp" onclick="shareOrderDetails('${o.id}')">🧾</button>
-      ${o.status==='in-progress'?`<button class="btn btn-primary" onclick="closeModal();startTrip('${o.id}')">🛵</button>`:''}
+      ${o.locationText||o.locationLink?`<button class="btn btn-light" onclick="tripLocationByOrder('${o.id}')">🗺️</button>`:''}
+      <button class="btn btn-success" onclick="callPhone('${esc(o.phone)}')">📞 اتصال</button>
+      ${o.status==='in-progress'?`<button class="btn btn-primary" onclick="closeModal();startTrip('${o.id}')">🛵 متابعة</button>`:''}
     </div>`);
 }
 function tripLocationByOrder(id){
@@ -2374,6 +2682,7 @@ function showFinancialReport(){
   const net=expectedSettlement();
   const realProfit=netProfitForPeriod('today');
   const appComp=d.appComp;
+  const extra=d.extra;
 
   showModal(`<h2 class="section-title">🧾 تقرير نهاية اليوم</h2>
     <div class="kpi-grid" style="margin-top:12px">
@@ -2385,6 +2694,7 @@ function showFinancialReport(){
     <div style="margin-top:14px">
       <div class="summary-line"><span>💰 المستلم اليوم</span><strong style="color:#fff">${money(d.received)}</strong></div>
       <div class="summary-line"><span>🛵 أجور التوصيل</span><b class="positive">+${money(d.fees)}</b></div>
+      <div class="summary-line"><span>💎 دخل إضافي</span><b class="positive">+${money(extra)}</b></div>
       <div class="summary-line"><span>🎁 تعويض التطبيق</span><b class="positive">+${money(appComp)}</b></div>
       <div class="summary-line"><span>📤 زيادات</span><b class="positive">+${money(d.over)}</b></div>
       <div class="summary-line"><span>📥 نواقص</span><b class="negative">-${money(d.under)}</b></div>
@@ -2396,7 +2706,7 @@ function showFinancialReport(){
       <div class="summary-line"><span>🏪 ديون المطاعم</span><b class="warning">${money(debt)}</b></div>
     </div>
     <div class="notice" style="margin-top:14px;font-size:11px">
-      💡 <b>ملاحظة:</b> صافي الربح يُحسب على أساس تاريخ الطلب، وليس تاريخ القبض. العمولات أمانة بيدك، وليست ربحًا. تعويض التطبيق يُضاف فورًا إلى نقدك ولا يدخل في الربح.
+      💡 <b>ملاحظة:</b> صافي الربح = أجور + دخل إضافي + تعويضات − نواقص − مصاريف. العمولات أمانة بيدك، وليست ربحًا.
     </div>
     <div class="actions" style="margin-top:14px">
       <button class="btn btn-dark" onclick="window.print()">🖨️ طباعة</button>
@@ -2406,11 +2716,11 @@ function showFinancialReport(){
 
 /* ============ النسخ الاحتياطي ============ */
 function exportBackup(){
-  const data={...state,exportedAt:nowISO(),app:'Rahimo V21'};
+  const data={...state,exportedAt:nowISO(),app:'Rahimo V25'};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download='rahimo-v21-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.download='rahimo-v25-backup-'+new Date().toISOString().slice(0,10)+'.json';
   document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),500);
   toast('⬇️ تم إنشاء النسخة');
@@ -2437,8 +2747,8 @@ function clearAllData(){
   if(!confirm('حذف جميع البيانات؟'))return;
   if(!confirm('تأكيد نهائي؟'))return;
   localStorage.removeItem(KEY);
-  state={version:7,driver:{name:'السائق'},orders:[],customers:[],expenses:[],ledger:[],settlements:[],
-    openingCash:0,currentTripId:null,templates:[],stores:[],autoBackup:true};
+  state={version:10,driver:{name:'السائق'},orders:[],customers:[],expenses:[],ledger:[],settlements:[],
+    extraIncomes:[],openingCash:0,currentTripId:null,templates:[],stores:[],autoBackup:true};
   renderAll();toast('🗑️ تم المسح');
 }
 
@@ -2518,8 +2828,8 @@ function aiSnapshot(){
   const all=periodData('all'),today=periodData('today');
   const completed=all.os.filter(o=>o.status==='completed');
   const stores={};all.os.forEach(o=>stores[o.store]=(stores[o.store]||0)+1);
-  return {today:{orders:today.os.length,received:today.received,fees:today.fees,expenses:today.ex,profit:netProfitForPeriod('today'),appComp:today.appComp},
-    all:{orders:all.os.length,completed:completed.length,received:all.received,fees:all.fees,expenses:all.ex,profit:netProfitForPeriod('all'),debt:restaurantDebt(),cash:cashInPocket(),available:availableToSpend(),commission:unpaidCommissions(),compensation:pendingOfficeCompensation(),appComp:appCompensationPaid()},
+  return {today:{orders:today.os.length,received:today.received,fees:today.fees,expenses:today.ex,profit:netProfitForPeriod('today'),extra:today.extra},
+    all:{orders:all.os.length,completed:completed.length,received:all.received,fees:all.fees,expenses:all.ex,profit:netProfitForPeriod('all'),extra:all.extra,debt:restaurantDebt(),cash:cashInPocket(),available:availableToSpend(),commission:unpaidCommissions(),compensation:pendingOfficeCompensation()},
     performance:{completionRate:all.os.length?Math.round(completed.length/all.os.length*100):0,
       collectionRate:all.os.length?Math.round(all.paid.length/all.os.length*100):0,
       avgProfit:completed.length?Math.round(completed.reduce((s,o)=>s+profitForOrder(o),0)/completed.length):0},
@@ -2529,8 +2839,8 @@ function aiSnapshot(){
 function localAI(type){
   const s=aiSnapshot(),n=s.today,a=s.all,p=s.performance;
   let out='';
-  if(type==='daily')out=`📊 تحليل اليوم\n\nالطلبات: ${n.orders}\nالمستلم: ${money(n.received)}\nأجور التوصيل: ${money(n.fees)}\nتعويض التطبيق: ${money(n.appComp)}\nالمصاريف: ${money(n.expenses)}\nصافي الربح: ${money(n.profit)}\n\n🔎 ${n.orders===0?'لم تسجل طلبات اليوم.':n.profit>0?'اليوم مربح ✅':'راجع المصاريف.'}`;
-  else if(type==='profit')out=`💰 خبير الأرباح\n\nصافي الربح: ${money(a.profit)}\nمتوسط ربح الطلب: ${money(p.avgProfit)}\nأجور التوصيل: ${money(a.fees)}\nتعويض التطبيق: ${money(a.appComp)}\nالمصاريف: ${money(a.expenses)}\nالنقد: ${money(a.cash)}\nالمتاح للصرف: ${money(a.available)}\nعمولات متراكمة: ${money(a.commission)}\nتعويض مجاني مستحق: ${money(a.compensation)}\n\n🎯 ركز على رفع متوسط الأجرة وتسوية العمولات دورياً.`;
+  if(type==='daily')out=`📊 تحليل اليوم\n\nالطلبات: ${n.orders}\nالمستلم: ${money(n.received)}\nأجور التوصيل: ${money(n.fees)}\nدخل إضافي: ${money(n.extra)}\nالمصاريف: ${money(n.expenses)}\nصافي الربح: ${money(n.profit)}\n\n🔎 ${n.orders===0&&n.extra===0?'لم تسجل أي دخل اليوم.':n.profit>0?'اليوم مربح ✅':'راجع المصاريف.'}`;
+  else if(type==='profit')out=`💰 خبير الأرباح\n\nصافي الربح: ${money(a.profit)}\nأجور التوصيل: ${money(a.fees)}\nدخل إضافي: ${money(a.extra)}\nالمصاريف: ${money(a.expenses)}\nالنقد: ${money(a.cash)}\nالمتاح للصرف: ${money(a.available)}\nعمولات متراكمة: ${money(a.commission)}\nتعويض مجاني مستحق: ${money(a.compensation)}\n\n🎯 ركز على رفع متوسط الأجرة وتسوية العمولات دورياً.`;
   else if(type==='operations'){const avgDur=state.orders.filter(o=>o.status==='completed').flatMap(o=>Object.values(o.steps||{}).map(x=>num(x.duration)).filter(Boolean));const avg=avgDur.length?Math.round(avgDur.reduce((x,y)=>x+y,0)/avgDur.length):0;
     out=`🛵 تحسين التشغيل\n\nالرحلات النشطة: ${s.active}\nالإتمام: ${p.completionRate}%\nالتحصيل: ${p.collectionRate}%\nمتوسط الزمن: ${avg} ثانية\n\n🎯 قلل زمن الانتظار.`}
   else if(type==='customers')out=`👥 تحليل العملاء\n\nالعملاء: ${s.customers}\nالطلبات: ${a.orders}\n\n🎯 راقب العملاء المتكررين.`;
@@ -2549,7 +2859,7 @@ function localAI(type){
   else if(type==='question'){
     const q=$('aiQuestion').value.trim();
     if(!q)return 'اكتب سؤالك.';
-    out=`🧠 إجابة\n\nسؤالك: ${q}\n\n${a.orders} طلب، ${money(a.profit)} ربح، ${money(a.appComp)} تعويض تطبيق، ${money(a.debt)} ديون، ${money(a.cash)} نقد، ${money(a.available)} متاح للصرف، ${money(a.commission)} عمولات.`;
+    out=`🧠 إجابة\n\nسؤالك: ${q}\n\n${a.orders} طلب، ${money(a.profit)} ربح، ${money(a.extra)} دخل إضافي، ${money(a.debt)} ديون، ${money(a.cash)} نقد، ${money(a.available)} متاح للصرف، ${money(a.commission)} عمولات.`;
   }
   return out;
 }
@@ -2632,6 +2942,13 @@ window.addEventListener('offline',updateOnlineStatus);
       b.onclick=()=>go(p.id);
       list.appendChild(b);
     });
+    const incomeBtn=document.createElement('button');
+    incomeBtn.className='r16-side-btn';
+    incomeBtn.type='button';
+    incomeBtn.textContent='💎 تسجيل دخل إضافي';
+    incomeBtn.style.borderColor='rgba(236,72,153,0.4)';
+    incomeBtn.onclick=()=>{close();openExtraIncomeModal()};
+    list.insertBefore(incomeBtn,list.firstChild);
   }
   function init(){
     document.getElementById('r16More').onclick=function(){
