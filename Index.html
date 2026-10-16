@@ -129,7 +129,6 @@ button{cursor:pointer}
 
 .section-title{font-size:17px;font-weight:900;margin:0 0 14px;color:#fff}
 
-/* ✅ 5 أزرار سريعة */
 .quick{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0 16px}
 .quick button{
   min-height:66px;border:1px solid var(--line);background:var(--card);
@@ -274,6 +273,13 @@ button{cursor:pointer}
 .income-card .income-amount{font-size:18px;font-weight:900;color:#f472b6;font-variant-numeric:tabular-nums}
 .income-card .income-cat{font-size:11px;color:var(--muted);margin-top:3px}
 .income-card .income-date{font-size:10px;color:#64748b;margin-top:2px}
+
+.save-customer-loc{
+  padding:12px 14px;border:1px solid var(--line);border-radius:14px;
+  background:#0b111e;margin-bottom:10px;
+}
+.save-customer-loc .sc-phone{font-size:16px;font-weight:900;color:#fff;margin-bottom:6px}
+.save-customer-loc .sc-loc{font-size:12px;color:var(--muted);line-height:1.6}
 
 #r16Backdrop{display:none;position:fixed;inset:0;z-index:15001;background:rgba(5,8,15,0.7);backdrop-filter:blur(4px)}
 #r16Backdrop.show{display:block}
@@ -673,6 +679,11 @@ button{cursor:pointer}
     <button class="btn btn-light btn-block" style="margin-top:10px" onclick="installPWA()">📲 تثبيت التطبيق</button>
     <button class="btn btn-light btn-block" style="margin-top:10px" onclick="testOfflineMap()">🗺️ اختبار الخريطة بدون إنترنت</button>
   </div>
+  <div class="card warn-box">
+    <strong>🧹 صيانة البيانات</strong>
+    <p class="small" style="margin:6px 0 10px">حذف بطاقات العملاء القدماء التي ليس لها موقع محفوظ (لن تُحذف الطلبات المرتبطة بهم).</p>
+    <button class="btn btn-warning btn-block" onclick="cleanupOrphanCustomers()">🧹 حذف العملاء بدون موقع</button>
+  </div>
   <div class="card danger-box">
     <strong>⚠️ منطقة خطرة</strong>
     <p class="small">مسح البيانات نهائي.</p>
@@ -708,11 +719,10 @@ button{cursor:pointer}
 'use strict';
 
 /* ============================================================
-   رحيمو V25
-   - إصلاح: 5 أزرار سريعة (الرحلة عادت)
-   - إصلاح: الرسم البياني يشمل الدخل الإضافي
-   - إضافة: تعديل الدخل الإضافي
-   - إضافة: حماية busyAction في saveExtraIncome
+   رحيمو V28
+   - نافذة إدخال موقع التسليم إذا كان الطلب بدون موقع
+   - تسلسل: موقع → حفظ عميل → إتمام
+   - حماية كاملة من الإغلاق العرضي
    ============================================================ */
 
 const KEY='rahimoV3State';
@@ -721,6 +731,10 @@ let mapInstance=null, mapMarker=null, mapOfflineMode=false;
 let _autoFilledValue='';
 let _lastPhoneChecked='';
 let _editingExtraIncomeId=null;
+/* 🆕 سياق التسليم */
+let _pendingPayment=null;
+let _pendingLocationContext=null;
+let _locationModalOpen=false;
 
 const $=id=>document.getElementById(id);
 const money=n=>new Intl.NumberFormat('ar-DZ').format(Math.round(Number(n)||0))+' دج';
@@ -738,7 +752,7 @@ const EXTRA_CATEGORIES={
 };
 
 let state={
-  version:10,
+  version:13,
   driver:{name:'السائق'},
   orders:[],customers:[],expenses:[],ledger:[],settlements:[],
   extraIncomes:[],
@@ -749,7 +763,7 @@ let state={
 };
 
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2400)}
-function persist(){try{state.version=10;localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast('⚠️ تعذر حفظ البيانات')}}
+function persist(){try{state.version=13;localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast('⚠️ تعذر حفظ البيانات')}}
 function setText(id,v){if($(id))$(id).textContent=v}
 function cleanPhone(p){return String(p||'').replace(/[^\d+]/g,'').replace(/(?!^)\+/g,'')}
 
@@ -762,6 +776,17 @@ function haversine(lat1,lng1,lat2,lng2){
 
 function isCoordsOnly(t){
   return !t || /^[\d\s.,\-]+$/.test(String(t).trim());
+}
+
+function customerHasLocation(c){
+  return !!(c && Array.isArray(c.locations) && c.locations.length > 0);
+}
+
+function orderHasLocation(o){
+  if(!o) return false;
+  return !!( (o.locationText && o.locationText.trim())
+          || (o.locationLink && o.locationLink.trim())
+          || (o.deliveryLat != null && o.deliveryLat !== '') );
 }
 
 /* ============ تطبيع ============ */
@@ -998,7 +1023,6 @@ function syncOrderLocationToCustomer(o){
 }
 
 /* ============ الأرباح الخارجية ============ */
-/* ✅ حفظ: يدعم الإنشاء والتعديل + حماية busyAction */
 function saveExtraIncome(){
   if(busyAction)return;
   busyAction=true;
@@ -1010,7 +1034,6 @@ function saveExtraIncome(){
     const note=noteRaw||EXTRA_CATEGORIES[cat]?.label||'دخل إضافي';
 
     if(_editingExtraIncomeId){
-      // ✅ تعديل
       const entry=state.extraIncomes.find(x=>x.id===_editingExtraIncomeId);
       if(!entry)return toast('⚠️ غير موجود');
       const oldAmount=entry.amount;
@@ -1021,7 +1044,6 @@ function saveExtraIncome(){
       entry.note=note;
       entry.updatedAt=nowISO();
 
-      // عكس القيد القديم وإضافة الجديد
       const diff=amount-oldAmount;
       if(diff!==0){
         addLedger('extra_income_edit',diff,entry.id,
@@ -1036,7 +1058,6 @@ function saveExtraIncome(){
       renderAll();
       toast(`✅ تم التعديل: ${money(amount)}`);
     } else {
-      // ✅ إنشاء
       const entry={
         id:uid('INC'),
         amount,
@@ -1058,7 +1079,6 @@ function saveExtraIncome(){
   }
 }
 
-/* ✅ فتح modal: إنشاء أو تعديل */
 function openExtraIncomeModal(id){
   const editEntry=id?state.extraIncomes.find(x=>x.id===id):null;
   _editingExtraIncomeId=editEntry?editEntry.id:null;
@@ -1167,6 +1187,21 @@ function renderExtraIncomes(){
       </div>`;
     }).join('')}
   `;
+}
+
+function cleanupOrphanCustomers(){
+  const orphans=state.customers.filter(c=>!customerHasLocation(c));
+  if(!orphans.length)return toast('✅ لا يوجد عملاء بدون موقع');
+  const withOrders=orphans.filter(c=>state.orders.some(o=>o.phone===c.phone));
+  const msg=`سيتم حذف ${orphans.length} بطاقة عميل بدون موقع.`+
+    (withOrders.length?`\n\n⚠️ ${withOrders.length} منهم لديهم طلبات سابقة (ستبقى الطلبات).`:'')+
+    `\n\nهل تريد المتابعة؟`;
+  if(!confirm(msg))return;
+  const ids=new Set(orphans.map(c=>c.id));
+  state.customers=state.customers.filter(c=>!ids.has(c.id));
+  persist();
+  renderAll();
+  toast(`🗑️ تم حذف ${orphans.length} عميل بدون موقع`);
 }
 
 /* ============ الترحيل ============ */
@@ -1332,11 +1367,12 @@ function renderCustomers(){
     const total=os.filter(o=>o.paymentReceived).reduce((s,o)=>s+num(o.amountReceived),0);
     const locCount=c.locations?.length||0;
     const defaultLoc=c.locations?.find(l=>l.isDefault)||c.locations?.[0];
-    return `<div class="order">
+    const noLoc=locCount===0;
+    return `<div class="order" ${noLoc?'style="border-color:rgba(245,158,11,0.3)"':''}>
       <div class="between">
         <div>
           <strong style="color:#fff">📞 ${esc(c.phone)}</strong>
-          <div class="small muted">${defaultLoc?'📍 '+esc(defaultLoc.label+': '+defaultLoc.text):'📍 بدون موقع'} ${locCount>1?`<span class="badge info">${locCount} مواقع</span>`:''}</div>
+          <div class="small muted">${defaultLoc?'📍 '+esc(defaultLoc.label+': '+defaultLoc.text):(noLoc?'<span class="warning">⚠️ بدون موقع</span>':'📍 بدون موقع')} ${locCount>1?`<span class="badge info">${locCount} مواقع</span>`:''}</div>
         </div>
         <span class="badge">${os.length} طلب</span>
       </div>
@@ -1665,8 +1701,6 @@ function renderLedger(){
     </div>`;
   }).join(''):'<div class="empty">لا توجد حركات</div>';
 }
-
-/* ✅ الرسم البياني يشمل الدخل الإضافي */
 function renderChart(){
   const box=$('chartBox');if(!box)return;
   const days=[],values=[];
@@ -1898,7 +1932,7 @@ function onPhoneInput(){
   const locField=$('deliveryLocationText');
 
   if(!c){
-    hint.innerHTML='🆕 عميل جديد';
+    hint.innerHTML='🆕 عميل جديد — سيُطلب منك حفظه عند التسليم';
     if(box)box.innerHTML='';
     _autoFilledValue='';
     return;
@@ -1908,7 +1942,7 @@ function onPhoneInput(){
   const orderCount=state.orders.filter(o=>o.phone===c.phone).length;
 
   if(!locs.length){
-    hint.innerHTML=`✅ عميل محفوظ — ${orderCount} طلب · بدون موقع محفوظ`;
+    hint.innerHTML=`<span class="warning">⚠️ عميل محفوظ بدون موقع</span> — ${orderCount} طلب`;
     if(box)box.innerHTML='';
     return;
   }
@@ -2044,7 +2078,6 @@ function captureGPS(mode){
           o.locationText=`${lat}, ${lng}`;
         }
         o.locationLink=link;
-        syncOrderLocationToCustomer(o);
         persist();renderTrip();
       }
     } else if(mode==='cust'){
@@ -2077,7 +2110,7 @@ function openMapPicker(purpose='order'){
     <div class="actions" style="margin-top:12px">
       <button class="btn btn-primary" onclick="confirmMapPick('${purpose}')">✅ تأكيد</button>
       <button class="btn btn-light" onclick="locateMeOnMap()">📍 موقعي</button>
-      <button class="btn btn-light" onclick="closeModal()">إلغاء</button>
+      <button class="btn btn-light" onclick="closeMapOnly()">إلغاء</button>
     </div>`);
   setTimeout(()=>{
     if(mapInstance){mapInstance.remove();mapInstance=null;mapMarker=null}
@@ -2100,6 +2133,12 @@ function openMapPicker(purpose='order'){
       $('mapPick').innerHTML='<div class="empty">تعذر تحميل الخريطة. استخدم زر GPS.</div>';
     }
   },120);
+}
+function closeMapOnly(){
+  // إغلاق فعلي بدون فحص _locationModalOpen
+  $('modal').classList.remove('show');
+  document.body.style.overflow='';
+  if(mapInstance){setTimeout(()=>{if(mapInstance){mapInstance.remove();mapInstance=null;mapMarker=null}},200)}
 }
 function locateMeOnMap(){
   if(!navigator.geolocation)return;
@@ -2133,8 +2172,21 @@ function confirmMapPick(purpose){
       $('storeEditLocation').value=text;
     }
     $('storeLat').value=lat;$('storeLng').value=lng;
+  } else if(purpose==='payloc'){
+    /* 🆕 رجوع إلى نافذة إدخال الموقع مع الإحداثيات */
+    if(_pendingLocationContext){
+      _pendingLocationContext.lat=lat;
+      _pendingLocationContext.lng=lng;
+      _pendingLocationContext.link=link;
+      if(!_pendingLocationContext.text || isCoordsOnly(_pendingLocationContext.text)){
+        _pendingLocationContext.text=text;
+      }
+    }
+    closeMapOnly();
+    setTimeout(()=>renderLocationModal(),250);
+    return;
   }
-  closeModal();
+  closeMapOnly();
   toast('✅ تم حفظ الموقع');
 }
 function testOfflineMap(){
@@ -2168,21 +2220,28 @@ function createOrder(){
     saveTemplateIfNew(phone,store,value,fee);
 
     let c=findCustomer(phone);
+    const hasLocation=!!(loc||link||lat);
+
     if(!c){
-      c=normalizeCustomer({id:uid('CUST'),phone,location:loc||link||''});
-      if(c.locations.length && (loc||link||lat)){
-        const first=c.locations[0];
-        first.lat = lat?Number(lat):null;
-        first.lng = lng?Number(lng):null;
-        first.link = link||'';
-        first.text = loc||link||`${lat}, ${lng}`;
-        first.lastUsed = nowISO();
-        c.lastUsedLocationId = first.id;
+      if(hasLocation){
+        // عميل جديد + موقع → يُحفظ الآن
+        c=normalizeCustomer({id:uid('CUST'),phone,location:loc||link||''});
+        if(c.locations.length){
+          const first=c.locations[0];
+          first.lat = lat?Number(lat):null;
+          first.lng = lng?Number(lng):null;
+          first.link = link||'';
+          first.text = loc||link||`${lat}, ${lng}`;
+          first.lastUsed = nowISO();
+          c.lastUsedLocationId = first.id;
+        }
+        state.customers.push(c);
       }
-      state.customers.push(c);
+      // عميل جديد بدون موقع → لا يُحفظ الآن
     } else {
+      // عميل موجود → تحديث صامت إن وُجد موقع
       if(!c.locations)c.locations=[];
-      if(loc||link){
+      if(hasLocation){
         let target=c.locations.find(x=>x.text===loc);
         if(!target){
           const latNum=lat?Number(lat):null;
@@ -2198,7 +2257,6 @@ function createOrder(){
             lastUsed:null
           };
           c.locations.push(target);
-
           if(c.locations.length>5){
             const sorted=[...c.locations].sort((a,b)=>
               new Date(b.lastUsed||0)-new Date(a.lastUsed||0)
@@ -2434,6 +2492,10 @@ function tripLocation(){
   else if(o.locationText)window.open('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(o.locationText),'_blank','noopener');
   else toast('📍 لا يوجد موقع');
 }
+
+/* ============================================================
+   💰 نافذة تأكيد التسليم
+   ============================================================ */
 function openPaymentModal(){
   const o=currentTrip();if(!o)return;
   const deliveryPart=o.isFreeDelivery?0:o.fee;
@@ -2484,47 +2546,286 @@ function attachReceipt(ev){
   r.onload=()=>{window._pendingReceipt=r.result;$('receiptPreview').innerHTML=`<img src="${r.result}" class="receipt-preview">`};
   r.readAsDataURL(f);
 }
+
+/* ✅ خطوة 1: ضغط تأكيد التسليم */
 function confirmPayment(){
   if(busyAction)return;
   const o=currentTrip(),r=num($('receivedInput')?.value);
   if(!o||o.status!=='in-progress')return toast('⚠️ غير متاح');
   if(r<=0)return toast('⚠️ أدخل المبلغ');
-  busyAction=true;
-  try{
-    const deliveryPart=o.isFreeDelivery?0:o.fee;
-    const expected=o.orderValue+deliveryPart+o.commission;
-    const diff=r-expected;
-    const d=o.steps[3];
-    d.completed=true;d.endTime=nowISO();d.startTime=d.startTime||nowISO();
-    d.duration=Math.max(0,Math.floor((new Date(d.endTime)-new Date(d.startTime))/1000));
-    o.paymentReceived=true;o.amountReceived=r;o.difference=diff;
-    o.status='completed';o.completedAt=nowISO();
-    if(window._pendingReceipt){o.receipt=window._pendingReceipt;window._pendingReceipt=null}
-    syncOrderLocationToCustomer(o);
-    addLedger('customer_payment',r,o.id,'استلام من العميل');
-    state.currentTripId=null;
-    persist();closeModal();renderAll();showPage('dashboard');
-    notify('🎉 تم التسليم',`${money(r)} — ربح: ${money(profitForOrder(o))}`);
-    toast('🎉 تم التسليم');
-  } finally {busyAction=false}
+
+  _pendingPayment={orderId:o.id, received:r};
+  maybeAskLocation(o);
 }
+
+/* ✅ خطوة 1 (سريع) */
 function quickFinish(){
   const o=currentTrip();if(!o)return;
   const deliveryPart=o.isFreeDelivery?0:o.fee;
   const expected=o.orderValue+deliveryPart+o.commission;
   if(!confirm(`تسليم سريع بـ ${money(expected)}؟`))return;
-  const d=o.steps[3];
-  d.completed=true;d.endTime=nowISO();d.startTime=d.startTime||nowISO();
-  d.duration=Math.max(0,Math.floor((new Date(d.endTime)-new Date(d.startTime))/1000));
-  o.paymentReceived=true;o.amountReceived=expected;o.difference=0;
-  o.status='completed';o.completedAt=nowISO();
-  syncOrderLocationToCustomer(o);
-  addLedger('customer_payment',expected,o.id,'تسليم سريع');
-  state.currentTripId=null;
-  persist();renderAll();showPage('dashboard');
-  notify('🎉 تسليم سريع',money(expected));
-  toast('🎉 تم التسليم السريع');
+
+  _pendingPayment={orderId:o.id, received:expected};
+  maybeAskLocation(o);
 }
+
+/* ============================================================
+   📍 خطوة 2: هل نطلب موقعًا؟
+   ============================================================ */
+function maybeAskLocation(o){
+  if(!orderHasLocation(o)){
+    openLocationForPayment();
+    return;
+  }
+  maybeAskSaveCustomer(o);
+}
+
+function openLocationForPayment(){
+  const o=currentTrip();
+  if(!o)return;
+
+  _pendingLocationContext={
+    text: o.locationText || '',
+    link: o.locationLink || '',
+    lat:  o.deliveryLat ?? null,
+    lng:  o.deliveryLng ?? null
+  };
+  renderLocationModal();
+}
+
+function captureLocationModalInputs(){
+  if(!_pendingLocationContext)return;
+  const t=$('payLocText')?.value;
+  const l=$('payLocLink')?.value;
+  if(t!==undefined) _pendingLocationContext.text=t;
+  if(l!==undefined) _pendingLocationContext.link=l;
+}
+
+function renderLocationModal(){
+  if(!_pendingLocationContext)return;
+  _locationModalOpen=true;
+
+  const ctx=_pendingLocationContext;
+  const hasCoords = ctx.lat!=null && ctx.lng!=null;
+  const latStr = hasCoords ? Number(ctx.lat).toFixed(6) : '';
+  const lngStr = hasCoords ? Number(ctx.lng).toFixed(6) : '';
+
+  showModal(`
+    <h2 class="section-title">📍 إدخال موقع التسليم</h2>
+    <div class="warn-box" style="margin-bottom:14px">
+      ⚠️ لم يُسجَّل موقع لهذا الطلب بعد. أدخل العنوان أو حدد الموقع على الخريطة.
+    </div>
+
+    <div class="field">
+      <label class="label">📍 وصف الموقع *</label>
+      <input id="payLocText" class="input" placeholder="حي، شارع، معلم..." value="${esc(ctx.text||'')}">
+    </div>
+
+    <div class="row" style="margin-bottom:12px">
+      <button class="btn btn-primary" style="flex:1" onclick="openMapForPayment()">🗺️ الخريطة</button>
+      <button class="btn btn-light" onclick="gpsForPayment()">📍 GPS</button>
+    </div>
+
+    <div class="field">
+      <label class="label">🔗 رابط الموقع (اختياري)</label>
+      <input id="payLocLink" class="input" type="url" placeholder="https://maps.app.goo.gl/..." value="${esc(ctx.link||'')}">
+    </div>
+
+    ${hasCoords ? `
+      <div class="success-box" style="margin-bottom:14px">
+        🌐 الإحداثيات: <b>${latStr}, ${lngStr}</b>
+      </div>
+    ` : ''}
+
+    <div class="notice" style="margin-bottom:14px;font-size:11px">
+      💡 إذا حفظت الموقع سيُربط بالعميل (إن وافقت في الخطوة التالية).
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-success" onclick="savePendingLocation()">💾 حفظ ومتابعة</button>
+      <button class="btn btn-light" onclick="skipLocationAndContinue()">تخطي بدون موقع</button>
+    </div>
+  `);
+  setTimeout(()=>$('payLocText')?.focus(),200);
+}
+
+function savePendingLocation(){
+  captureLocationModalInputs();
+  const ctx=_pendingLocationContext;
+  if(!ctx)return;
+  if(!ctx.text && !ctx.link && ctx.lat==null){
+    return toast('⚠️ أدخل موقعًا أو اضغط GPS');
+  }
+  applyPendingLocationToOrder();
+  continueAfterLocation();
+}
+
+function skipLocationAndContinue(){
+  _locationModalOpen=false;
+  _pendingLocationContext=null;
+  continueAfterLocation();
+}
+
+function applyPendingLocationToOrder(){
+  const o=currentTrip();
+  if(!o||!_pendingLocationContext)return;
+  o.locationText = _pendingLocationContext.text || '';
+  o.locationLink = _pendingLocationContext.link || '';
+  o.deliveryLat  = _pendingLocationContext.lat ?? null;
+  o.deliveryLng  = _pendingLocationContext.lng ?? null;
+  persist();
+}
+
+function continueAfterLocation(){
+  const o=currentTrip();
+  _locationModalOpen=false;
+  _pendingLocationContext=null;
+  if(!o)return;
+  maybeAskSaveCustomer(o);
+}
+
+function openMapForPayment(){
+  captureLocationModalInputs();
+  _locationModalOpen=false;
+  openMapPicker('payloc');
+}
+
+function gpsForPayment(){
+  if(!navigator.geolocation)return toast('❌ GPS غير مدعوم');
+  captureLocationModalInputs();
+
+  toast('📍 جارٍ تحديد الموقع...');
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat=Number(pos.coords.latitude.toFixed(6));
+    const lng=Number(pos.coords.longitude.toFixed(6));
+    const link=`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+
+    _pendingLocationContext.lat=lat;
+    _pendingLocationContext.lng=lng;
+    _pendingLocationContext.link=link;
+    if(!_pendingLocationContext.text || isCoordsOnly(_pendingLocationContext.text)){
+      _pendingLocationContext.text=`${lat}, ${lng}`;
+    }
+    renderLocationModal();
+    toast('✅ تم تحديد الموقع');
+  },()=>toast('❌ تعذر تحديد الموقع'),{enableHighAccuracy:true,timeout:15000,maximumAge:0});
+}
+
+/* ============================================================
+   💾 خطوة 3: هل نحفظ العميل؟
+   ============================================================ */
+function maybeAskSaveCustomer(o){
+  const c=findCustomer(o.phone);
+  const hasLocation=orderHasLocation(o);
+
+  if(!c && hasLocation){
+    showSaveCustomerPrompt(o);
+    return;
+  }
+
+  finalizePayment(o);
+}
+
+function showSaveCustomerPrompt(o){
+  const deliveryPart=o.isFreeDelivery?0:o.fee;
+  const expected=o.orderValue+deliveryPart+o.commission;
+  const locText=o.locationText && !isCoordsOnly(o.locationText)
+    ? o.locationText
+    : (o.deliveryLat ? `📍 ${Number(o.deliveryLat).toFixed(4)}, ${Number(o.deliveryLng).toFixed(4)}` : '—');
+
+  $('modalSheet').innerHTML=`
+    <h2 class="section-title">💾 حفظ هذا العميل؟</h2>
+
+    <div class="save-customer-loc">
+      <div class="sc-phone">📞 ${esc(o.phone)}</div>
+      <div class="sc-loc">
+        <div>📍 ${esc(locText)}</div>
+        ${o.locationLink?`<div style="margin-top:4px;color:#93c5fd;font-size:11px">${esc(o.locationLink)}</div>`:''}
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-bottom:14px">
+      💡 سيُحفظ الرقم والموقع في قائمة **العملاء** لاستخدامه في الطلبات القادمة.
+    </div>
+
+    <div class="notice" style="margin-bottom:14px">
+      📊 <b>المبلغ:</b> ${money(_pendingPayment.received)}
+      ${_pendingPayment.received!==expected?`<span class="warning"> (المطلوب: ${money(expected)})</span>`:''}
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-success" onclick="chooseSaveCustomer(true)">💾 نعم، احفظ</button>
+      <button class="btn btn-light" onclick="chooseSaveCustomer(false)">❌ لا، تخطَّ</button>
+    </div>
+  `;
+}
+
+function chooseSaveCustomer(shouldSave){
+  if(!_pendingPayment)return;
+  const o=findOrder(_pendingPayment.orderId);
+  if(!o)return;
+
+  if(shouldSave){
+    let c=findCustomer(o.phone);
+    if(!c){
+      c=normalizeCustomer({id:uid('CUST'),phone:o.phone,location:o.locationText||o.locationLink||''});
+      state.customers.push(c);
+    }
+    syncOrderLocationToCustomer(o);
+    persist();
+    toast('💾 تم حفظ العميل');
+  } else {
+    toast('تم تخطي حفظ العميل');
+  }
+
+  finalizePayment(o);
+}
+
+/* ✅ خطوة 4: الإتمام */
+function finalizePayment(o){
+  if(busyAction)return;
+  const r=_pendingPayment?.received;
+  if(r==null||r<=0)return toast('⚠️ مبلغ غير صالح');
+
+  busyAction=true;
+  try{
+    const deliveryPart=o.isFreeDelivery?0:o.fee;
+    const expected=o.orderValue+deliveryPart+o.commission;
+    const diff=r-expected;
+
+    const d=o.steps[3];
+    d.completed=true;d.endTime=nowISO();d.startTime=d.startTime||nowISO();
+    d.duration=Math.max(0,Math.floor((new Date(d.endTime)-new Date(d.startTime))/1000));
+
+    o.paymentReceived=true;o.amountReceived=r;o.difference=diff;
+    o.status='completed';o.completedAt=nowISO();
+
+    if(window._pendingReceipt){o.receipt=window._pendingReceipt;window._pendingReceipt=null}
+
+    const c=findCustomer(o.phone);
+    if(c) syncOrderLocationToCustomer(o);
+
+    addLedger('customer_payment',r,o.id,'استلام من العميل');
+    state.currentTripId=null;
+
+    _pendingPayment=null;
+    _pendingLocationContext=null;
+    _locationModalOpen=false;
+
+    persist();
+    // استخدم closeMapOnly للإغلاق الفعلي (يتجاوز حماية _locationModalOpen)
+    $('modal').classList.remove('show');
+    document.body.style.overflow='';
+    renderAll();
+    showPage('dashboard');
+    notify('🎉 تم التسليم',`${money(r)} — ربح: ${money(profitForOrder(o))}`);
+    toast('🎉 تم التسليم');
+  } finally {
+    busyAction=false;
+    _pendingPayment=null;
+  }
+}
+
 function viewReceipt(id){
   const o=findOrder(id);if(!o||!o.receipt)return;
   showModal(`<h2 class="section-title">📸 الإيصال</h2>
@@ -2716,11 +3017,11 @@ function showFinancialReport(){
 
 /* ============ النسخ الاحتياطي ============ */
 function exportBackup(){
-  const data={...state,exportedAt:nowISO(),app:'Rahimo V25'};
+  const data={...state,exportedAt:nowISO(),app:'Rahimo V28'};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download='rahimo-v25-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.download='rahimo-v28-backup-'+new Date().toISOString().slice(0,10)+'.json';
   document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),500);
   toast('⬇️ تم إنشاء النسخة');
@@ -2747,8 +3048,11 @@ function clearAllData(){
   if(!confirm('حذف جميع البيانات؟'))return;
   if(!confirm('تأكيد نهائي؟'))return;
   localStorage.removeItem(KEY);
-  state={version:10,driver:{name:'السائق'},orders:[],customers:[],expenses:[],ledger:[],settlements:[],
+  state={version:13,driver:{name:'السائق'},orders:[],customers:[],expenses:[],ledger:[],settlements:[],
     extraIncomes:[],openingCash:0,currentTripId:null,templates:[],stores:[],autoBackup:true};
+  _pendingPayment=null;
+  _pendingLocationContext=null;
+  _locationModalOpen=false;
   renderAll();toast('🗑️ تم المسح');
 }
 
@@ -2798,12 +3102,44 @@ function showModal(html){
   $('modal').classList.add('show');
   document.body.style.overflow='hidden';
 }
+
+/* ✅ closeModal مع حماية كاملة */
 function closeModal(){
+  /* حماية نافذة إدخال الموقع */
+  if(_locationModalOpen){
+    toast('⚠️ أدخل موقعًا أو اضغط "تخطي"');
+    return;
+  }
+  /* حماية نافذة حفظ العميل */
+  if(_pendingPayment){
+    const html=$('modalSheet')?.innerHTML||'';
+    if(html.includes('chooseSaveCustomer')){
+      toast('⚠️ اختر: احفظ أو تخطَّ');
+      return;
+    }
+  }
   $('modal').classList.remove('show');
   document.body.style.overflow='';
   if(mapInstance){setTimeout(()=>{if(mapInstance){mapInstance.remove();mapInstance=null;mapMarker=null}},200)}
 }
-$('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+
+$('modal').addEventListener('click',e=>{
+  if(e.target.id!=='modal')return;
+  /* حماية نافذة إدخال الموقع */
+  if(_locationModalOpen){
+    toast('⚠️ أدخل موقعًا أو اضغط "تخطي"');
+    return;
+  }
+  /* حماية نافذة حفظ العميل */
+  if(_pendingPayment){
+    const html=$('modalSheet')?.innerHTML||'';
+    if(html.includes('chooseSaveCustomer')){
+      toast('⚠️ اختر: احفظ أو تخطَّ');
+      return;
+    }
+  }
+  closeModal();
+});
 
 /* ============ AI ============ */
 const AI_KEY='rahimoAISettings';
